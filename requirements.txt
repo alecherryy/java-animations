@@ -1,0 +1,18 @@
+SHAPE ABSTRACT CLASS:
+1. Common traits:
+    - Name
+    - Height
+    - Width
+    - Corner radius*
+    - Color
+    - Position
+    - Keyframe
+2. Can change:
+    - Color
+    - Position
+    - Size/scale
+*Note: we can use corner radius to determine whether a shape is a
+square/rectangle, oval or circle. A circle has equal height, width and corner
+radius equal to its height and width. An oval has different height and width, 
+and corner radius equal to height/width.
+
