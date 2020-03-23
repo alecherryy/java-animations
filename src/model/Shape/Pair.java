@@ -1,3 +1,5 @@
+package model.Shape;
+
 /**
  * This class represent a value pair of integers. It can be used
  * to represent coordinates or sizes.

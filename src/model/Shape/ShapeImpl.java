@@ -1,3 +1,5 @@
+package model.Shape;
+
 /**
  * This class represents a Shape Implementation, it implements all the
  * methods that belong to the Shape Interface and it can be used
