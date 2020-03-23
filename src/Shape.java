@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 /**
  * This is a Shape interface. It includes all methods available to
  * a shape.
@@ -5,18 +7,32 @@
 public interface Shape {
 
   /**
+   * Returns the name of the shape.
+   *
+   * @return the name of the shape
+   */
+  String getName();
+
+  /**
+   * Returns the type of the shape.
+   *
+   * @return the type of the shape
+   */
+  ShapeType getType();
+
+  /**
    * Returns the width of the shape.
    *
    * @return the width of the shape
    */
-  int getWidth();
+  double getWidth();
 
   /**
    * Returns the height of the shape.
    *
    * @return the width of the shape
    */
-  int getHeight();
+  double getHeight();
 
   /**
    * Returns the size of the Shape in the form
@@ -35,7 +51,14 @@ public interface Shape {
   Pair getPosition();
 
   /**
-   * Returns a summery of the Shape in a string; meaning, a detailed
+   * Returns the color of the shape.
+   *
+   * @return the color of the shape
+   */
+  String getColor();
+
+  /**
+   * Returns a summary of the Shape in a string; meaning, a detailed
    * description of the shape information and its expected behavior.
    *
    * @return a summary in a string

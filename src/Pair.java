@@ -3,8 +3,8 @@
  * to represent coordinates or sizes.
  */
 public class Pair {
-  public final int x;
-  public final int y;
+  public final double x;
+  public final double y;
 
   /**
    * This is the Pair class constructor; it takes two integer
@@ -13,7 +13,7 @@ public class Pair {
    * @param x first pair item
    * @param y second pair item
    */
-  public Pair(int x, int y) {
+  public Pair(double x, double y) {
     this.x = x;
     this.y = y;
   }
@@ -23,7 +23,7 @@ public class Pair {
    *
    * @return x value
    */
-  public int getX() {
+  public double getX() {
     return this.x;
   }
 
@@ -32,7 +32,7 @@ public class Pair {
    *
    * @return y value
    */
-  public int getY() {
+  public double getY() {
     return this.y;
   }
 
