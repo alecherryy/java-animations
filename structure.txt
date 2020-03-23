@@ -1,0 +1,40 @@
+Class hierarchy
+
+Option 1: Creating sub-directories
+- Directory: model
+- 	Interface: AnimationModel
+- 	Class: AnimationModelImpl impements AnimationModel.
+		- Represents a model that processes an animation.
+		- fields: List<Shape> shapes; List<Animation> animation.
+		- methods:
+			public void addShape(Shape shape)
+			public void addAnimation(Animation animation)
+			public String getDescription()
+			public List<Animations> getAnimations()
+			public int getEndTime()
+		- Within this class, we would also (maybe) need a static final class animation model builder that actually adds the shapes and animations to the model (addOval, addRectangle, addColor, etc.). 
+
+- Sub-directory: model.Animation
+	- Interface: Animation
+	- Class: AnimationImpl implements Animation
+		- methods:
+			String getDescription()
+			String getStartState()
+			String getEndState()
+			Shape getShape() // this will be the shape where the animation will be animating on
+			int getStartTime()
+			int getEndTime()
+- Subdirectory: model.Shape
+	- Interface: Shape
+	- Class: ShapeImpl implements shape
+		- methods:
+			String getName()
+			string getType()
+			getDimension1()
+			getDimension2()
+			get position
+			getDescription()
+			getStartTime()
+			getEndTime()
+	- We will also need classes to change the color, and change the dimension, and also to move the animation to a different coordinate.
+
