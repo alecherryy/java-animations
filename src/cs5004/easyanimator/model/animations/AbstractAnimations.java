@@ -18,33 +18,27 @@ public abstract class AbstractAnimations implements Animations {
     this.endTime = end;
   }
 
-  @Override
   public String getDescription() {
     //TODO IMPLEMENT CODE
     return null;
   }
 
-  @Override
   public Shape getShape() {
     return this.shape;
   }
 
-  @Override
   public int getStartTime() {
     return this.startTime;
   }
 
-  @Override
   public int getEndTime() {
     return this.endTime;
   }
 
-  @Override
   public AnimationType getAnimationType() {
     return this.type;
   }
 
-  @Override
   public void setNewShape(Shape s) {
     this.shape = s;
   }

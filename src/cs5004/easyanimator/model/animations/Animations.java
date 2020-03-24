@@ -1,5 +1,6 @@
+package cs5004.easyanimator.model.animations;
+
 import cs5004.easyanimator.model.shapes.*;
-import cs5004.easyanimator.model.animations.*;
 
 public interface Animations {
 

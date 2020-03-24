@@ -153,9 +153,10 @@ public class ShapeImpl implements Shape {
         break;
     }
     String str = this.color
-            + this.type
-            + "with corner at " + this.getPosition().toString() + ", "
-            + "width " + this.width
+            + " "
+            + type
+            + " with corner at " + this.getPosition().toString() + ", "
+            + "width " + this.width + " "
             + "and height " + this.height;
     return str;
   }
