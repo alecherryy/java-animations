@@ -90,6 +90,3 @@ public class ChangeCoordinates extends AbstractAnimations {
     s.changePosition(newCoordinates);
   }
 }
-
-  }
-}
