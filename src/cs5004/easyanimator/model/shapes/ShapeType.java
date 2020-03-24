@@ -1,4 +1,4 @@
-package model.Shape;
+package cs5004.easyanimator.model.shapes;
 
 /**
  * This is an enum of all the Shapes available to the

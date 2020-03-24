@@ -1,4 +1,4 @@
-package model.Shape;
+package cs5004.easyanimator.model.shapes;
 
 /**
  * This class represent a value pair of integers. It can be used

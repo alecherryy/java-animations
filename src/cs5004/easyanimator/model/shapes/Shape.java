@@ -1,6 +1,4 @@
-package model.Shape;
-
-import java.text.DecimalFormat;
+package cs5004.easyanimator.model.shapes;
 
 /**
  * This is a Shape interface. It includes all methods available to

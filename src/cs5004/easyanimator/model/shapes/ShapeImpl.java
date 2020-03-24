@@ -1,5 +1,9 @@
 package model.Shape;
 
+import cs5004.easyanimator.model.shapes.Pair;
+import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.ShapeType;
+
 /**
  * This class represents a Shape Implementation, it implements all the
  * methods that belong to the Shape Interface and it can be used

@@ -1,7 +1,8 @@
+import cs5004.easyanimator.model.shapes.*;
+import model.Shape.ShapeImpl;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import model.Shape.*;
 
 public class ShapeImplTest {
   private Shape rectangle;
