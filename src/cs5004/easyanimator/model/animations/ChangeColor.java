@@ -112,5 +112,3 @@ public class ChangeColor extends AbstractAnimations {
   }
 
 }
-  }
-}
