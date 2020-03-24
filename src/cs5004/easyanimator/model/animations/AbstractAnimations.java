@@ -1,6 +1,10 @@
 package cs5004.easyanimator.model.animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This abstract class implements Animation and all of its methods. It contains the code
+ * for an abstract animation and represents the behavior shared by all animations.
+ */
 
 public abstract class AbstractAnimations implements Animations {
   private AnimationType type;
@@ -10,7 +14,10 @@ public abstract class AbstractAnimations implements Animations {
 
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
     if (end < start) {
-      throw new IllegalArgumentException("");
+      throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
+    }
+    if (start < 0 || end < 0) {
+      throw new IllegalArgumentException("Start and end time must be positive.");
     }
     this.type = type;
     this.shape = shape;
@@ -18,29 +25,43 @@ public abstract class AbstractAnimations implements Animations {
     this.endTime = end;
   }
 
-  public String getDescription() {
-    //TODO IMPLEMENT CODE
-    return null;
-  }
-
+  @Override
   public Shape getShape() {
     return this.shape;
   }
 
-  public int getStartTime() {
-    return this.startTime;
-  }
-
-  public int getEndTime() {
-    return this.endTime;
-  }
-
+  @Override
   public AnimationType getAnimationType() {
     return this.type;
   }
 
-  public void setNewShape(Shape s) {
+  @Override
+  public int getStartTime() {
+    return this.startTime;
+  }
+
+  @Override
+  public int getEndTime() {
+    return this.endTime;
+  }
+
+  @Override
+  public String getDescription() {
+    return "Shape name: " + this.shape.getName() + " " + this.getChange() + " from "
+        + this.getStartState() + " to " + this.getEndState() + " starting at " + this.startTime
+        + " and ending at " + this.endTime;
+  }
+
+  @Override
+  public void resetShape(Shape s) {
     this.shape = s;
   }
 
 }
+  @Override
+  public void resetShape(Shape s) {
+    this.shape = s;
+  }
+
+}
+

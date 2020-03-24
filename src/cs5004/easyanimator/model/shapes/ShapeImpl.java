@@ -1,4 +1,6 @@
 package cs5004.easyanimator.model.shapes;
+import java.awt.Color;
+
 
 /**
  * This class represents a Shape Implementation, it implements all the
@@ -11,7 +13,7 @@ public class ShapeImpl implements Shape {
   private ShapeType type;
   private double width;
   private double height;
-  private String color;
+  private Color color;
   private Pair position;
 
   /**
@@ -23,9 +25,10 @@ public class ShapeImpl implements Shape {
    * @param name the name of the shape
    * @param type the type of shape
    * @throws IllegalArgumentException if the name and color are empty strings or the width and height are less
-   * than 1
+   * than 1.
    */
-  public ShapeImpl(String name, ShapeType type, double width, double height, String color, Pair position) {
+  public ShapeImpl(String name, ShapeType type, double width, double height, Color color,
+                   Pair position) {
     if (name == null || name.equals("")) {
       throw new IllegalArgumentException("A shape must have a name.");
     }
@@ -99,7 +102,7 @@ public class ShapeImpl implements Shape {
    *
    * @return the color of the shape
    */
-  public String getColor() {
+  public Color getColor() {
     return this.color;
   };
 
@@ -121,6 +124,28 @@ public class ShapeImpl implements Shape {
    */
   public Pair getPosition() {
     return this.position;
+  }
+
+
+  @Override
+  public void changeColor(Color newColor) {
+    this.color = newColor;
+  }
+
+  @Override
+  public void changeWidth(double w) {
+    this.width = w;
+
+  }
+
+  @Override
+  public void changeHeight(double h) {
+    this.height = h;
+  }
+
+  @Override
+  public void changePosition(Pair pos) {
+    this.position = pos;
   }
 
   /**
@@ -149,11 +174,11 @@ public class ShapeImpl implements Shape {
         break;
     }
     String str = this.color
-            + " "
-            + type
-            + " with corner at " + this.getPosition().toString() + ", "
-            + "width " + this.width + " "
-            + "and height " + this.height;
+        + " "
+        + type
+        + " with corner at " + this.getPosition().toString() + ", "
+        + "width " + this.width + " "
+        + "and height " + this.height;
     return str;
   }
 }
