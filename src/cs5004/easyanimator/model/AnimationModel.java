@@ -1,27 +1,48 @@
 package cs5004.easyanimator.model;
 
-import java.util.List;
-
+import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
-import javafx.animation.Animation;
 
 public interface AnimationModel {
 
-  // Add shape to list of shapes
+  /**
+   * Add a new shape to the list.
+   *
+   * @param s the shape to add
+   */
   void addShape(Shape s);
 
-  // Add animation to list of animations
-  void addAnimations(Animation a);
+  /**
+   * Removes a shape from the list, using its index
+   * as an identifier.
+   *
+   * @param index the shape to add
+   */
+  void removeShape(int index);
 
-  // Get String representation of present state of the animation
+  /**
+   * Add a new animation to a specific shape, using the index to
+   * retrieve the correct shape.
+   *
+   * @param a the shape to add
+   * @param a the shape to add
+   */
+  void addAnimation(int index, Animations a);
+
+  /**
+   * Returns true if the model is empty, otherwise returns false.
+   *
+   * @return true if empty, other returns false
+   */
+  boolean isEmpty();
+
+  /**
+   * Return a summary of each item in the model. For each item,
+   * the summary include a description of the shape and a description
+   * of each animation associated with the given shape.
+   *
+   * @return the model in a string
+   */
   String getDescription();
-
-  // Get the list of shapes
-  List<Shape> getShapes();
-
-  // Get a list of animation
-  List<Animation> getAnimations();
-
-  int getLastEndTime();
 
 }

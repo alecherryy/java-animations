@@ -1,7 +1,4 @@
-import cs5004.easyanimator.model.shapes.ShapeType;
-import cs5004.easyanimator.model.shapes.Shape;
-import cs5004.easyanimator.model.shapes.Pair;
-import model.Shape.ShapeImpl;
+package cs5004.easyanimator.model.shapes;
 
 import org.junit.Assert;
 import org.junit.Test;
