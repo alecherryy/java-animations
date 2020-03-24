@@ -99,6 +99,3 @@ public class ChangeSize extends AbstractAnimations {
 
   }
 }
-
-  }
-}
