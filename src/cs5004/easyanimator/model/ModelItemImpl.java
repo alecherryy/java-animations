@@ -70,8 +70,9 @@ public class ModelItemImpl implements ModelItem {
   public String toString() {
     StringBuilder str = new StringBuilder();
 
+    str.append("SHAPE DESCRIPTION:\n");
     str.append(this.shape.toString());
-    str.append("\n");
+    str.append("\n\n");
     for (Animations obj : this.animations) {
       str.append(obj.getDescription());
     }

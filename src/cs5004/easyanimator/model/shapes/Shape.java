@@ -61,28 +61,28 @@ public interface Shape {
   /**
    * Changes the color of this shape to a new color.
    *
-   * @param c the color to which we are changing this shape's color.
+   * @param c the color to which we are changing this shape's colo
    */
   void changeColor(Color c);
 
   /**
    * Changes the width of this shape to a new width.
    *
-   * @param w the width to which we are changing this shape's width.
+   * @param w the width to which we are changing this shape's width
    */
   void changeWidth(double w);
 
   /**
    * Changes the height of this shape to a new height.
    *
-   * @param h the height to which we are changing this shape's height.
+   * @param h the height to which we are changing this shape's height
    */
   void changeHeight(double h);
 
   /**
    * Changes the position of this shape to a new position.
    *
-   * @param pos the position to which we are changing this shape's position.
+   * @param pos the position to which we are changing this shape's position
    */
   void changePosition(Pair pos);
 

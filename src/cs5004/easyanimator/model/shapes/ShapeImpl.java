@@ -46,8 +46,8 @@ public class ShapeImpl implements Shape {
     }
 
     // a shape of width and height equal to 0 is a point, and not a shape
-    if (width < 1 || height < 1) {
-      throw new IllegalArgumentException("A shape has to have a width and height greater than 1.");
+    if (width <= 0 || height <= 0) {
+      throw new IllegalArgumentException("A shape has to have a width and height greater than 0.");
     }
     this.width = width;
     this.height = height;
@@ -126,24 +126,46 @@ public class ShapeImpl implements Shape {
     return this.position;
   }
 
-
-  @Override
-  public void changeColor(Color newColor) {
-    this.color = newColor;
+  /**
+   * Changes the color of this shape to a new color.
+   *
+   * @param c the color to which we are changing this shape's color
+   */
+  public void changeColor(Color c) {
+    this.color = c;
   }
 
-  @Override
+  /**
+   * Changes the width of this shape to a new width.
+   *
+   * @param w the width to which we are changing this shape's width
+   * @throws IllegalArgumentException if width is smaller than 1
+   */
   public void changeWidth(double w) {
+    if (w <= 0) {
+      throw new IllegalArgumentException("A shape's width has to be greater than 0.");
+    }
     this.width = w;
-
   }
 
-  @Override
+  /**
+   * Changes the height of this shape to a new height.
+   *
+   * @param h the height to which we are changing this shape's height
+   * @throws IllegalArgumentException if height is smaller than 1
+   */
   public void changeHeight(double h) {
+    if (h <= 0) {
+      throw new IllegalArgumentException("A shape's width has to be greater than 0.");
+    }
     this.height = h;
   }
 
-  @Override
+  /**
+   * Changes the position of this shape to a new position.
+   *
+   * @param pos the position to which we are changing this shape's position
+   */
   public void changePosition(Pair pos) {
     this.position = pos;
   }
@@ -173,12 +195,38 @@ public class ShapeImpl implements Shape {
       default:
         break;
     }
-    String str = this.color
+    String str = colorAsString(this.color)
         + " "
         + type
         + " with corner at " + this.getPosition().toString() + ", "
         + "width " + this.width + " "
         + "and height " + this.height;
     return str;
+  }
+
+  /**
+   * Private helper method to get the String representation of a shape's color.
+   *
+   * @param c the color of the shape
+   * @return the RGB value of a shape's color as a string
+   */
+  private String colorAsString(Color c) {
+    return "("
+            + rgbToFloat(c.getRed())
+            + ", "
+            + rgbToFloat(c.getGreen())
+            + ", "
+            + rgbToFloat(c.getBlue()) + ")";
+  }
+
+  /**
+   * Private helper method to convert RGB values in 0-255 format to values in 0.0f-1.0f format.
+   *
+   * @param v the RGB value of the color
+   * @return a float representing a color
+   */
+
+  private float rgbToFloat(int v) {
+    return (float) v / (float) 255;
   }
 }

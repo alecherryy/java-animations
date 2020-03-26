@@ -12,28 +12,28 @@ public interface Animations {
   /**
    * Get the shape that will be animated.
    *
-   * @return the shape that will receive the animation, a Shapes object.
+   * @return the shape that will receive the animation
    */
   Shape getShape();
 
   /**
    * Get the type of animation.
    *
-   * @return the type of the animation, an AnimationType obkect.
+   * @return the type of the animation, an AnimationType object
    */
   AnimationType getAnimationType();
 
   /**
    * Get the start time of the animation.
    *
-   * @return the start time of the animation, an int.
+   * @return the start time of the animation, an int
    */
   int getStartTime();
 
   /**
    * Get the end time of the animation.
    *
-   * @return the end time of the animation, an int.
+   * @return the end time of the animation, an int
    */
   int getEndTime();
 
@@ -50,21 +50,21 @@ public interface Animations {
   /**
    * Get the starting state of the animation as a string.
    *
-   * @return the starting state of the animation as a string.
+   * @return the starting state of the animation as a string
    */
   String getStartState();
 
   /**
    * Get the end state of the animation as a string.
    *
-   * @return the end state of the animation as a string.
+   * @return the end state of the animation as a string
    */
   String getEndState();
 
   /**
    * Get the string representation of the animation.
    *
-   * @return the animation represented as a string.
+   * @return the animation represented as a string
    */
   String getDescription();
 
@@ -72,9 +72,8 @@ public interface Animations {
    * Implements the animation on a shape (whether it is changing color, changing size, or
    * changing coordinates).
    *
-   * @param time the current time of the animation.
+   * @param time the current time of the animation
    */
-
   void implementAnimation(double time);
 
   /**
@@ -83,13 +82,12 @@ public interface Animations {
    *
    * @param s a Shape object, whose field will be changed.
    */
-
   void changeField(Shape s);
 
   /**
    * Resets the shape that the animation is being implemented on to a new shape.
    *
-   * @param s a Shape object, which will now be animated.
+   * @param s a Shape object, which will now be animated
    */
   void resetShape(Shape s);
 }

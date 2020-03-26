@@ -3,6 +3,8 @@ package cs5004.easyanimator.model;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.awt.*;
+
 import cs5004.easyanimator.model.shapes.Pair;
 import cs5004.easyanimator.model.shapes.ShapeImpl;
 import cs5004.easyanimator.model.shapes.ShapeType;
@@ -27,7 +29,7 @@ public class AnimationModelImplTest {
   @Test
   public void testAddShape() {
     alessia = new AnimationModelImpl();
-    alessia.addShape(new ShapeImpl("S", ShapeType.SQUARE, 75, 75, "Red", new Pair(0, 0)));
+    alessia.addShape(new ShapeImpl("S", ShapeType.SQUARE, 75, 75, Color.RED, new Pair(0, 0)));
     Assert.assertFalse(alessia.isEmpty());
   }
 
@@ -37,7 +39,7 @@ public class AnimationModelImplTest {
   @Test
   public void testRemoveShape() {
     clara = new AnimationModelImpl();
-    clara.addShape(new ShapeImpl("R", ShapeType.RECTANGLE, 100, 50, "Blue", new Pair(25, 50)));
+    clara.addShape(new ShapeImpl("R", ShapeType.RECTANGLE, 100, 50, Color.BLUE, new Pair(25, 50)));
     Assert.assertFalse(clara.isEmpty());
     clara.removeShape(0);
     Assert.assertTrue(clara.isEmpty());

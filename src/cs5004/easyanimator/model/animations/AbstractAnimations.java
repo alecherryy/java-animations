@@ -12,6 +12,15 @@ public abstract class AbstractAnimations implements Animations {
   private int startTime;
   private int endTime;
 
+  /**
+   * This is the class constructor; it takes 4 parameters: a type, a shape, a start
+   * time and an end time.
+   *
+   * @param type of animation
+   * @param shape to be animated
+   * @param start of the animation
+   * @param end of the animation
+   */
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
     if (end < start) {
       throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
@@ -25,43 +34,60 @@ public abstract class AbstractAnimations implements Animations {
     this.endTime = end;
   }
 
-  @Override
+  /**
+   * Get the shape that will be animated.
+   *
+   * @return the shape that will receive the animation
+   */
   public Shape getShape() {
     return this.shape;
   }
 
-  @Override
+  /**
+   * Get the type of animation.
+   *
+   * @return the type of the animation, an AnimationType object
+   */
   public AnimationType getAnimationType() {
     return this.type;
   }
 
-  @Override
+  /**
+   * Get the start time of the animation.
+   *
+   * @return the start time of the animation, an int.
+   */
   public int getStartTime() {
     return this.startTime;
   }
 
-  @Override
+  /**
+   * Get the end time of the animation.
+   *
+   * @return the end time of the animation, an int
+   */
   public int getEndTime() {
     return this.endTime;
   }
 
-  @Override
+  /**
+   * Get the string representation of the animation.
+   *
+   * @return the animation represented as a string.
+   */
   public String getDescription() {
     return "Shape name: " + this.shape.getName() + " " + this.getChange() + " from "
         + this.getStartState() + " to " + this.getEndState() + " starting at " + this.startTime
-        + " and ending at " + this.endTime;
+        + " and ending at " + this.endTime + "\n";
   }
 
-  @Override
+  /**
+   * Resets the shape that the animation is being implemented on to a new shape.
+   *
+   * @param s a Shape object, which will now be animated.
+   */
   public void resetShape(Shape s) {
     this.shape = s;
   }
-
-
-  @Override
-  public void resetShape(Shape s) {
-    this.shape = s;
-  }
-
 }
 

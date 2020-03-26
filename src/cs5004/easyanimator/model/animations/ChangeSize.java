@@ -12,6 +12,19 @@ public class ChangeSize extends AbstractAnimations {
   private double newWidth;
   private double newHeight;
 
+  /**
+   * This is the class constructor; it takes 7 parameters: a shape, a start
+   * time, an end time, the original width, the original height, the new width
+   * and the new height.
+   *
+   * @param shape to be animated
+   * @param start of the animation
+   * @param end of the animation
+   * @param originalWidth of the shape
+   * @param originalHeight of the shape
+   * @param newWidth of the shape
+   * @param newHeight of the shape
+   */
   public ChangeSize(Shape shape, int start, int end, double originalWidth, double originalHeight,
                     double newWidth, double newHeight) {
     super(AnimationType.CHANGESIZE, shape, start, end);
@@ -24,7 +37,7 @@ public class ChangeSize extends AbstractAnimations {
   /**
    * Get the original width of the shape.
    *
-   * @return the original width of the shape.
+   * @return the original width of the shape
    */
   public double getOriginalWidth() {
     return originalWidth;
@@ -33,7 +46,7 @@ public class ChangeSize extends AbstractAnimations {
   /**
    * Get the original height of the shape.
    *
-   * @return the original height of the shape.
+   * @return the original height of the shape
    */
   public double getOriginalHeight() {
     return originalHeight;
@@ -42,7 +55,7 @@ public class ChangeSize extends AbstractAnimations {
   /**
    * Get the new width of the shape.
    *
-   * @return the new width of the shape.
+   * @return the new width of the shape
    */
   public double getNewWidth() {
     return newWidth;
@@ -51,28 +64,44 @@ public class ChangeSize extends AbstractAnimations {
   /**
    * Get the new height of the shape.
    *
-   * @return the new height of the shape.
+   * @return the new height of the shape
    */
   public double getNewHeight() {
     return newHeight;
   }
 
-  @Override
+  /**
+   * Get the string representation of what the animation is changing.
+   *
+   * @return the animation change as a string
+   */
   public String getChange() {
     return "Changing shape size ";
   }
 
-  @Override
+  /**
+   * Get the starting state of the animation as a string.
+   *
+   * @return the starting state of the animation as a string
+   */
   public String getStartState() {
     return "width: " + originalWidth + " height: " + originalHeight;
   }
 
-  @Override
+  /**
+   * Get the end state of the animation as a string.
+   *
+   * @return the end state of the animation as a string
+   */
   public String getEndState() {
     return "width: " + newWidth + " height: " + newHeight;
   }
 
-  @Override
+  /**
+   * Implements the animation on a shape.
+   *
+   * @param time the current time of the animation
+   */
   public void implementAnimation(double time) {
     double changeWidth = this.newWidth - this.originalWidth;
     double changeHeight = this.newHeight - this.originalHeight;
@@ -92,7 +121,12 @@ public class ChangeSize extends AbstractAnimations {
     }
   }
 
-  @Override
+  /**
+   * Changes the appropriate fields of the shape to match the changes
+   * implemented on the shape.
+   *
+   * @param s a Shape object, whose field will be changed
+   */
   public void changeField(Shape s) {
     s.changeWidth(newWidth);
     s.changeHeight(newHeight);
