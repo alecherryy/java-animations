@@ -5,7 +5,4 @@ package cs5004.easyanimator.model.animations;
  * It includes: CHANGECOLOR, CHANGECOORDINATES, AND CHANGESIZE.
  */
 
-public enum AnimationType {
-  CHANGECOLOR, CHANGECOORDINATES, CHANGESIZE;
-
-}
+public enum AnimationType { CHANGECOLOR, CHANGECOORDINATES, CHANGESIZE }

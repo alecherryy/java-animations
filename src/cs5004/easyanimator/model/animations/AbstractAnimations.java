@@ -57,7 +57,7 @@ public abstract class AbstractAnimations implements Animations {
     this.shape = s;
   }
 
-}
+
   @Override
   public void resetShape(Shape s) {
     this.shape = s;
