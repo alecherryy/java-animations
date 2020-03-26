@@ -92,13 +92,5 @@ public interface Animations {
    * @param s a Shape object, which will now be animated.
    */
   void resetShape(Shape s);
-
-}
-
-  @Override
-  public void resetShape(Shape s) {
-    this.shape = s;
-  }
-
 }
 
