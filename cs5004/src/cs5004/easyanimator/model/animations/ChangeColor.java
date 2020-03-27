@@ -95,3 +95,4 @@ public class ChangeColor extends AbstractAnimations {
   public void changeField(Shape s) {
     s.changeColor(newColor);
   }
+}
