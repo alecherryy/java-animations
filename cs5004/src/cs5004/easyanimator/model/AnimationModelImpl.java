@@ -93,7 +93,3 @@ public class AnimationModelImpl implements AnimationModel {
     return str.toString();
   }
 }
-    // return StringBuilder in a string
-    return str.toString();
-  }
-}

@@ -95,24 +95,3 @@ public class ChangeColor extends AbstractAnimations {
   public void changeField(Shape s) {
     s.changeColor(newColor);
   }
-}
-
-  }
-
-  @Override
-  public void changeField(Shape s) {
-    s.changeColor(newColor);
-  }
-  /**
-   * Private helper method to get the String representation of a shape's color.
-   *
-   * @param c the color of the shape.
-   * @return the RGB value of a shape's color as a string.
-   */
-
-  private String colorAsString(Color c) {
-    return "(" + rgbToFloat(c.getRed()) + "," + rgbToFloat(c.getGreen()) + ","
-        + rgbToFloat(c.getBlue()) + ")";
-  }
-
-}
