@@ -5,7 +5,6 @@ import cs5004.easyanimator.model.shapes.Shape;
  * This class represents changing the size of a shape. It extends AbstractAnimation and
  * implements all its methods.
  */
-
 public class ChangeSize extends AbstractAnimations {
   private double originalWidth;
   private double originalHeight;
@@ -75,9 +74,7 @@ public class ChangeSize extends AbstractAnimations {
    *
    * @return the animation change as a string
    */
-  public String getChange() {
-    return "Changing shape size ";
-  }
+  public String getChange() { return "scales "; }
 
   /**
    * Get the starting state of the animation as a string.
@@ -85,7 +82,7 @@ public class ChangeSize extends AbstractAnimations {
    * @return the starting state of the animation as a string
    */
   public String getStartState() {
-    return "width: " + originalWidth + " height: " + originalHeight;
+    return "Width: " + originalWidth + " Height: " + originalHeight;
   }
 
   /**
@@ -94,7 +91,7 @@ public class ChangeSize extends AbstractAnimations {
    * @return the end state of the animation as a string
    */
   public String getEndState() {
-    return "width: " + newWidth + " height: " + newHeight;
+    return "Width: " + newWidth + " Height: " + newHeight;
   }
 
   /**
@@ -110,7 +107,7 @@ public class ChangeSize extends AbstractAnimations {
         / (double) (this.getEndTime() - this.getStartTime());
 
     if ((time > this.getEndTime()) || (time < this.getStartTime())) {
-      // do nothing.
+      // do nothing
       return;
     }
     else {
@@ -130,6 +127,5 @@ public class ChangeSize extends AbstractAnimations {
   public void changeField(Shape s) {
     s.changeWidth(newWidth);
     s.changeHeight(newHeight);
-
   }
 }

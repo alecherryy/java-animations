@@ -51,7 +51,7 @@ public class ChangeColor extends AbstractAnimations {
    * @return the animation change as a string
    */
   public String getChange() {
-    return "Changing shape color";
+    return "changes color ";
   }
 
   /**
@@ -66,7 +66,7 @@ public class ChangeColor extends AbstractAnimations {
   /**
    * Get the end state of the animation as a string.
    *
-   * @return the end state of the animation as a string.
+   * @return the end state of the animation as a string
    */
   public String getEndState() {
     return colorAsString(newColor);
@@ -141,9 +141,9 @@ public class ChangeColor extends AbstractAnimations {
   private String colorAsString(Color c) {
     return "("
             + rgbToFloat(c.getRed())
-            + ", "
+            + ","
             + rgbToFloat(c.getGreen())
-            + ", "
+            + ","
             + rgbToFloat(c.getBlue()) + ")";
   }
 

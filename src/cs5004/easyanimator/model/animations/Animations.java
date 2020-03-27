@@ -38,10 +38,11 @@ public interface Animations {
   int getEndTime();
 
   /**
-   * Get the string representation of what the animation is changing. If the color is being
-   * changed, this method will output "Change in color," if the size is being changed,
-   * this method will output "Change in size," and if the coordinates of the shape are
-   * being changed, this method will output "Change in coordinates."
+   * Get the string representation of what the animation is changing.
+   * If the color is being changed, this method will output "Change
+   * in color," if the size is being changed, this method will output
+   * "Change in size," and if the coordinates of the shape are being changed,
+   * this method will output "Change in coordinates."
    *
    * @return the animation change as a string.
    */

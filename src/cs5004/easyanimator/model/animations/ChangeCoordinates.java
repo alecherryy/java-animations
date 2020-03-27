@@ -1,27 +1,26 @@
 package cs5004.easyanimator.model.animations;
+import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Shape;
-import cs5004.easyanimator.model.shapes.Pair;
 
 /**
- * This class represents changing the coordinates of a shape. It extends AbstractAnimation and
- * implements all its methods.
+ * This class represents changing the coordinates of a shape. It extends
+ * AbstractAnimation and implements all its methods.
  */
-
 public class ChangeCoordinates extends AbstractAnimations {
-  private Pair originalCoordinates;
-  private Pair newCoordinates;
+  private Coordinates originalCoordinates;
+  private Coordinates newCoordinates;
 
   /**
    * This is the class constructor; it takes 5 parameters: a shape, a start
    * time, an end time, an original pair of coordinates and a new pair of coordinates.
-   *
-   * @param shape to be animated
+   *  @param shape to be animated
    * @param start of the animation
    * @param end of the animation
    * @param originalC of the shape at the beginning of the animation
    * @param newC of the shape
    */
-  public ChangeCoordinates(Shape shape, int start, int end, Pair originalC, Pair newC) {
+  public ChangeCoordinates(Shape shape, int start, int end,
+                           Coordinates originalC, Coordinates newC) {
     super(AnimationType.CHANGECOORDINATES, shape, start, end);
     originalCoordinates = originalC;
     this.newCoordinates = newC;
@@ -32,7 +31,7 @@ public class ChangeCoordinates extends AbstractAnimations {
    *
    * @return the original coordinates of the shape
    */
-  public Pair getOriginalCoordinates() {
+  public Coordinates getOriginalCoordinates() {
     return originalCoordinates;
   }
 
@@ -41,13 +40,17 @@ public class ChangeCoordinates extends AbstractAnimations {
    *
    * @return the new coordinates of the shape
    */
-  public Pair getNewCoordinates() {
+  public Coordinates getNewCoordinates() {
     return newCoordinates;
   }
 
-  @Override
+  /**
+   * Return a string.
+   *
+   * @return a string
+   */
   public String getChange() {
-    return "Changing shape coordinates ";
+    return "moves ";
   }
 
   /**
@@ -56,9 +59,9 @@ public class ChangeCoordinates extends AbstractAnimations {
    * @param pos the position of the shape (i.e. its coordinates)
    * @return the string representation of the shape's position
    */
-  private String getPositionAsString(Pair pos)
+  private String getPositionAsString(Coordinates pos)
   {
-    return "(" + pos.getX() + ", " + pos.getY() + ")";
+    return "(" + pos.getX() + "," + pos.getY() + ")";
   }
 
   /**
@@ -102,7 +105,7 @@ public class ChangeCoordinates extends AbstractAnimations {
       double finalX = originalX + (changeX * changeInTime);
       double finalY = originalY + (changeY * changeInTime);
 
-      Pair newPos = new Pair(finalX, finalY);
+      Coordinates newPos = new Coordinates(finalX, finalY);
 
       this.getShape().changePosition(newPos);
     }

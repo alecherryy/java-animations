@@ -1,5 +1,7 @@
 package cs5004.easyanimator.model;
 
+import java.util.ArrayList;
+
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
@@ -11,6 +13,11 @@ public interface ModelItem {
   Shape getShape();
 
   /**
+   * Returns the name.
+   */
+  String getName();
+
+  /**
    * Add animation to a shape.
    *
    * @param a the animation
@@ -18,11 +25,11 @@ public interface ModelItem {
   void addAnimation(Animations a);
 
   /**
-   * Returns the animation.
+   * Remove animation from a shape.
    *
-   * @param index of the animation
+   * @return a list of animations
    */
-  Animations getAnimation(int index);
+  ArrayList<Animations> getAllAnimations();
 
   /**
    * Remove animation from a shape.

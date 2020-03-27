@@ -7,9 +7,9 @@ import java.awt.*;
 
 import cs5004.easyanimator.model.animations.ChangeColor;
 import cs5004.easyanimator.model.animations.ChangeCoordinates;
-import cs5004.easyanimator.model.shapes.Pair;
-import cs5004.easyanimator.model.shapes.ShapeImpl;
-import cs5004.easyanimator.model.shapes.ShapeType;
+import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Oval;
+import cs5004.easyanimator.model.shapes.Rectangle;
 
 public class ModelItemImplTest {
   private ModelItemImpl clara;
@@ -20,10 +20,10 @@ public class ModelItemImplTest {
    */
   @Test
   public void classConstructor() {
-    clara = new ModelItemImpl(new ShapeImpl("R", ShapeType.RECTANGLE, 100, 50, Color.BLUE, new Pair(25, 50)));
+    clara = new ModelItemImpl(new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50)));
     Assert.assertNotNull(clara.getShape());
     Assert.assertEquals("R", clara.getShape().getName());
-    alessia = new ModelItemImpl(new ShapeImpl("C", ShapeType.CIRCLE, 50, 50, Color.RED, new Pair(200, 199.24)));
+    alessia = new ModelItemImpl(new Oval("C", 50, 50, Color.RED, new Coordinates(200, 199.24)));
     Assert.assertNotNull(alessia.getShape());
     Assert.assertEquals("C", alessia.getShape().getName());
   }
@@ -33,10 +33,10 @@ public class ModelItemImplTest {
    */
   @Test
   public void testAddAnimation() {
-    clara = new ModelItemImpl(new ShapeImpl("R", ShapeType.RECTANGLE, 100, 50, Color.RED, new Pair(25, 50)));
+    clara = new ModelItemImpl(new Rectangle("R", 100, 50, Color.RED, new Coordinates(25, 50)));
     clara.addAnimation(new ChangeColor(clara.getShape(), 1, 10, Color.RED, Color.BLUE));
     Assert.assertTrue(clara.hasAnimation());
-    alessia = new ModelItemImpl(new ShapeImpl("C", ShapeType.CIRCLE, 50, 50, Color.BLUE, new Pair(200, 199.24)));
+    alessia = new ModelItemImpl(new Oval("C", 50, 50, Color.BLUE, new Coordinates(200, 199.24)));
     Assert.assertFalse(alessia.hasAnimation());
     alessia.addAnimation(new ChangeColor(clara.getShape(), 1, 10, Color.BLUE, Color.GREEN));
     Assert.assertTrue(alessia.hasAnimation());
@@ -47,12 +47,13 @@ public class ModelItemImplTest {
    */
   @Test
   public void testRemoveAnimation() {
-    clara = new ModelItemImpl(new ShapeImpl("R", ShapeType.RECTANGLE, 100, 50, Color.BLUE, new Pair(25, 50)));
+    clara = new ModelItemImpl(new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50)));
     clara.addAnimation(new ChangeColor(clara.getShape(), 1, 10, Color.BLUE, Color.RED));
     Assert.assertTrue(clara.hasAnimation());
+    Assert.assertEquals(1, clara.getAllAnimations().size());
     clara.removeAnimation(0);
     Assert.assertFalse(clara.hasAnimation());
-    alessia = new ModelItemImpl(new ShapeImpl("C", ShapeType.CIRCLE, 50, 50, Color.RED, new Pair(200, 199.24)));
+    alessia = new ModelItemImpl(new Oval("C", 50, 50, Color.RED, new Coordinates(200, 199.24)));
     Assert.assertFalse(alessia.hasAnimation());
     alessia.addAnimation(new ChangeColor(clara.getShape(), 1, 10, Color.RED, Color.GREEN));
     alessia.addAnimation(new ChangeColor(clara.getShape(), 1, 10, Color.GREEN, Color.BLUE));
@@ -68,26 +69,28 @@ public class ModelItemImplTest {
    */
   @Test
   public void testToString() {
-    clara = new ModelItemImpl(new ShapeImpl("R", ShapeType.RECTANGLE, 100, 50, Color.BLUE, new Pair(25, 50)));
+    clara = new ModelItemImpl(new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50)));
     clara.addAnimation(new ChangeColor(clara.getShape(), 1, 10, Color.BLUE, Color.GREEN));
     Assert.assertEquals(""
-            + "SHAPE DESCRIPTION:\n"
-            + "(0.0, 0.0, 1.0) Rectangle with corner at "
-            + "(25.0, 50.0), width 100.0 and height 50.0"
-            + "\n\n"
-            + "Shape name: R Changing shape color from (0.0, 0.0, 1.0) "
-            + "to (0.0, 1.0, 0.0) starting at 1 and ending at 10\n"
-            + "\n\n", clara.toString());
-    alessia = new ModelItemImpl(new ShapeImpl("R", ShapeType.CIRCLE, 25, 25, Color.BLUE, new Pair(0, 0)));
+            + "Name: R\n"
+            + "Type: rectangle\n"
+            + "Min corner: (25.0, 50.0), Width: 100.0, Height: 50.0, "
+            + "Color: (0.0,0.0,1.0)\n\n"
+            + "\n"
+            + "Shape R changing shape color "
+            + "from (0.0, 0.0, 1.0) to (0.0, 1.0, 0.0) starting at 1 and ending at 10\n", clara.toString());
+    alessia = new ModelItemImpl(new Oval("O", 25, 25, Color.BLUE, new Coordinates(0, 0)));
     alessia.addAnimation(new ChangeColor(alessia.getShape(), 1, 7, Color.RED, Color.GREEN));
-    alessia.addAnimation(new ChangeCoordinates(alessia.getShape(), 10, 99, alessia.getShape().getPosition(), new Pair(25, 98)));
-    Assert.assertEquals("" +
-            "SHAPE DESCRIPTION:\n"
-            + "(0.0, 0.0, 1.0) Circle with corner at (0.0, 0.0), "
-            + "width 25.0 and height 25.0"
-            + "\n\n"
-            + "Shape name: R Changing shape color from (1.0, 0.0, 0.0) to (0.0, 1.0, 0.0) starting at 1 and ending at 7\n"
-            + "Shape name: R Changing shape coordinates  from (0.0, 0.0) to (25.0, 98.0) starting at 10 and ending at 99\n"
-            + "\n\n", alessia.toString());
+    alessia.addAnimation(new ChangeCoordinates(alessia.getShape(), 10, 99, alessia.getShape().getPosition(), new Coordinates(25, 98)));
+    Assert.assertEquals(""
+            + "Name: O\n"
+            + "Type: oval\n"
+            + "Center: (0.0, 0.0), X radius: 25.0, Y radius: 25.0, Color: (0.0,0.0,1.0)\n\n"
+            + "\n"
+            + "Shape O changing shape color from (1.0, 0.0, 0.0) to (0.0, 1.0, 0.0) "
+            + "starting at 1 and ending at 7\n"
+            + "Shape O changing shape coordinates from (0.0, 0.0) to (25.0, 98.0) "
+            + "starting at 10 and ending at 99\n", alessia.toString());
+    Assert.assertTrue(alessia.hasAnimation());
   }
 }

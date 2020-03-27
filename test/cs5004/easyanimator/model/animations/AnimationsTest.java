@@ -1,16 +1,16 @@
+package cs5004.easyanimator.model.animations;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
 
-import cs5004.easyanimator.model.shapes.*;
-import cs5004.easyanimator.model.animations.*;
-import cs5004.easyanimator.model.animations.ChangeColor;
+import cs5004.easyanimator.model.Utils;
+import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Oval;
 import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shape;
-import cs5004.easyanimator.model.Utils;
-
-import org.junit.Assert;
 
 /**
  * A JUnit test class for the classes that extend AbstractAnimations, which include: ChangeColor,
@@ -18,9 +18,9 @@ import org.junit.Assert;
  */
 
 public class AnimationsTest {
-  private Animations changeColor;
-  private Animations changeCoordinates;
-  private Animations changeSize;
+  private ChangeColor changeColor;
+  private ChangeCoordinates changeCoordinates;
+  private ChangeSize changeSize;
   private Shape rectangle;
   private Shape square;
   private Shape oval;
@@ -29,11 +29,11 @@ public class AnimationsTest {
 
   @Before
   public void setup() {
-    rectangle = new Rectangle("R", 0, 3, 5, 10, Color.BLUE, new Coordinates(25, 50));
-    square = new Rectangle("R", 75, 76, 2, 7, Color.RED, new Coordinates(0, 0));
-    oval = new Oval("O", 3, 10, 10, 20, Color.GREEN, new Coordinates(0, 18.5));
-    oval2 = new Oval("O", 0, 10, 0, 0, Color.BLACK, new Coordinates(0, 0));
-    circle = new Oval("C", 0, 5, 8, 13, Color.RED, new Coordinates(100, 200));
+    rectangle = new Rectangle("R", 5, 10, Color.BLUE, new Coordinates(25, 50));
+    square = new Rectangle("R", 2, 7, Color.RED, new Coordinates(0, 0));
+    oval = new Oval("O", 10, 20, Color.GREEN, new Coordinates(0, 18.5));
+    oval2 = new Oval("O", 0, 0, Color.BLACK, new Coordinates(0, 0));
+    circle = new Oval("C", 8, 13, Color.RED, new Coordinates(100, 200));
     changeColor = new ChangeColor(rectangle, 10, 20, Color.BLUE, Color.RED);
     changeCoordinates = new ChangeCoordinates(square, 0, 5, new Coordinates(25, 50),
         new Coordinates(20, 50));
@@ -43,7 +43,6 @@ public class AnimationsTest {
   /**
    * Constructor test for ChangeColor.
    */
-
   @Test
   public void constructorTest1() {
     Assert.assertEquals(rectangle, changeColor.getShape());
@@ -58,7 +57,6 @@ public class AnimationsTest {
   /**
    * Constructor exception test for ChangeColor.
    */
-
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest1() {
     // end-time is less than start time.
@@ -80,7 +78,6 @@ public class AnimationsTest {
   /**
    * Constructor test for ChangeCoordinates.
    */
-
   @Test
   public void constructorTest2() {
     Assert.assertEquals(square, changeCoordinates.getShape());
@@ -95,7 +92,6 @@ public class AnimationsTest {
   /**
    * Constructor exception test for ChangeCoordinates.
    */
-
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest2() {
     // end-time is less than start time.
@@ -111,7 +107,6 @@ public class AnimationsTest {
   /**
    * Constructor test for ChangeSize.
    */
-
   @Test
   public void constructorTest3() {
     Assert.assertEquals(oval, changeSize.getShape());
@@ -122,13 +117,11 @@ public class AnimationsTest {
     Assert.assertEquals(40, changeSize.getNewWidth(), 0.1);
     Assert.assertEquals(20, changeSize.getNewHeight(), 0.1);
     Assert.assertEquals(AnimationType.CHANGESIZE, changeSize.getAnimationType());
-
   }
 
   /**
    * Constructor exception test for ChangeSize.
    */
-
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest3() {
     // end-time is less than start time.
@@ -142,7 +135,7 @@ public class AnimationsTest {
   }
 
   /**
-   * TESTING getChange() METHOD.
+   * TESTING getChange() method.
    */
   @Test
   public void getChangeTest() {
@@ -152,27 +145,27 @@ public class AnimationsTest {
   }
 
   /**
-   * TESTING getStartState() METHOD.
+   * TESTING getStartState() method.
    */
   @Test
   public void getStartStateTest() {
     Assert.assertEquals("(0.0,0.0,1.0)", changeColor.getStartState());
-    Assert.assertEquals("(25.0, 50.0)", changeCoordinates.getStartState());
+    Assert.assertEquals("(25.0,50.0)", changeCoordinates.getStartState());
     Assert.assertEquals("X radius: 35.0, Y radius: 18.0", changeSize.getStartState());
   }
 
   /**
-   * TESTING getEndState() METHOD.
+   * TESTING getEndState() method.
    */
   @Test
   public void getEndStateTest() {
     Assert.assertEquals("(1.0,0.0,0.0)", changeColor.getEndState());
-    Assert.assertEquals("(20.0, 50.0)", changeCoordinates.getEndState());
+    Assert.assertEquals("(20.0,50.0)", changeCoordinates.getEndState());
     Assert.assertEquals("X radius: 40.0, Y radius: 20.0", changeSize.getEndState());
   }
 
   /**
-   * TESTING getDescription() METHOD.
+   * TESTING getDescription() method.
    */
   @Test
   public void getDescriptionTest() {
@@ -185,7 +178,7 @@ public class AnimationsTest {
   }
 
   /**
-   * TESTING implementAnimation() METHOD for ChangeColor.
+   * TESTING implementAnimation() method for ChangeColor.
    */
   @Test
   public void implementAnimationTest1() {
@@ -229,7 +222,7 @@ public class AnimationsTest {
   }
 
   /**
-   * TESTING implementAnimation() METHOD for ChangeCoordinates.
+   * Test for implementAnimation() method for ChangeCoordinates.
    */
   @Test
   public void implementAnimationTest2() {
@@ -264,7 +257,7 @@ public class AnimationsTest {
 
 
   /**
-   * TESTING implementAnimation() METHOD for ChangeSize.
+   * Test for implementAnimation() method for ChangeSize.
    */
   @Test
   public void implementAnimationTest3() {
@@ -293,31 +286,31 @@ public class AnimationsTest {
   }
 
   /**
-   * TESTING updateField() METHOD.
+   * Test for changeField() method.
    */
   @Test
-  public void updateFieldTest() {
+  public void changeFieldTest() {
     Assert.assertEquals(Color.BLUE, changeColor.getOriginalColor());
     Assert.assertEquals(Color.RED, changeColor.getNewColor());
-    changeColor.updateField(rectangle);
+    changeColor.changeField(rectangle);
     Assert.assertEquals(Color.RED, rectangle.getColor());
 
     Assert.assertEquals("(25.0, 50.0)", changeCoordinates.getOriginalCoordinates().toString());
     Assert.assertEquals("(20.0, 50.0)", changeCoordinates.getNewCoordinates().toString());
-    changeCoordinates.updateField(square);
+    changeCoordinates.changeField(square);
     Assert.assertEquals("(20.0, 50.0)", square.getPosition().toString());
 
     Assert.assertEquals(35, changeSize.getOriginalWidth(), 0.1);
     Assert.assertEquals(18, changeSize.getOriginalHeight(), 0.1);
     Assert.assertEquals(40, changeSize.getNewWidth(), 0.1);
     Assert.assertEquals(20, changeSize.getNewHeight(), 0.1);
-    changeSize.updateField(oval);
+    changeSize.changeField(oval);
     Assert.assertEquals(40, oval.getWidth(), 0.1);
     Assert.assertEquals(20, oval.getHeight(), 0.1);
   }
 
   /**
-   * TESTING resetShape() METHOD.
+   * Test for resetShape() method.
    */
   @Test
   public void resetShapeTest() {
@@ -332,8 +325,5 @@ public class AnimationsTest {
     Assert.assertEquals(oval, changeSize.getShape());
     changeSize.resetShape(oval2);
     Assert.assertEquals(oval2, changeSize.getShape());
-
   }
-
-
 }

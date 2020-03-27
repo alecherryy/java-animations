@@ -5,7 +5,6 @@ import cs5004.easyanimator.model.shapes.Shape;
  * This abstract class implements Animation and all of its methods. It contains the code
  * for an abstract animation and represents the behavior shared by all animations.
  */
-
 public abstract class AbstractAnimations implements Animations {
   private AnimationType type;
   private Shape shape;
@@ -20,6 +19,8 @@ public abstract class AbstractAnimations implements Animations {
    * @param shape to be animated
    * @param start of the animation
    * @param end of the animation
+   * @throws IllegalArgumentException if end time is greater
+   *                                  than start time or if they're both negative
    */
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
     if (end < start) {
@@ -55,7 +56,7 @@ public abstract class AbstractAnimations implements Animations {
   /**
    * Get the start time of the animation.
    *
-   * @return the start time of the animation, an int.
+   * @return the start time of the animation, an int
    */
   public int getStartTime() {
     return this.startTime;
@@ -76,9 +77,12 @@ public abstract class AbstractAnimations implements Animations {
    * @return the animation represented as a string.
    */
   public String getDescription() {
-    return "Shape name: " + this.shape.getName() + " " + this.getChange() + " from "
-        + this.getStartState() + " to " + this.getEndState() + " starting at " + this.startTime
-        + " and ending at " + this.endTime + "\n";
+
+    return  "Shape " + this.shape.getName()
+            + " " + this.getChange() + " from "
+            + this.getStartState() + " to " + this.getEndState()
+            + " starting at " + this.startTime
+            + " and ending at " + this.endTime + "\n";
   }
 
   /**

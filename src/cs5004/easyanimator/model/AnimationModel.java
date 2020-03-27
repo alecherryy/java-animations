@@ -13,21 +13,29 @@ public interface AnimationModel {
   void addShape(Shape s);
 
   /**
-   * Removes a shape from the list, using its index
-   * as an identifier.
+   * Given a shape name returns the item inside the model matching
+   * the given name.
    *
-   * @param index the shape to add
+   * @param name the shape name
    */
-  void removeShape(int index);
+  ModelItem getItem(String name);
 
   /**
-   * Add a new animation to a specific shape, using the index to
-   * retrieve the correct shape.
+   * Removes a shape from the list, using its name as an identifier.
    *
-   * @param a the shape to add
-   * @param a the shape to add
+   * @param name of the shape to add
+   * @throws IllegalArgumentException if the shape does not exist
    */
-  void addAnimation(int index, Animations a);
+  void removeShape(String name) throws IllegalArgumentException;
+
+  /**
+   * Add a new animation to a specific shape, using the shape name as an identifier.
+   *
+   * @param name of the shape
+   * @param a     the animation to add
+   * @throws IllegalArgumentException if the shape does not exist
+   */
+  void addAnimation(String name, Animations a) throws IllegalArgumentException;
 
   /**
    * Returns true if the model is empty, otherwise returns false.
