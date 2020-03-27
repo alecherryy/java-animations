@@ -1,11 +1,13 @@
 package cs5004.easyanimator.model.animations;
+
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.*;
+
 import java.awt.Color;
 
 /**
- * This abstract class implements Animation and all of its methods. It contains the code
- * for an abstract animation and represents the behavior shared by all animations.
+ * This abstract class implements Animation and all of its methods. It contains the code for an
+ * abstract animation and represents the behavior shared by all animations.
  */
 
 public abstract class AbstractAnimations implements Animations {
@@ -22,9 +24,13 @@ public abstract class AbstractAnimations implements Animations {
    * @param start the start time of the animation, an int.
    * @param end   the end time of the animation, an int.
    * @throws IllegalArgumentException if the start time is after the end time, or if either the
-   * start or end times are negative.
+   *                                  start or end times are negative, or if the type parameter is
+   *                                  null.
    */
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
+    if (type == null) {
+      throw new IllegalArgumentException("The animation type must be specified");
+    }
     if (end < start) {
       throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
     }
@@ -59,7 +65,7 @@ public abstract class AbstractAnimations implements Animations {
 
   @Override
   public String getDescription() {
-    return "shape " + this.shape.getName() + " " + this.getChange() + " from "
+    return "Shape " + this.shape.getName() + " " + this.getChange() + "from "
         + this.getStartState() + " to " + this.getEndState() + " from t=" + this.startTime
         + " to t=" + this.endTime;
   }
@@ -80,12 +86,12 @@ public abstract class AbstractAnimations implements Animations {
   }
 
   @Override
-  public Pair getOriginalCoordinates() {
+  public Coordinates getOriginalCoordinates() {
     return null;
   }
 
   @Override
-  public Pair getNewCoordinates() {
+  public Coordinates getNewCoordinates() {
     return null;
   }
 

@@ -1,7 +1,8 @@
 package cs5004.easyanimator.model.animations;
+
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Shape;
-import cs5004.easyanimator.model.shapes.Pair;
+import cs5004.easyanimator.model.shapes.Coordinates;
 
 /**
  * This class represents the second animation type -- changing the coordinates of a shape. It
@@ -9,48 +10,48 @@ import cs5004.easyanimator.model.shapes.Pair;
  */
 
 public class ChangeCoordinates extends AbstractAnimations {
-  private Pair originalCoordinates;
-  private Pair newCoordinates;
+  private Coordinates originalCoordinates;
+  private Coordinates newCoordinates;
 
   /**
    * Constructs an AbstractAnimation object, with its given type, shape, and start and end times.
    * Calls the AbstractAnimations super-constructor and sets the AnimationType parameter to
-   * CHANGE COORDINATES.
+   * CHANGECOORDINATES.
    *
-   * @param shape the shape will be animated, type Shape.
-   * @param start the start time of the animation, an int.
-   * @param end   the end time of the animation, an int.
+   * @param shape     the shape will be animated, type Shape.
+   * @param start     the start time of the animation, an int.
+   * @param end       the end time of the animation, an int.
    * @param originalC the original coordinates of the object, type Pair.
+   * @param newC      the new coordinates of the object, type Pair.
    */
-  public ChangeCoordinates(Shape shape, int start, int end, Pair originalC, Pair newC) {
+  public ChangeCoordinates(Shape shape, int start, int end, Coordinates originalC, Coordinates newC) {
     super(AnimationType.CHANGECOORDINATES, shape, start, end);
     this.originalCoordinates = originalC;
     this.newCoordinates = newC;
   }
 
-  public Pair getOriginalCoordinates() {
+  @Override
+  public Coordinates getOriginalCoordinates() {
     return originalCoordinates;
   }
 
-  public Pair getNewCoordinates() {
+  @Override
+  public Coordinates getNewCoordinates() {
     return newCoordinates;
   }
 
   @Override
   public String getChange() {
-    // TODO returning null pointer error
-    return "moves";
+    return "moves ";
   }
 
   @Override
   public String getStartState() {
-    // TODO returning null pointer error
     return Utils.getPositionString(originalCoordinates);
   }
 
   @Override
   public String getEndState() {
-    // TODO returning null pointer error
     return Utils.getPositionString(newCoordinates);
   }
 
@@ -68,19 +69,18 @@ public class ChangeCoordinates extends AbstractAnimations {
     if ((time > this.getEndTime()) || (time < this.getStartTime())) {
       // do nothing.
       return;
-    }
-    else {
+    } else {
       double finalX = originalX + (changeX * changeInTime);
       double finalY = originalY + (changeY * changeInTime);
 
-      Pair newPos = new Pair(finalX, finalY);
+      Coordinates newPos = new Coordinates(finalX, finalY);
 
       this.getShape().changePosition(newPos);
     }
   }
 
   @Override
-  public void changeField(Shape s) {
+  public void updateField(Shape s) {
     s.changePosition(newCoordinates);
   }
 }

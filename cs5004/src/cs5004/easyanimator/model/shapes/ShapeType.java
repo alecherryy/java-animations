@@ -1,21 +1,21 @@
 package cs5004.easyanimator.model.shapes;
 
 /**
- * This is an enum of all the Shapes available to the
- * user. It includes: RECTANGLE and OVAL.
+ * This is an enum of all the Shapes available to the user. It includes: RECTANGLE and OVAL.
+ * Throws an IllegalArgumentException if the type is null or invalid (not a rectangle or oval).
  */
 public enum ShapeType {
   RECTANGLE, OVAL;
 
+  @Override
   public String toString() {
-    if (this == RECTANGLE) {
-      return "rectangle";
-    }
-    else if (this == OVAL) {
-      return "oval";
-    }
-    else {
-      throw new AssertionError("Shape must be a rectangle or an oval.");
+    switch (this) {
+      case RECTANGLE:
+        return "rectangle";
+      case OVAL:
+        return "oval";
+      default:
+        throw new IllegalArgumentException("Invalid type.");
     }
   }
 }

@@ -1,27 +1,47 @@
 package cs5004.easyanimator.model.shapes;
+
 import java.awt.Color;
+
 import cs5004.easyanimator.model.Utils;
 
-  public class Oval extends AbstractShape {
+/**
+ * This class represents an Oval. It extends the AbstractShape class, and defines methods specific
+ * to ovals. a circle is also an oval.
+ */
 
-    public Oval(String name, int appear, int disappear, double x, double y, Color color, Pair pos) {
-      super(name, ShapeType.OVAL, appear, disappear, x, y, color, pos);
+public class Oval extends AbstractShape {
 
-    }
+  /**
+   * Constructs an Oval object, with its given name, appear time, disappear time, width, height,
+   * color, and position. Calls the AbstractShape super-constructor and sets the ShapeType to OVAL.
+   *
+   * @param name      the name of the shape
+   * @param appear    the appear time of the shape
+   * @param disappear the disappear time of the shape
+   * @param width     the width of the shape
+   * @param height    the height of the shape
+   * @param color     the color of the shape
+   * @param pos       the position of the shape
+   */
+  public Oval(String name, int appear, int disappear, double width, double height, Color color,
+              Coordinates pos) {
+    super(name, ShapeType.OVAL, appear, disappear, width, height, color, pos);
 
-    @Override
-    public String getLocation() {
-      return "Center: " + Utils.getPositionString(this.getPosition());
-    }
-
-    @Override
-    public String widthString() {
-      return "X radius: ";
-    }
-
-    @Override
-    public String heightString() {
-      return "Y radius: ";
-    }
   }
+
+  @Override
+  public String getLocation() {
+    return "Center: " + Utils.getPositionString(this.getPosition());
+  }
+
+  @Override
+  public String widthString() {
+    return "X radius: ";
+  }
+
+  @Override
+  public String heightString() {
+    return "Y radius: ";
+  }
+}
 

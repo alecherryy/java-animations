@@ -6,12 +6,16 @@ import java.util.List;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This class represents an animation model. It implements the AnimationModel interface
+ * and all of its operations.
+ */
+
 public class AnimationModelImpl implements AnimationModel {
   private List<ModelItem> model;
 
   /**
-   * This is the class constructor. It initializes a new empty
-   * list of AnimationModelItem.
+   * This is the class constructor. It initializes a new empty list of AnimationModelItem.
    */
   public AnimationModelImpl() {
     model = new ArrayList<ModelItem>();
@@ -27,8 +31,7 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Removes a shape from the list, using its index
-   * as an identifier.
+   * Removes a shape from the list, using its index as an identifier.
    *
    * @param index of the shape to add
    * @throws IndexOutOfBoundsException if index does not exist
@@ -43,13 +46,12 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Add a new animation to a specific shape, using the index to
-   * retrieve the correct shape.
+   * Add a new animation to a specific shape, using the index to retrieve the correct shape.
    *
    * @param index of the shape
-   * @param a the animation to add
+   * @param a     the animation to add
    * @throws IndexOutOfBoundsException if index does not exist
-   * @throws IllegalStateException if the model is empty
+   * @throws IllegalStateException     if the model is empty
    */
   public void addAnimation(int index, Animations a) {
     if (!(this.model.isEmpty())) {
@@ -74,16 +76,15 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Return a summary of each item in the model. For each item,
-   * the summary include a description of the shape and a description
-   * of each animation associated with the given shape.
+   * Return a summary of each item in the model. For each item, the summary include a description of
+   * the shape and a description of each animation associated with the given shape.
    *
    * @return the model in a string
    */
   public String getDescription() {
     StringBuilder str = new StringBuilder();
 
-    for(ModelItem obj : this.model) {
+    for (ModelItem obj : this.model) {
       // call toString() method on each obj and append it
       // to the StringBuilder
       str.append(obj.toString());

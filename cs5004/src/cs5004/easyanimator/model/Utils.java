@@ -1,12 +1,12 @@
 package cs5004.easyanimator.model;
 
 import java.awt.Color;
+
 import cs5004.easyanimator.model.shapes.*;
 
 
 /**
- * This class contains static methods that are common to a few classes. They are used for
- * testing.
+ * This class contains static methods that are common to a few classes. They are used for testing.
  */
 
 public class Utils {
@@ -33,16 +33,17 @@ public class Utils {
   public static float rgbToFloat(int v) {
     return (float) v / (float) 255;
   }
+
   /**
-   * Get he String representation of a shape's color.
+   * Get the String representation of a shape's color in RGB.
    *
-   * @param c the color of the shape.
+   * @param color the color of the shape.
    * @return the RGB value of a shape's color as a string.
    */
 
-  public static String colorAsString(Color c) {
-    return "(" + Utils.rgbToFloat(c.getRed()) + "," + Utils.rgbToFloat(c.getGreen()) + ","
-        + Utils.rgbToFloat(c.getBlue()) + ")";
+  public static String colorAsString(Color color) {
+    return "(" + Utils.rgbToFloat(color.getRed()) + "," + Utils.rgbToFloat(color.getGreen()) + ","
+        + Utils.rgbToFloat(color.getBlue()) + ")";
   }
 
   /**
@@ -51,8 +52,18 @@ public class Utils {
    * @param pos the position of the shape, a Pair object.
    * @return the string representation of the position of the shape.
    */
-  public static String getPositionString(Pair pos) {
+  public static String getPositionString(Coordinates pos) {
     return "(" + pos.getX() + ", " + pos.getY() + ")";
+  }
+
+  /**
+   * Returns the string representation of a color with its RGB value (not as a float).
+   *
+   * @param color the color
+   * @return string representation of the color.
+   */
+  public static String getRGBColorString(Color color) {
+    return "(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")";
   }
 }
 

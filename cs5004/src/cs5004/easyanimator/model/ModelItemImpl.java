@@ -6,6 +6,9 @@ import java.util.List;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This class implements ModelItem and all of its operations. Animations are stored as a list.
+ */
 public class ModelItemImpl implements ModelItem {
   private Shape shape;
   private List<Animations> animations;
@@ -29,7 +32,7 @@ public class ModelItemImpl implements ModelItem {
    */
   public void addAnimation(Animations a) {
     this.animations.add(a);
-  };
+  }
 
   /**
    * Returns the animation.
@@ -42,7 +45,7 @@ public class ModelItemImpl implements ModelItem {
       throw new IndexOutOfBoundsException("This index does not exist.");
     }
     return this.animations.get(index);
-  };
+  }
 
   /**
    * Remove animation from a shape.
@@ -51,19 +54,18 @@ public class ModelItemImpl implements ModelItem {
    */
   public void removeAnimation(int index) {
     this.animations.remove(index);
-  };
+  }
 
   /**
-   * Checks if an item has at least one animation and
-   * returns true or false accordingly.
+   * Checks if an item has at least one animation and returns true or false accordingly.
    */
   public boolean hasAnimation() {
     return this.animations.size() != 0;
-  };
+  }
+
 
   /**
-   * Returns a summary of the item, including a description of the
-   * Shape and all the animations.
+   * Returns a summary of the item, including a description of the Shape and all the animations.
    *
    * @return a summary in a string
    */
