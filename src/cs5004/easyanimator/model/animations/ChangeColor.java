@@ -1,18 +1,43 @@
 package cs5004.easyanimator.model.animations;
+
 import java.awt.Color;
+
 import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.Utils;
 
 /**
- * This class represents changing the color of a shape. It extends AbstractAnimation and
- * implements all its methods.
+ * This class represents the first animation type -- changing the color of a shape.
+ * We use the Java inbuilt color, which encapsulates colors in the default sRGB color space.
  */
 
 public class ChangeColor extends AbstractAnimations {
   private Color originalColor;
-  private Color newColor; // color to change to
+  private Color newColor; // color to change to.
 
+  /**
+   * Constructs a ChangeColor object, with its given type, start and end times, original color and
+   * new color. Calls the AbstractAnimations super-constructor and sets the AnimationType parameter
+   * to CHANGECOLOR.
+   *
+   * @param shape         the shape will be animated, type Shape.
+   * @param start         the start time of the animation, an int.
+   * @param end           the end time of the animation, an int.
+   * @param originalColor the original color of the object, type Color.
+   * @param newColor      the color to which the object will be changed to, type Color.
+   * @throws IllegalArgumentException if the originalColor or newColor are null, or if the
+   *                                  originalColor or newColor are something other than red, green,
+   *                                  and blue, or if the newColor is the same as the
+   *                                  originalColor.
+   */
   public ChangeColor(Shape shape, int start, int end, Color originalColor, Color newColor) {
     super(AnimationType.CHANGECOLOR, shape, start, end);
+    if (originalColor == null || newColor == null) {
+      throw new IllegalArgumentException("Original color and new cannot be null.");
+    }
+    if (originalColor == newColor) {
+      throw new IllegalArgumentException("New color must be different from original color.");
+    }
+
     this.originalColor = originalColor;
     this.newColor = newColor;
   }
@@ -20,72 +45,66 @@ public class ChangeColor extends AbstractAnimations {
   /**
    * Get the original color of the shape.
    *
-   * @return the original color of the shape.
+   * @return the original color of the shape
    */
-  public Color getOriginalColor() {
-    return this.originalColor;
-  }
+  public Color getOriginalColor() { return this.originalColor; }
 
   /**
    * Get the new color of the shape.
    *
-   * @return the new color of the shape.
+   * @return the new color of the shape
    */
-  public Color getNewColor() {
-    return this.newColor;
-  }
-
-  @Override
-  public String getChange() {
-    return "Changing shape color ";
-  }
-
-  @Override
-  public String getStartState() {
-    return colorAsString(originalColor);
-  }
-
-  @Override
-  public String getEndState() {
-    return colorAsString(newColor);
-  }
+  public Color getNewColor() { return this.newColor; }
 
   /**
-   * Private helper method to convert RGB values in 0-255 format to values in 0.0f-1.0f format.
+   * Returns the string "moves".
    *
-   * @param v the RGB value of the color.
-   * @return a float representing a color.
+   * @return the animation change as a string
    */
+  public String getChange() { return "changes color "; }
 
-  private float rgbToFloat(int v) {
-    return (float) v / (float) 255;
-  }
+  /**
+   * Get the starting state of the animation as a string.
+   *
+   * @return the starting state of the animation as a string
+   */
+  public String getStartState() { return Utils.colorAsString(this.originalColor); }
 
-  @Override
+  /**
+   * Get the end state of the animation as a string.
+   *
+   * @return the end state of the animation as a string
+   */
+  public String getEndState() { return Utils.colorAsString(this.newColor); }
+
+  /**
+   * Implements the ChangeColor animation on a shape.
+   *
+   * @param time the current time of the animation
+   */
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
-    float originalRed = rgbToFloat(this.originalColor.getRed());
+    float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
     // getGreen() returns the green component in the range 0-255 in the default sRGB space.
-    float originalGreen = rgbToFloat(this.originalColor.getGreen());
+    float originalGreen = Utils.rgbToFloat(this.originalColor.getGreen());
     // getBlue() returns the blue component in the range 0-255 in the default sRGB space.
-    float originalBlue = rgbToFloat(this.originalColor.getBlue());
+    float originalBlue = Utils.rgbToFloat(this.originalColor.getBlue());
 
-    float newRed = rgbToFloat(this.newColor.getRed());
-    float newGreen = rgbToFloat(this.newColor.getGreen());
-    float newBlue = rgbToFloat(this.newColor.getBlue());
+    float newRed = Utils.rgbToFloat(this.newColor.getRed());
+    float newGreen = Utils.rgbToFloat(this.newColor.getGreen());
+    float newBlue = Utils.rgbToFloat(this.newColor.getBlue());
 
     float changeRed = newRed - originalRed;
     float changeGreen = newGreen - originalGreen;
     float changeBlue = newBlue - originalBlue;
 
     float changeInTime = (float) (time - this.getStartTime())
-        / (float) (this.getEndTime() - this.getStartTime());
+            / (float) (this.getEndTime() - this.getStartTime());
 
     if ((time > this.getEndTime()) || (time < this.getStartTime())) {
       // do nothing.
       return;
-    }
-    else {
+    } else {
       float finalRed = originalRed + (changeRed * changeInTime);
       float finalGreen = originalGreen + (changeGreen * changeInTime);
       float finalBlue = originalBlue + (changeBlue * changeInTime);
@@ -95,20 +114,11 @@ public class ChangeColor extends AbstractAnimations {
     }
   }
 
-  @Override
-  public void changeField(Shape s) {
-    s.changeColor(newColor);
-  }
   /**
-   * Private helper method to get the String representation of a shape's color.
+   * Changes the appropriate fields of the shape to match the changes
+   * implemented on the shape.
    *
-   * @param c the color of the shape.
-   * @return the RGB value of a shape's color as a string.
+   * @param s a Shape object, whose field will be changed
    */
-
-  private String colorAsString(Color c) {
-    return "(" + rgbToFloat(c.getRed()) + "," + rgbToFloat(c.getGreen()) + ","
-        + rgbToFloat(c.getBlue()) + ")";
-  }
-
+  public void updateField(Shape s) { s.changeColor(newColor); }
 }

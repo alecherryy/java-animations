@@ -1,9 +1,9 @@
 package cs5004.easyanimator.model.shapes;
+
 import java.awt.Color;
 
 /**
- * This is a Shape interface. It includes all methods available to
- * a shape.
+ * This is a Shape interface. It includes all methods available to a shape.
  */
 public interface Shape {
 
@@ -36,55 +36,70 @@ public interface Shape {
   double getHeight();
 
   /**
-   * Returns the size of the Shape in the form
-   * of value pair (width, height).
+   * Returns the size of the Shape in the form of value pair (width, height).
    *
    * @return the size of the shape
    */
-  Pair getSize();
+  Coordinates getSize();
 
   /**
-   * Returns the position of the Shape in the form
-   * of value pair coordinates (x, y).
+   * Returns the position of the Shape in the form of value pair coordinates (x, y).
    *
    * @return the position of the shape
    */
-  Pair getPosition();
+  Coordinates getPosition();
 
   /**
-   * Returns the color of the shape.
+   * Returns the color of the shape as a string.
    *
-   * @return the color of the shape
+   * @return the color of the shape as a string
    */
   Color getColor();
 
   /**
    * Changes the color of this shape to a new color.
    *
-   * @param c the color to which we are changing this shape's color.
+   * @param c the color to which we are changing this shape's color
    */
   void changeColor(Color c);
 
   /**
    * Changes the width of this shape to a new width.
    *
-   * @param w the width to which we are changing this shape's width.
+   * @param w the width to which we are changing this shape's width
+   * @throws IllegalArgumentException if new width is negative
    */
-  void changeWidth(double w);
+  void changeWidth(double w) throws IllegalArgumentException;
 
   /**
    * Changes the height of this shape to a new height.
    *
-   * @param h the height to which we are changing this shape's height.
+   * @param h the height to which we are changing this shape's height
+   * @throws IllegalArgumentException if new height is negative
    */
-  void changeHeight(double h);
+  void changeHeight(double h) throws IllegalArgumentException;
 
   /**
    * Changes the position of this shape to a new position.
    *
-   * @param pos the position to which we are changing this shape's position.
+   * @param pos the position to which we are changing this shape's position
    */
-  void changePosition(Pair pos);
+  void changePosition(Coordinates pos);
+
+  /**
+   * Returns the string representation of the location of the shape.
+   *
+   * @return the location of the shape as a string
+   */
+  String getLocation();
+
+  /**
+   * Returns the string representation of the dimensions of the shape.
+   * We round to 1 decimal place.
+   *
+   * @return the dimensions of the shape as a string
+   */
+  String getDimensions();
 
   /**
    * Returns a summary of the Shape in a string; meaning, a detailed
@@ -92,6 +107,5 @@ public interface Shape {
    *
    * @return a summary in a string
    */
-  String toString();
-
+  String getDescription();
 }
