@@ -173,24 +173,7 @@ public abstract class AbstractShape implements Shape {
    * @return the dimensions of the shape as a string
    */
   public String getDimensions() {
-    String width = "";
-    String height = "";
-
-    switch(this.type) {
-      case RECTANGLE:
-        width = "Width: ";
-        height = "Height: ";
-        break;
-      case OVAL:
-        width = "X radius: ";
-        height = "Y radius: ";
-        break;
-      default:
-        break;
-    }
-
-    return  width + String.format("%.1f", this.width) + ", "
-            + height + String.format("%.1f", this.height);
+    return Utils.formatSizeString(this, this.width, this.height);
   }
 
   /**

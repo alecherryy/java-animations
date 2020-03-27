@@ -1,6 +1,7 @@
 package cs5004.easyanimator.model;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
@@ -32,6 +33,35 @@ public class AnimationModelImplTest {
   @Test
   public void testAddShape() {
     alessia = new AnimationModelImpl();
+    alessia.addShape(new Rectangle("S", 75, 75, Color.RED, new Coordinates(0, 0)));
+    Assert.assertFalse(alessia.isEmpty());
+  }
+
+  /**
+   * Set up model so we can test exceptions for addShape() method.
+   */
+  @Before
+  public void setUp() {
+    clara = new AnimationModelImpl();
+    clara.addShape(new Rectangle("S", 75, 75, Color.RED, new Coordinates(0, 0)));
+  }
+
+  /**
+   * Test for addShape() method exceptions.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void testChangeWidthExceptions() {
+    clara.addShape(new Rectangle("S", 12.43, 86.01, Color.GREEN, new Coordinates(35, 75.4)));
+    clara.addShape(new Oval("s", 12.43, 86.01, Color.RED, new Coordinates(35, 75.4)));
+  }
+
+  /**
+   * This is a test for isEmpty() method.
+   */
+  @Test
+  public void testIsEmpty() {
+    alessia = new AnimationModelImpl();
+    Assert.assertTrue(alessia.isEmpty());
     alessia.addShape(new Rectangle("S", 75, 75, Color.RED, new Coordinates(0, 0)));
     Assert.assertFalse(alessia.isEmpty());
   }

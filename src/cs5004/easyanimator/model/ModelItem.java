@@ -35,6 +35,7 @@ public interface ModelItem {
    * Remove animation from a shape.
    *
    * @param index of the animation
+   * @throws IndexOutOfBoundsException if animation does exist
    */
   void removeAnimation(int index);
 

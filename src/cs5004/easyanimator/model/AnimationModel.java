@@ -9,8 +9,9 @@ public interface AnimationModel {
    * Add a new shape to the list.
    *
    * @param s the shape to add
+   * @throws IllegalArgumentException if a shape of the same name already exists
    */
-  void addShape(Shape s);
+  void addShape(Shape s) throws IllegalArgumentException;
 
   /**
    * Given a shape name returns the item inside the model matching

@@ -45,6 +45,36 @@ public class Utils {
   }
 
   /**
+   * Given a shape, a width and a height as its inputs, this methods formats
+   * a string according to the shape's type.
+   *
+   * @param s the Shape
+   * @param w the width
+   * @param h the width
+   * @return the dimensions of the shape as a string
+   */
+  public static String formatSizeString(Shape s, double w, double h) {
+    String width = "";
+    String height = "";
+
+    switch(s.getType()) {
+      case RECTANGLE:
+        width = "Width: ";
+        height = "Height: ";
+        break;
+      case OVAL:
+        width = "X radius: ";
+        height = "Y radius: ";
+        break;
+      default:
+        break;
+    }
+
+    return  width + String.format("%.1f", w) + ", "
+            + height + String.format("%.1f", h);
+  }
+
+  /**
    * Returns the position of the shape in string representation.
    *
    * @param pos the position of the shape, a Pair object

@@ -41,7 +41,7 @@ public class AnimationModelImpl implements AnimationModel {
    */
   private boolean helperAddShape(String name) {
     for (ModelItem obj : this.model) {
-      if (obj.getName().equals(name)) {
+      if (obj.getName().equalsIgnoreCase(name)) {
         return false;
       }
     }

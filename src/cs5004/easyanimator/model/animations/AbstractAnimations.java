@@ -1,4 +1,8 @@
 package cs5004.easyanimator.model.animations;
+
+import java.awt.*;
+
+import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
@@ -12,15 +16,15 @@ public abstract class AbstractAnimations implements Animations {
   private int endTime;
 
   /**
-   * This is the class constructor; it takes 4 parameters: a type, a shape, a start
-   * time and an end time.
+   * This is the class constructor; it takes 4 parameters: a type, a shape, a start time and an end
+   * time.
    *
-   * @param type of animation
+   * @param type  of animation
    * @param shape to be animated
    * @param start of the animation
-   * @param end of the animation
-   * @throws IllegalArgumentException if end time is greater
-   *                                  than start time or if they're both negative
+   * @param end   of the animation
+   * @throws IllegalArgumentException if end time is greater than start time or if they're both
+   *                                  negative
    */
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
     if (end < start) {
@@ -77,21 +81,74 @@ public abstract class AbstractAnimations implements Animations {
    * @return the animation represented as a string.
    */
   public String getDescription() {
-
-    return  "Shape " + this.shape.getName()
-            + " " + this.getChange() + " from "
-            + this.getStartState() + " to " + this.getEndState()
-            + " starting at " + this.startTime
-            + " and ending at " + this.endTime + "\n";
+    return "Shape "
+            + this.shape.getName() + " "
+            + this.getChange() + "from "
+            + this.getStartState() + " to "
+            + this.getEndState() + " from t=" + this.startTime
+            + " to t=" + this.endTime;
   }
 
   /**
    * Resets the shape that the animation is being implemented on to a new shape.
    *
-   * @param s a Shape object, which will now be animated.
+   * @param s a Shape object, which we are changing the shape animation field to
    */
-  public void resetShape(Shape s) {
-    this.shape = s;
-  }
-}
+  public void resetShape(Shape s) { this.shape = s; }
 
+  /**
+   * Get the original color of the shape.
+   *
+   * @return the original color of the shape
+   */
+  public Color getOriginalColor() { return null; }
+
+  /**
+   * Get the new color of the shape.
+   *
+   * @return the new color of the shape
+   */
+  public Color getNewColor() { return null; }
+
+  /**
+   * Get the original coordinates of the shape.
+   *
+   * @return the original coordinates of the shape
+   */
+  public Coordinates getOriginalCoordinates() { return null; }
+
+  /**
+   * Get the new coordinates of the shape.
+   *
+   * @return the new coordinates of the shape
+   */
+  public Coordinates getNewCoordinates() { return null; }
+
+  /**
+   * Get the original width of the shape.
+   *
+   * @return the original width of the shape
+   */
+  public double getOriginalWidth() { return -1; }
+
+  /**
+   * Get the original height of the shape.
+   *
+   * @return the original height of the shape
+   */
+  public double getOriginalHeight() { return -1; }
+
+  /**
+   * Get the new width of the shape.
+   *
+   * @return the new width of the shape
+   */
+  public double getNewWidth() { return -1; }
+
+  /**
+   * Get the new height of the shape.
+   *
+   * @return the new height of the shape
+   */
+  public double getNewHeight() { return -1; }
+}

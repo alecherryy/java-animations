@@ -19,19 +19,19 @@ public class ShapeTest {
   public void classConstructor() {
     rectangle = new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50));
     Assert.assertEquals(ShapeType.RECTANGLE, rectangle.getType());
-    Assert.assertEquals("(25.0, 50.0)", rectangle.getPosition().toString());
+    Assert.assertEquals("(25.0,50.0)", rectangle.getPosition().toString());
     Assert.assertEquals(100.0, rectangle.getWidth(), 0.01);
     square = new Rectangle("S", 75, 75, Color.RED, new Coordinates(0, 0));
     Assert.assertEquals(ShapeType.RECTANGLE, square.getType());
-    Assert.assertEquals("(0.0, 0.0)", square.getPosition().toString());
+    Assert.assertEquals("(0.0,0.0)", square.getPosition().toString());
     Assert.assertEquals(75.0, square.getWidth(), 0.01);
     oval = new Oval("O", 36, 18, Color.GREEN, new Coordinates(0, 18.465));
     Assert.assertEquals(ShapeType.OVAL, oval.getType());
-    Assert.assertEquals("(0.0, 18.465)", oval.getPosition().toString());
+    Assert.assertEquals("(0.0,18.465)", oval.getPosition().toString());
     Assert.assertEquals(36, oval.getWidth(), 0.01);
     circle = new Oval("C", 50, 50, Color.BLUE, new Coordinates(200, 199.24));
     Assert.assertEquals(ShapeType.OVAL, circle.getType());
-    Assert.assertEquals("(200.0, 199.24)", circle.getPosition().toString());
+    Assert.assertEquals("(200.0,199.24)", circle.getPosition().toString());
     Assert.assertEquals(50, circle.getWidth(), 0.01);
   }
 
@@ -97,11 +97,11 @@ public class ShapeTest {
   @Test
   public void testGetPosition() {
     rectangle = new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50));
-    Assert.assertEquals("(25.0, 50.0)", rectangle.getPosition().toString());
+    Assert.assertEquals("(25.0,50.0)", rectangle.getPosition().toString());
     square = new Rectangle("S", 98, 98, Color.RED, new Coordinates(0, 0));
-    Assert.assertEquals("(0.0, 0.0)", square.getPosition().toString());
+    Assert.assertEquals("(0.0,0.0)", square.getPosition().toString());
     circle = new Oval("C", 12, 12, Color.GREEN, new Coordinates(-12.35, 28.3475));
-    Assert.assertEquals("(-12.35, 28.3475)", circle.getPosition().toString());
+    Assert.assertEquals("(-12.35,28.3475)", circle.getPosition().toString());
   }
 
   /**
@@ -110,11 +110,11 @@ public class ShapeTest {
   @Test
   public void testGetSize() {
     rectangle = new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50));
-    Assert.assertEquals("(100.0, 50.0)", rectangle.getSize().toString());
+    Assert.assertEquals("(100.0,50.0)", rectangle.getSize().toString());
     square = new Rectangle("S", 98, 98, Color.RED, new Coordinates(0, 0));
-    Assert.assertEquals("(98.0, 98.0)", square.getSize().toString());
+    Assert.assertEquals("(98.0,98.0)", square.getSize().toString());
     circle = new Oval("C", 12, 12, Color.GREEN, new Coordinates(-12.35, 28.3475));
-    Assert.assertEquals("(12.0, 12.0)", circle.getSize().toString());
+    Assert.assertEquals("(12.0,12.0)", circle.getSize().toString());
   }
 
   /**
@@ -194,13 +194,13 @@ public class ShapeTest {
   public void testChangePosition() {
     rectangle = new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50));
     rectangle.changePosition(new Coordinates(0,23.12));
-    Assert.assertEquals("(0.0, 23.12)", rectangle.getPosition().toString());
+    Assert.assertEquals("(0.0,23.12)", rectangle.getPosition().toString());
     square = new Rectangle("S", 98, 98, Color.RED, new Coordinates(0, 0));
     square.changePosition(new Coordinates(-148.70,-2.88));
-    Assert.assertEquals("(-148.7, -2.88)", square.getPosition().toString());
+    Assert.assertEquals("(-148.7,-2.88)", square.getPosition().toString());
     circle = new Oval("C", 12, 12, Color.GREEN, new Coordinates(-12.35, 28.3475));
     circle.changePosition(new Coordinates(0,0));
-    Assert.assertEquals("(0.0, 0.0)", circle.getPosition().toString());
+    Assert.assertEquals("(0.0,0.0)", circle.getPosition().toString());
   }
 
   /**
@@ -212,25 +212,25 @@ public class ShapeTest {
     Assert.assertEquals(""
             + "Name: R\n"
             + "Type: rectangle\n"
-            + "Min corner: (25.0, 50.0), "
+            + "Min corner: (25.0,50.0), "
             + "Width: 100.0, Height: 50.0, Color: (0.0,0.0,1.0)\n", rectangle.getDescription());
     square = new Rectangle("S", 75, 75, Color.RED, new Coordinates(0, 0));
     Assert.assertEquals(""
             + "Name: S\n"
             + "Type: rectangle\n"
-            + "Min corner: (0.0, 0.0), "
+            + "Min corner: (0.0,0.0), "
             + "Width: 75.0, Height: 75.0, Color: (1.0,0.0,0.0)\n", square.getDescription());
     oval = new Oval("O", 36.123, 18.86, Color.GREEN, new Coordinates(0, 18.465));
     Assert.assertEquals(""
             + "Name: O\n"
             + "Type: oval\n"
-            + "Center: (0.0, 18.465), X radius: 36.1, Y radius: 18.9, "
+            + "Center: (0.0,18.465), X radius: 36.1, Y radius: 18.9, "
             + "Color: (0.0,1.0,0.0)\n", oval.getDescription());
     circle = new Oval("C", 50.1, 50.03, Color.RED, new Coordinates(200, 199.24));
     Assert.assertEquals(""
             + "Name: C\n"
             + "Type: oval\n"
-            + "Center: (200.0, 199.24), "
+            + "Center: (200.0,199.24), "
             + "X radius: 50.1, Y radius: 50.0, Color: (1.0,0.0,0.0)\n", circle.getDescription());
   }
 }

@@ -44,25 +44,23 @@ public class ModelItemImpl implements ModelItem {
    * @return a list of animations
    */
   public ArrayList<Animations> getAllAnimations() {
-
-    try {
-      if (this.hasAnimation()) {
-        return (ArrayList<Animations>) this.animations;
-      }
-    }
-    catch (NullPointerException n) {
-      System.out.println("This shape does not have any animations yet.");
-    }
-
-    return null;
+    return (ArrayList<Animations>) this.animations;
   }
 
   /**
    * Remove animation from a shape.
    *
    * @param index of the animation
+   * @throws IndexOutOfBoundsException if animation does exist
    */
-  public void removeAnimation(int index) { this.animations.remove(index); }
+  public void removeAnimation(int index) {
+    try {
+      this.animations.remove(index);
+    }
+    catch (IndexOutOfBoundsException e) {
+      throw new IndexOutOfBoundsException("This animation does not exist.");
+    }
+  }
 
   /**
    * Checks if an item has at least one animation and
@@ -85,6 +83,7 @@ public class ModelItemImpl implements ModelItem {
     str.append("\n\n");
     for (Animations obj : this.animations) {
       str.append(obj.getDescription());
+      str.append("\n");
     }
     return str.toString();
   }
