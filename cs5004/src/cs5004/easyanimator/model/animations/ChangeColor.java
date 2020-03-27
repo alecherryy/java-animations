@@ -1,6 +1,7 @@
 package cs5004.easyanimator.model.animations;
 import java.awt.Color;
 import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.Utils;
 
 /**
  * This class represents the first animation type -- changing the color of a shape. We
@@ -41,44 +42,33 @@ public class ChangeColor extends AbstractAnimations {
   @Override
   public String getChange() {
     // TODO returning null pointer error
-    return "Changing shape color ";
+    return "changes color ";
   }
 
   @Override
   public String getStartState() {
     // TODO returning null pointer error
-    return colorAsString(originalColor);
+    return Utils.colorAsString(this.originalColor);
   }
 
   @Override
   public String getEndState() {
     // TODO returning null pointer error
-    return colorAsString(newColor);
-  }
-
-  /**
-   * Private helper method to convert RGB values in 0-255 format to values in 0.0f-1.0f format.
-   *
-   * @param v the RGB value of the color.
-   * @return a float representing a color.
-   */
-
-  private float rgbToFloat(int v) {
-    return (float) v / (float) 255;
+    return Utils.colorAsString(this.newColor);
   }
 
   @Override
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
-    float originalRed = rgbToFloat(this.originalColor.getRed());
+    float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
     // getGreen() returns the green component in the range 0-255 in the default sRGB space.
-    float originalGreen = rgbToFloat(this.originalColor.getGreen());
+    float originalGreen = Utils.rgbToFloat(this.originalColor.getGreen());
     // getBlue() returns the blue component in the range 0-255 in the default sRGB space.
-    float originalBlue = rgbToFloat(this.originalColor.getBlue());
+    float originalBlue = Utils.rgbToFloat(this.originalColor.getBlue());
 
-    float newRed = rgbToFloat(this.newColor.getRed());
-    float newGreen = rgbToFloat(this.newColor.getGreen());
-    float newBlue = rgbToFloat(this.newColor.getBlue());
+    float newRed = Utils.rgbToFloat(this.newColor.getRed());
+    float newGreen = Utils.rgbToFloat(this.newColor.getGreen());
+    float newBlue = Utils.rgbToFloat(this.newColor.getBlue());
 
     float changeRed = newRed - originalRed;
     float changeGreen = newGreen - originalGreen;
@@ -99,6 +89,14 @@ public class ChangeColor extends AbstractAnimations {
       Color newColor = new Color(finalRed, finalGreen, finalBlue);
       this.getShape().changeColor(newColor);
     }
+  }
+
+  @Override
+  public void changeField(Shape s) {
+    s.changeColor(newColor);
+  }
+}
+
   }
 
   @Override

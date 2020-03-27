@@ -1,4 +1,5 @@
 package cs5004.easyanimator.model.animations;
+import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.shapes.Pair;
 
@@ -38,29 +39,19 @@ public class ChangeCoordinates extends AbstractAnimations {
   @Override
   public String getChange() {
     // TODO returning null pointer error
-    return "Changing shape coordinates ";
+    return "moves";
   }
 
-  /**
-   * Get the shape's coordinates as a string.
-   *
-   * @param pos the position of the shape (i.e. its coordinates)
-   * @return the string representation of the shape's position.
-   */
-  public String positionAsString(Pair pos) {
-    // TODO returning null pointer error
-    return "(" + pos.getX() + ", " + pos.getY() + ")";
-  }
   @Override
   public String getStartState() {
     // TODO returning null pointer error
-    return positionAsString(originalCoordinates);
+    return Utils.getPositionString(originalCoordinates);
   }
 
   @Override
   public String getEndState() {
     // TODO returning null pointer error
-    return positionAsString(newCoordinates);
+    return Utils.getPositionString(newCoordinates);
   }
 
   @Override
@@ -94,14 +85,3 @@ public class ChangeCoordinates extends AbstractAnimations {
   }
 }
 
-      Pair newPos = new Pair(finalX, finalY);
-
-      this.getShape().changePosition(newPos);
-    }
-  }
-
-  @Override
-  public void changeField(Shape s) {
-    s.changePosition(newCoordinates);
-  }
-}

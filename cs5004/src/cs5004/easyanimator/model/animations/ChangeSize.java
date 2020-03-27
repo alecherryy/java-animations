@@ -54,6 +54,52 @@ public class ChangeSize extends AbstractAnimations {
   @Override
   public String getChange() {
     // TODO returning null pointer error
+    return "scales";
+  }
+
+  @Override
+  public String getStartState() {
+    // TODO returning null pointer error
+    return this.getShape().widthString() + this.originalWidth + ", " + this.getShape().heightString()
+        + this.originalHeight;  }
+
+  @Override
+  public String getEndState() {
+    // TODO returning null pointer error
+    return this.getShape().widthString() + this.newWidth + ", " + this.getShape().heightString()
+        + this.newHeight;  }
+
+  @Override
+  public void implementAnimation(double time) {
+    double changeWidth = this.newWidth - this.originalWidth;
+    double changeHeight = this.newHeight - this.originalHeight;
+
+    double changeInTime = (time - this.getStartTime())
+        / (double) (this.getEndTime() - this.getStartTime());
+
+    if ((time > this.getEndTime()) || (time < this.getStartTime())) {
+      // do nothing.
+      return;
+    }
+    else {
+      double finalWidth = this.originalWidth + (changeInTime * changeWidth);
+      double finalHeight = this.originalHeight + (changeInTime * changeHeight);
+      this.getShape().changeWidth(finalWidth);
+      this.getShape().changeHeight(finalHeight);
+    }
+  }
+
+  @Override
+  public void changeField(Shape s) {
+    s.changeWidth(newWidth);
+    s.changeHeight(newHeight);
+
+  }
+}
+
+  @Override
+  public String getChange() {
+    // TODO returning null pointer error
     return "Changing shape size ";
   }
 
