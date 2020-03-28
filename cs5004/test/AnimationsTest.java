@@ -43,7 +43,6 @@ public class AnimationsTest {
   /**
    * Constructor test for ChangeColor.
    */
-
   @Test
   public void constructorTest1() {
     Assert.assertEquals(rectangle, changeColor.getShape());
@@ -58,7 +57,6 @@ public class AnimationsTest {
   /**
    * Constructor exception test for ChangeColor.
    */
-
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest1() {
     // end-time is less than start time.
@@ -80,7 +78,6 @@ public class AnimationsTest {
   /**
    * Constructor test for ChangeCoordinates.
    */
-
   @Test
   public void constructorTest2() {
     Assert.assertEquals(square, changeCoordinates.getShape());
@@ -111,7 +108,6 @@ public class AnimationsTest {
   /**
    * Constructor test for ChangeSize.
    */
-
   @Test
   public void constructorTest3() {
     Assert.assertEquals(oval, changeSize.getShape());
@@ -128,7 +124,6 @@ public class AnimationsTest {
   /**
    * Constructor exception test for ChangeSize.
    */
-
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest3() {
     // end-time is less than start time.
@@ -289,7 +284,6 @@ public class AnimationsTest {
     Assert.assertEquals("X radius: 41.6, Y radius: 65.2", change3.getShape().getDimensions());
     change3.implementAnimation(5);
     Assert.assertEquals("X radius: 64.0, Y radius: 100.0", change3.getShape().getDimensions());
-
   }
 
   /**
