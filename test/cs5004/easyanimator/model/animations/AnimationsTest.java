@@ -13,8 +13,8 @@ import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
- * A JUnit test class for the classes that extend AbstractAnimations, which includes:
- * ChangeColor, ChangeCoordinates and ChangeSize.
+ * A JUnit test class for the classes that extend AbstractAnimations,
+ * which includes: ChangeColor, ChangeCoordinates and ChangeSize.
  */
 public class AnimationsTest {
   private ChangeColor changeColor;
@@ -51,7 +51,6 @@ public class AnimationsTest {
     Assert.assertEquals(Color.BLUE, changeColor.getOriginalColor());
     Assert.assertEquals(Color.RED, changeColor.getNewColor());
     Assert.assertEquals(AnimationType.CHANGECOLOR, changeColor.getAnimationType());
-
   }
 
   /**
@@ -88,7 +87,6 @@ public class AnimationsTest {
     Assert.assertEquals("(25.0,50.0)", changeCoordinates.getOriginalCoordinates().toString());
     Assert.assertEquals("(20.0,50.0)", changeCoordinates.getNewCoordinates().toString());
     Assert.assertEquals(AnimationType.CHANGECOORDINATES, changeCoordinates.getAnimationType());
-
   }
 
   /**
@@ -98,7 +96,8 @@ public class AnimationsTest {
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest2() {
     // end-time is less than start time.
-    new ChangeSize(rectangle, 19, 17, 10, 20, 20, 39);
+    new ChangeSize(rectangle, 19, 17, 10, 20,
+            20, 39);
     // start time is negative.
     new ChangeSize(square, -2, 5, 2, 4, 6, 8);
     // end time is negative.
@@ -121,7 +120,6 @@ public class AnimationsTest {
     Assert.assertEquals(40, changeSize.getNewWidth(), 0.1);
     Assert.assertEquals(20, changeSize.getNewHeight(), 0.1);
     Assert.assertEquals(AnimationType.CHANGESIZE, changeSize.getAnimationType());
-
   }
 
   /**
@@ -131,13 +129,17 @@ public class AnimationsTest {
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest3() {
     // end-time is less than start time.
-    new ChangeSize(rectangle, 10, 0, 20, 50, 10, 30);
+    new ChangeSize(rectangle, 10, 0, 20, 50,
+            10, 30);
     // start time is negative.
-    new ChangeSize(square, -1, 5, 14, 14, 15, 15);
+    new ChangeSize(square, -1, 5, 14, 14,
+            15, 15);
     // end time is negative.
-    new ChangeSize(circle, 2, -3, 19, 20, 20, 30);
+    new ChangeSize(circle, 2, -3, 19, 20,
+            20, 30);
     // both start and end time are negative.
-    new ChangeSize(oval, -2, -1, 21, 20, 20, 30);
+    new ChangeSize(oval, -2, -1, 21, 20,
+            20, 30);
   }
 
   /**
@@ -175,12 +177,15 @@ public class AnimationsTest {
    */
   @Test
   public void getDescriptionTest() {
-    Assert.assertEquals("Shape R changes color from (0.0,0.0,1.0) to (1.0,0.0,0.0) from t=10 to " +
-            "t=20", changeColor.getDescription());
-    Assert.assertEquals("Shape R moves from (25.0,50.0) to (20.0,50.0) from t=0 to t=5",
+    Assert.assertEquals(""
+            + "Shape R changes color from (0.0,0.0,1.0) to (1.0,0.0,0.0) from t=10 to "
+            + "t=20", changeColor.getDescription());
+    Assert.assertEquals(""
+            + "Shape R moves from (25.0,50.0) to (20.0,50.0) from t=0 to t=5",
             changeCoordinates.getDescription());
-    Assert.assertEquals("Shape O scales from X radius: 35.0, Y radius: 18.0 to X radius: " +
-            "40.0, Y radius: 20.0 from t=0 to t=10", changeSize.getDescription());
+    Assert.assertEquals(""
+            + "Shape O scales from X radius: 35.0, Y radius: 18.0 to X radius: "
+            + "40.0, Y radius: 20.0 from t=0 to t=10", changeSize.getDescription());
   }
 
   /**
@@ -238,8 +243,8 @@ public class AnimationsTest {
     Assert.assertEquals("(0.0,0.0)",
             Utils.getPositionString(changeCoordinates.getShape().getPosition()));
 
-    Animations change2 = new ChangeCoordinates(oval2, 8, 10, new Coordinates(0.0, 0.0),
-            new Coordinates(100, 50));
+    Animations change2 = new ChangeCoordinates(oval2, 8, 10,
+            new Coordinates(0.0, 0.0), new Coordinates(100, 50));
     Assert.assertEquals("(0.0,0.0)",
             Utils.getPositionString(change2.getShape().getPosition()));
     change2.implementAnimation(7);
@@ -252,8 +257,8 @@ public class AnimationsTest {
     Assert.assertEquals("(100.0,50.0)",
             Utils.getPositionString(change2.getShape().getPosition()));
 
-    Animations change3 = new ChangeCoordinates(rectangle, 0, 3, new Coordinates(25.0, 50.0),
-            new Coordinates(60.0, 50.0));
+    Animations change3 = new ChangeCoordinates(rectangle, 0, 3,
+            new Coordinates(25.0, 50.0), new Coordinates(60.0, 50.0));
     Assert.assertEquals("(25.0,50.0)",
             Utils.getPositionString(change3.getShape().getPosition()));
     change3.implementAnimation(3);
@@ -267,27 +272,39 @@ public class AnimationsTest {
    */
   @Test
   public void implementAnimationTest3() {
-    Assert.assertEquals("X radius: 10.0, Y radius: 20.0", changeSize.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 10.0, Y radius: 20.0", changeSize.getShape().getDimensions());
     changeSize.implementAnimation(5);
-    Assert.assertEquals("X radius: 37.5, Y radius: 19.0", changeSize.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 37.5, Y radius: 19.0", changeSize.getShape().getDimensions());
     changeSize.implementAnimation(9);
-    Assert.assertEquals("X radius: 39.5, Y radius: 19.8", changeSize.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 39.5, Y radius: 19.8", changeSize.getShape().getDimensions());
     changeSize.implementAnimation(10);
-    Assert.assertEquals("X radius: 40.0, Y radius: 20.0", changeSize.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 40.0, Y radius: 20.0", changeSize.getShape().getDimensions());
 
-    Animations change2 = new ChangeSize(oval2, 0, 10, 0, 0, 10, 10);
-    Assert.assertEquals("X radius: 0.0, Y radius: 0.0", change2.getShape().getDimensions());
+    Animations change2 = new ChangeSize(oval2, 0, 10, 0,
+            0, 10, 10);
+    Assert.assertEquals(""
+            + "X radius: 0.0, Y radius: 0.0", change2.getShape().getDimensions());
     change2.implementAnimation(5);
-    Assert.assertEquals("X radius: 5.0, Y radius: 5.0", change2.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 5.0, Y radius: 5.0", change2.getShape().getDimensions());
     change2.implementAnimation(10);
-    Assert.assertEquals("X radius: 10.0, Y radius: 10.0", change2.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 10.0, Y radius: 10.0", change2.getShape().getDimensions());
 
-    Animations change3 = new ChangeSize(circle, 0, 5, 8, 13, 64, 100);
-    Assert.assertEquals("X radius: 8.0, Y radius: 13.0", change3.getShape().getDimensions());
+    Animations change3 = new ChangeSize(circle, 0, 5,
+            8, 13, 64, 100);
+    Assert.assertEquals(""
+            + "X radius: 8.0, Y radius: 13.0", change3.getShape().getDimensions());
     change3.implementAnimation(3);
-    Assert.assertEquals("X radius: 41.6, Y radius: 65.2", change3.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 41.6, Y radius: 65.2", change3.getShape().getDimensions());
     change3.implementAnimation(5);
-    Assert.assertEquals("X radius: 64.0, Y radius: 100.0", change3.getShape().getDimensions());
+    Assert.assertEquals(""
+            + "X radius: 64.0, Y radius: 100.0", change3.getShape().getDimensions());
 
   }
 
@@ -301,10 +318,13 @@ public class AnimationsTest {
     changeColor.updateField(rectangle);
     Assert.assertEquals(Color.RED, rectangle.getColor());
 
-    Assert.assertEquals("(25.0,50.0)", changeCoordinates.getOriginalCoordinates().toString());
-    Assert.assertEquals("(20.0,50.0)", changeCoordinates.getNewCoordinates().toString());
+    Assert.assertEquals(""
+            + "(25.0,50.0)", changeCoordinates.getOriginalCoordinates().toString());
+    Assert.assertEquals(""
+            + "(20.0,50.0)", changeCoordinates.getNewCoordinates().toString());
     changeCoordinates.updateField(square);
-    Assert.assertEquals("(20.0,50.0)", square.getPosition().toString());
+    Assert.assertEquals(""
+            + "(20.0,50.0)", square.getPosition().toString());
 
     Assert.assertEquals(35, changeSize.getOriginalWidth(), 0.1);
     Assert.assertEquals(18, changeSize.getOriginalHeight(), 0.1);
@@ -331,6 +351,5 @@ public class AnimationsTest {
     Assert.assertEquals(oval, changeSize.getShape());
     changeSize.resetShape(oval2);
     Assert.assertEquals(oval2, changeSize.getShape());
-
   }
 }

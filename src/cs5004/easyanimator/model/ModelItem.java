@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This is the ModelItem Interface. It includes all methods available
+ * to model item.
+ */
 public interface ModelItem {
 
   /**
@@ -14,6 +18,8 @@ public interface ModelItem {
 
   /**
    * Returns the name.
+   *
+   * @return the name in a string
    */
   String getName();
 
@@ -42,14 +48,16 @@ public interface ModelItem {
   /**
    * Checks if an item has at least one animation and
    * returns true or false accordingly.
+   *
+   * @return true if the animations array is empty, otherwise returns false
    */
   boolean hasAnimation();
 
   /**
    * Returns a summary of the item, including a description of the
-   * Shape and all the animations.
+   * Shape and all its animations.
    *
-   * @return a summary in a string
+   * @return a summary of the item in a string
    */
   String toString();
 }

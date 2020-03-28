@@ -15,6 +15,7 @@ public enum ShapeType {
    *                                  (i.e., not a rectangle nor oval)
    */
   public String toString() {
+    // initialize switch statement using shape type
     switch (this) {
 
       case RECTANGLE:

@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import cs5004.easyanimator.model.Utils;
 
-
 /**
  * This abstract class implements Shape and all of its methods. It contains the code for
  * an abstract shape and represents the behavior shared by all shapes.
@@ -30,8 +29,7 @@ public abstract class AbstractShape implements Shape {
    *                                  height are less than 1 or appear or disappear time are
    *                                  negative, or appear time is after disappear time.
    */
-  public AbstractShape(String name, ShapeType type, double width,
-                       double height, Color color,
+  public AbstractShape(String name, ShapeType type, double width, double height, Color color,
                        Coordinates position) {
     // check for bad inputs
     if (Utils.isNegative(width) || Utils.isNegative(height)) {
@@ -52,7 +50,6 @@ public abstract class AbstractShape implements Shape {
     if (color == null) {
       throw new IllegalArgumentException("A shape must have a color.");
     }
-
     this.color = color;
     this.position = position;
   }
@@ -167,8 +164,8 @@ public abstract class AbstractShape implements Shape {
   }
 
   /**
-   * Returns the string representation of the dimensions of the shape. We round to 1 decimal
-   * place.
+   * Returns the string representation of the dimensions of the shape.
+   * We round to 1 decimal place.
    *
    * @return the dimensions of the shape as a string
    */
@@ -177,8 +174,8 @@ public abstract class AbstractShape implements Shape {
   }
 
   /**
-   * Returns a summary of the Shape in a string; meaning, a detailed description of the shape
-   * information and its expected behavior.
+   * Returns a summary of the Shape in a string; meaning, a detailed
+   * description of the shape information and its expected behavior.
    *
    * @return a summary in a string
    */

@@ -27,9 +27,11 @@ public abstract class AbstractAnimations implements Animations {
    *                                  negative
    */
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
+    // check if end is smaller than start
     if (end < start) {
       throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
     }
+    // check end and start are not negative
     if (start < 0 || end < 0) {
       throw new IllegalArgumentException("Start and end time must be positive.");
     }

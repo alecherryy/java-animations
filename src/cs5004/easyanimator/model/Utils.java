@@ -6,13 +6,15 @@ import cs5004.easyanimator.model.shapes.*;
 
 
 /**
- * This class contains static methods that are common to a few classes. They are used for testing.
+ * This class contains static methods that are common to a few classes.
+ * They are used for testing and to standardized methods shared among
+ * multiple classes
  */
 public class Utils {
 
   /**
-   * Check if a number is negative or not. This will be used for throwing exceptions inside
-   * constructors.
+   * Check if a number is negative or not. This will be used for throwing
+   * exceptions inside constructors.
    *
    * @param n The number we are checking
    * @return true if number is negative, false if it isn't
@@ -57,6 +59,7 @@ public class Utils {
     String width = "";
     String height = "";
 
+    // format string based on shape type
     switch(s.getType()) {
       case RECTANGLE:
         width = "Width: ";
@@ -88,6 +91,7 @@ public class Utils {
    * Returns the string representation of a color with its RGB value (not as a float).
    *
    * @param color the color
+   * @return the RGB value of the color in a string
    */
   public static String getRGBColorString(Color color) {
     return "(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")";

@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.awt.*;
 
+/**
+ * A JUnit test class for all classes that extends the Shape Interface.
+ */
 public class ShapeTest {
   private Shape rectangle;
   private Shape square;
@@ -17,7 +20,8 @@ public class ShapeTest {
    */
   @Test
   public void classConstructor() {
-    rectangle = new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50));
+    rectangle = new Rectangle("R", 100, 50, Color.BLUE,
+            new Coordinates(25, 50));
     Assert.assertEquals(ShapeType.RECTANGLE, rectangle.getType());
     Assert.assertEquals("(25.0,50.0)", rectangle.getPosition().toString());
     Assert.assertEquals(100.0, rectangle.getWidth(), 0.01);
@@ -58,7 +62,8 @@ public class ShapeTest {
     circle = new Oval("C", 121, 121, null, new Coordinates(200, 199.24));
     square = new Rectangle("S", -13, 75, Color.RED, new Coordinates(0, 0));
     rectangle = new Rectangle("S", -0.999, 75, Color.RED, new Coordinates(0, 0));
-    rectangle = new Rectangle("S", 24, -928475, Color.BLUE, new Coordinates(0, 0));
+    rectangle = new Rectangle("S", 24, -928475, Color.BLUE,
+            new Coordinates(0, 0));
   }
 
   /**
@@ -125,7 +130,8 @@ public class ShapeTest {
     circle = new Oval("C", 12.24, 12.24, Color.RED, new Coordinates(0, 0));
     circle.changeColor(Color.BLUE);
     Assert.assertEquals(Color.BLUE, circle.getColor());
-    rectangle = new Rectangle("R", 12.24, 12.876, Color.GREEN, new Coordinates(0, 0));
+    rectangle = new Rectangle("R", 12.24, 12.876, Color.GREEN,
+            new Coordinates(0, 0));
     rectangle.changeColor(Color.RED);
     Assert.assertEquals(Color.RED, rectangle.getColor());
     square = new Rectangle("S", 53, 53, Color.BLUE, new Coordinates(14, 82.3));
@@ -138,10 +144,12 @@ public class ShapeTest {
    */
   @Test
   public void changeWidth() {
-    rectangle = new Rectangle("R", 12.24, 12.876, Color.RED, new Coordinates(0, 0));
+    rectangle = new Rectangle("R", 12.24, 12.876, Color.RED,
+            new Coordinates(0, 0));
     rectangle.changeWidth(12.23);
     Assert.assertEquals(12.23, rectangle.getWidth(), 0.001);
-    oval = new Oval("O", 123, 56.32, Color.GREEN, new Coordinates(-12.35, 28.3475));
+    oval = new Oval("O", 123, 56.32, Color.GREEN,
+            new Coordinates(-12.35, 28.3475));
     oval.changeWidth(1);
     Assert.assertEquals(1.0, oval.getWidth(), 0.001);
   }
@@ -152,7 +160,8 @@ public class ShapeTest {
   @Before
   public void setUp() {
     square = new Rectangle("S", 98, 98, Color.RED, new Coordinates(0, 0));
-    rectangle = new Rectangle("R", 12.45, 29.03, Color.BLUE, new Coordinates(-1.45, 0));
+    rectangle = new Rectangle("R", 12.45, 29.03, Color.BLUE,
+            new Coordinates(-1.45, 0));
     circle = new Oval("C", 12, 12, Color.GREEN, new Coordinates(-12.35, 28.3475));
   }
 
@@ -182,7 +191,8 @@ public class ShapeTest {
     square = new Rectangle("S", 98, 98, Color.RED, new Coordinates(0, 0));
     square.changeHeight(75.23);
     Assert.assertEquals(75.23, square.getHeight(), 0.001);
-    circle = new Oval("C", 12, 12, Color.GREEN, new Coordinates(-12.35, 28.3475));
+    circle = new Oval("C", 12, 12, Color.GREEN,
+            new Coordinates(-12.35, 28.3475));
     circle.changeHeight(0.987);
     Assert.assertEquals(0.987, circle.getHeight(), 0.001);
   }
@@ -195,10 +205,12 @@ public class ShapeTest {
     rectangle = new Rectangle("R", 100, 50, Color.BLUE, new Coordinates(25, 50));
     rectangle.changePosition(new Coordinates(0,23.12));
     Assert.assertEquals("(0.0,23.12)", rectangle.getPosition().toString());
-    square = new Rectangle("S", 98, 98, Color.RED, new Coordinates(0, 0));
+    square = new Rectangle("S", 98, 98, Color.RED,
+            new Coordinates(0, 0));
     square.changePosition(new Coordinates(-148.70,-2.88));
     Assert.assertEquals("(-148.7,-2.88)", square.getPosition().toString());
-    circle = new Oval("C", 12, 12, Color.GREEN, new Coordinates(-12.35, 28.3475));
+    circle = new Oval("C", 12, 12, Color.GREEN,
+            new Coordinates(-12.35, 28.3475));
     circle.changePosition(new Coordinates(0,0));
     Assert.assertEquals("(0.0,0.0)", circle.getPosition().toString());
   }

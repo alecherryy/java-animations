@@ -4,8 +4,8 @@ import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
- * This class represents the third animation type -- changing the size of a shape, using its width
- * and height. It extends AbstractAnimation.
+ * This class represents the third animation type -- changing the size of a shape,
+ * using its width and height. It extends AbstractAnimation.
  */
 public class ChangeSize extends AbstractAnimations {
   private double originalWidth;
@@ -14,9 +14,10 @@ public class ChangeSize extends AbstractAnimations {
   private double newHeight;
 
   /**
-   * Constructs a Change Size object, with its given shape, start time, end time, original width,
-   * original height, new width, and new height. Calls the AbstractAnimations super-constructor and
-   * sets the AnimationType parameter to CHANGESIZE.
+   * Constructs a Change Size object, with its given shape, start time,
+   * end time, original width, original height, new width, and new height.
+   * Calls the AbstractAnimations super-constructor and sets the
+   * AnimationType parameter to CHANGESIZE.
    *
    * @param shape          the shape will be animated, type Shape.
    * @param start          the start time of the animation, an int.

@@ -37,3 +37,17 @@ animation. Furthermore, we define a super-constructor that we call inside `Chang
 and `ChangeSize` (much like we did in our shapes class). Each of the three classes representing a
 type of animation contains a method to implement the animation at a certain time, as well as to
 update the field of a shape once it has been implemented.
+
+### Appear/Disappear
+As you review our project, you will notice that there is not method nor animation to allow Shapes to _Appear/Disappear_. That's because we were not able to reach an agreement on how to implement this functionality.
+Specifically, we are having concerns on whether such functionality should be yet another `Animation` or be part of the `Shape` itself. 
+
+One argument is that shape objects should be "stateless", meaning
+they do not interact with the timeline and have no concept of _visibility_. They either exist or don't and only feature properties that would be appropriate to a shape (i.e. width, height, color, position, etc.). In this scenario, 
+the ability to appear and disappear would be added to the `Animations` and would inherit some of the properties shared among all animations.
+
+Another argument is that _visibility_ should, indeed, be a property of each shape, as well as time references according to which the shape appears and disappears. This implies
+a `Shape` class would include two additional parameters in its constructor before it can be instantiated; said parameters would be `startTime` and `endTime`.
+
+After much discussion, we have decided to leave this portion of the implementation for the next round of this assignment, during which we will
+be giving more thought to how exactly animations and shapes exist and behave within the larger `AnimatioModel`. 
