@@ -61,7 +61,7 @@ public class Utils {
     String height = "";
 
     // format string based on shape type
-    switch(s.getType()) {
+    switch (s.getType()) {
       case RECTANGLE:
         width = "Width: ";
         height = "Height: ";

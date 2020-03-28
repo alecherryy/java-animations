@@ -45,6 +45,7 @@ public class ModelItemImpl implements ModelItem {
    * @return the shape as an object
    */
   public Shape getShape() {
+
     return this.shape;
   }
 
@@ -53,7 +54,9 @@ public class ModelItemImpl implements ModelItem {
    *
    * @param a the animation
    */
-  public void addAnimation(Animations a) { this.animations.add(a); }
+  public void addAnimation(Animations a) {
+    this.animations.add(a);
+  }
 
   /**
    * Remove animation from a shape.
@@ -61,6 +64,7 @@ public class ModelItemImpl implements ModelItem {
    * @return a list of animations
    */
   public ArrayList<Animations> getAllAnimations() {
+
     return (ArrayList<Animations>) this.animations;
   }
 
