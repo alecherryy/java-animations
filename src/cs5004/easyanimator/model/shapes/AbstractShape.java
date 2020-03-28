@@ -118,7 +118,7 @@ public abstract class AbstractShape implements Shape {
   }
 
   /**
-   * Changes the color of this shape to a new color
+   * Changes the color of this shape to a new color.
    *
    * @param c the color to which we are changing this shape's color
    */

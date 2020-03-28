@@ -162,7 +162,8 @@ public class AnimationModelImplTest {
                     + "Min corner: (0.0,0.0), Width: 25.1, Height: 25.1, Color: (1.0,0.0,0.0)"
                     + "\n"
                     + "\n"
-                    + "Shape S changes color from (1.0,0.0,0.0) to (0.0,0.0,1.0) from t=5 to t=100\n",
+                    + "Shape S changes color "
+                    + "from (1.0,0.0,0.0) to (0.0,0.0,1.0) from t=5 to t=100\n",
             clara.getDescription());
     clara.addAnimation("S", new ChangeCoordinates(sqr, 1, 10, sqr.getPosition(),
             new Coordinates(0, 0)));
@@ -179,7 +180,8 @@ public class AnimationModelImplTest {
                     + "\n"
                     + "\n"
                     + "Shape S moves from (0.0,0.0) to (0.0,0.0) from t=1 to t=10\n"
-                    + "Shape S changes color from (1.0,0.0,0.0) to (0.0,0.0,1.0) from t=5 to t=100\n",
+                    + "Shape S changes color "
+                    + "from (1.0,0.0,0.0) to (0.0,0.0,1.0) from t=5 to t=100\n",
             clara.getDescription());
     alessia = new AnimationModelImpl();
     alessia.addShape(new Oval("O", 23.56, 50, Color.GREEN,

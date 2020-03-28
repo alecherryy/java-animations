@@ -41,35 +41,49 @@ public class ChangeSize extends AbstractAnimations {
    *
    * @return the original width of the shape
    */
-  public double getOriginalWidth() { return originalWidth; }
+  public double getOriginalWidth() {
+
+    return originalWidth;
+  }
 
   /**
    * Get the original height of the shape.
    *
    * @return the original height of the shape
    */
-  public double getOriginalHeight() { return originalHeight; }
+  public double getOriginalHeight() {
+
+    return originalHeight;
+  }
 
   /**
    * Get the new width of the shape.
    *
    * @return the new width of the shape
    */
-  public double getNewWidth() { return newWidth; }
+  public double getNewWidth() {
+
+    return newWidth;
+  }
 
   /**
    * Get the new height of the shape.
    *
    * @return the new height of the shape
    */
-  public double getNewHeight() { return newHeight; }
+  public double getNewHeight() {
+    return newHeight;
+  }
 
   /**
    * Returns the string "moves".
    *
    * @return the animation change as a string
    */
-  public String getChange() { return "scales "; }
+  public String getChange() {
+
+    return "scales ";
+  }
 
   /**
    * Get the starting state of the animation as a string.
@@ -77,6 +91,7 @@ public class ChangeSize extends AbstractAnimations {
    * @return the starting state of the animation as a string
    */
   public String getStartState() {
+
     return Utils.formatSizeString(this.getShape(), this.originalWidth, this.originalHeight);
   }
 
@@ -86,6 +101,7 @@ public class ChangeSize extends AbstractAnimations {
    * @return the end state of the animation as a string
    */
   public String getEndState() {
+
     return Utils.formatSizeString(this.getShape(), this.newWidth, this.newHeight);
   }
 

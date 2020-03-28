@@ -1,6 +1,6 @@
 package cs5004.easyanimator.model.animations;
 
-import java.awt.*;
+import java.awt.Color;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Shape;

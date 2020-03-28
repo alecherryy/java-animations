@@ -47,35 +47,49 @@ public class ChangeColor extends AbstractAnimations {
    *
    * @return the original color of the shape
    */
-  public Color getOriginalColor() { return this.originalColor; }
+  public Color getOriginalColor() {
+
+    return this.originalColor;
+  }
 
   /**
    * Get the new color of the shape.
    *
    * @return the new color of the shape
    */
-  public Color getNewColor() { return this.newColor; }
+  public Color getNewColor() {
+
+    return this.newColor;
+  }
 
   /**
    * Returns the string "moves".
    *
    * @return the animation change as a string
    */
-  public String getChange() { return "changes color "; }
+  public String getChange() {
+
+    return "changes color ";
+  }
 
   /**
    * Get the starting state of the animation as a string.
    *
    * @return the starting state of the animation as a string
    */
-  public String getStartState() { return Utils.colorAsString(this.originalColor); }
+  public String getStartState() {
+
+    return Utils.colorAsString(this.originalColor);
+  }
 
   /**
    * Get the end state of the animation as a string.
    *
    * @return the end state of the animation as a string
    */
-  public String getEndState() { return Utils.colorAsString(this.newColor); }
+  public String getEndState() {
+    return Utils.colorAsString(this.newColor);
+  }
 
   /**
    * Implements the ChangeColor animation on a shape.
@@ -121,5 +135,8 @@ public class ChangeColor extends AbstractAnimations {
    *
    * @param s a Shape object, whose field will be changed
    */
-  public void updateField(Shape s) { s.changeColor(newColor); }
+  public void updateField(Shape s) {
+
+    s.changeColor(newColor);
+  }
 }

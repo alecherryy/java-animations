@@ -1,6 +1,6 @@
 package cs5004.easyanimator.model.animations;
 
-import java.awt.*;
+import java.awt.Color;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Shape;
@@ -47,6 +47,7 @@ public abstract class AbstractAnimations implements Animations {
    * @return the shape that will receive the animation
    */
   public Shape getShape() {
+
     return this.shape;
   }
 
@@ -56,6 +57,7 @@ public abstract class AbstractAnimations implements Animations {
    * @return the type of the animation, an AnimationType object
    */
   public AnimationType getAnimationType() {
+
     return this.type;
   }
 
@@ -65,6 +67,7 @@ public abstract class AbstractAnimations implements Animations {
    * @return the start time of the animation, an int
    */
   public int getStartTime() {
+
     return this.startTime;
   }
 
@@ -74,6 +77,7 @@ public abstract class AbstractAnimations implements Animations {
    * @return the end time of the animation, an int
    */
   public int getEndTime() {
+
     return this.endTime;
   }
 
@@ -96,61 +100,80 @@ public abstract class AbstractAnimations implements Animations {
    *
    * @param s a Shape object, which we are changing the shape animation field to
    */
-  public void resetShape(Shape s) { this.shape = s; }
+  public void resetShape(Shape s) {
+
+    this.shape = s;
+  }
 
   /**
    * Get the original color of the shape.
    *
    * @return the original color of the shape
    */
-  public Color getOriginalColor() { return null; }
+  public Color getOriginalColor() {
+    return null;
+  }
 
   /**
    * Get the new color of the shape.
    *
    * @return the new color of the shape
    */
-  public Color getNewColor() { return null; }
+  public Color getNewColor() {
+    return null;
+  }
 
   /**
    * Get the original coordinates of the shape.
    *
    * @return the original coordinates of the shape
    */
-  public Coordinates getOriginalCoordinates() { return null; }
+  public Coordinates getOriginalCoordinates() {
+    return null;
+  }
 
   /**
    * Get the new coordinates of the shape.
    *
    * @return the new coordinates of the shape
    */
-  public Coordinates getNewCoordinates() { return null; }
+  public Coordinates getNewCoordinates() {
+    return null;
+  }
 
   /**
    * Get the original width of the shape.
    *
    * @return the original width of the shape
    */
-  public double getOriginalWidth() { return -1; }
+  public double getOriginalWidth() {
+    return -1;
+  }
 
   /**
    * Get the original height of the shape.
    *
    * @return the original height of the shape
    */
-  public double getOriginalHeight() { return -1; }
+  public double getOriginalHeight() {
+    return -1;
+  }
 
   /**
    * Get the new width of the shape.
    *
    * @return the new width of the shape
    */
-  public double getNewWidth() { return -1; }
+  public double getNewWidth() {
+    return -1;
+  }
 
   /**
    * Get the new height of the shape.
    *
    * @return the new height of the shape
    */
-  public double getNewHeight() { return -1; }
+  public double getNewHeight() {
+    return -1;
+  }
 }

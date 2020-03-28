@@ -94,7 +94,8 @@ public class AnimationModelImpl implements AnimationModel {
   public void addAnimation(String name, Animations a) {
     // throw an exception if there are no shapes
     if ((this.model.isEmpty())) {
-      throw new IllegalArgumentException("You need to add a shape, before you can add an animation");
+      throw new IllegalArgumentException("You need to add a shape, "
+              + "before you can add an animation");
     }
 
     returnShape(name).addAnimation(a);
@@ -127,8 +128,9 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Returns a summary of each item in the model. For each item, the summary include a description of
-   * the shape and a description of each animation associated with the given shape. If the
+   * Returns a summary of each item in the model. For each item,
+   * the summary include a description of the shape and a description of
+   * each animation associated with the given shape. If the
    * model is empty, returns an empty string.
    *
    * @return the model in a string
@@ -177,7 +179,8 @@ public class AnimationModelImpl implements AnimationModel {
     }
 
     // sort animations by start time
-    animations.sort((Animations a, Animations b) -> Integer.compare(a.getStartTime(), b.getStartTime()));
+    animations.sort((Animations a, Animations b) ->
+            Integer.compare(a.getStartTime(), b.getStartTime()));
 
     return animations;
   }

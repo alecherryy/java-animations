@@ -2,7 +2,8 @@ package cs5004.easyanimator.model;
 
 import java.awt.Color;
 
-import cs5004.easyanimator.model.shapes.*;
+import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Coordinates;
 
 
 /**

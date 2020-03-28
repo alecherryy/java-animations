@@ -23,7 +23,8 @@ public class ChangeCoordinates extends AbstractAnimations {
    * @param originalC the original coordinates of the object, type Pair.
    * @param newC      the new coordinates of the object, type Pair.
    */
-  public ChangeCoordinates(Shape shape, int start, int end, Coordinates originalC, Coordinates newC) {
+  public ChangeCoordinates(Shape shape, int start, int end,
+                           Coordinates originalC, Coordinates newC) {
     super(AnimationType.CHANGECOORDINATES, shape, start, end);
     this.originalCoordinates = originalC;
     this.newCoordinates = newC;

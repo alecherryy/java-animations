@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Coordinates;
