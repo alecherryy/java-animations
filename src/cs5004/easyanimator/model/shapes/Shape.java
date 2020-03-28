@@ -31,7 +31,7 @@ public interface Shape {
   /**
    * Returns the height of the shape.
    *
-   * @return the width of the shape
+   * @return the height of the shape
    */
   double getHeight();
 
@@ -59,7 +59,7 @@ public interface Shape {
   /**
    * Changes the color of this shape to a new color.
    *
-   * @param c the color to which we are changing this shape's color
+   * @param c the color to which we are changing this shape to
    */
   void changeColor(Color c);
 

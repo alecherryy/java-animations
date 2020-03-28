@@ -13,8 +13,8 @@ import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
- * A JUnit test class for the classes that extend AbstractAnimations, which includes:
- * ChangeColor, ChangeCoordinates and ChangeSize.
+ * A JUnit test class for the classes that extend AbstractAnimations,
+ * which includes: ChangeColor, ChangeCoordinates and ChangeSize.
  */
 public class AnimationsTest {
   private ChangeColor changeColor;
@@ -51,7 +51,6 @@ public class AnimationsTest {
     Assert.assertEquals(Color.BLUE, changeColor.getOriginalColor());
     Assert.assertEquals(Color.RED, changeColor.getNewColor());
     Assert.assertEquals(AnimationType.CHANGECOLOR, changeColor.getAnimationType());
-
   }
 
   /**
@@ -88,7 +87,6 @@ public class AnimationsTest {
     Assert.assertEquals("(25.0,50.0)", changeCoordinates.getOriginalCoordinates().toString());
     Assert.assertEquals("(20.0,50.0)", changeCoordinates.getNewCoordinates().toString());
     Assert.assertEquals(AnimationType.CHANGECOORDINATES, changeCoordinates.getAnimationType());
-
   }
 
   /**
@@ -122,7 +120,6 @@ public class AnimationsTest {
     Assert.assertEquals(40, changeSize.getNewWidth(), 0.1);
     Assert.assertEquals(20, changeSize.getNewHeight(), 0.1);
     Assert.assertEquals(AnimationType.CHANGESIZE, changeSize.getAnimationType());
-
   }
 
   /**
@@ -186,7 +183,8 @@ public class AnimationsTest {
     Assert.assertEquals(""
             + "Shape R moves from (25.0,50.0) to (20.0,50.0) from t=0 to t=5",
             changeCoordinates.getDescription());
-    Assert.assertEquals("Shape O scales from X radius: 35.0, Y radius: 18.0 to X radius: "
+    Assert.assertEquals(""
+            + "Shape O scales from X radius: 35.0, Y radius: 18.0 to X radius: "
             + "40.0, Y radius: 20.0 from t=0 to t=10", changeSize.getDescription());
   }
 
@@ -353,6 +351,5 @@ public class AnimationsTest {
     Assert.assertEquals(oval, changeSize.getShape());
     changeSize.resetShape(oval2);
     Assert.assertEquals(oval2, changeSize.getShape());
-
   }
 }

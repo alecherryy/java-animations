@@ -3,6 +3,12 @@ package cs5004.easyanimator.model;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This is the AnimationModel Interface. It includes all methods available to an
+ * Animation model; including actions such as adding a shape, removing a shape,
+ * adding an animation, removing an animation and get a summary of each shape and
+ * animation within the model.
+ */
 public interface AnimationModel {
 
   /**

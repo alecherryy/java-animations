@@ -6,6 +6,10 @@ import java.util.List;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This is the AnimationModel class; it implements all methods available on the
+ * AnimationModel Interface.
+ */
 public class AnimationModelImpl implements AnimationModel {
   private List<ModelItem> model;
 
@@ -14,7 +18,7 @@ public class AnimationModelImpl implements AnimationModel {
    * list of objects (i.e., AnimationModelItem).
    */
   public AnimationModelImpl() {
-    model = new ArrayList<ModelItem>();
+    this.model = new ArrayList<ModelItem>();
   }
 
   /**
@@ -70,6 +74,7 @@ public class AnimationModelImpl implements AnimationModel {
 
     for (ModelItem obj : this.model) {
       if (obj.getName().equals(name)) {
+        // remove shape at the current index
         this.model.remove(i);
         // exit method
         return;
@@ -87,6 +92,7 @@ public class AnimationModelImpl implements AnimationModel {
    * @throws IllegalArgumentException if the shape does not exist
    */
   public void addAnimation(String name, Animations a) {
+    // throw an exception if there are no shapes
     if ((this.model.isEmpty())) {
       throw new IllegalArgumentException("You need to add a shape, before you can add an animation");
     }
@@ -101,11 +107,13 @@ public class AnimationModelImpl implements AnimationModel {
    * @throws IllegalArgumentException if the shape does not exist
    */
   private ModelItem returnShape(String name) {
+    // look for obj whose name matches the given name
     for (ModelItem obj : this.model) {
       if (obj.getName().equalsIgnoreCase(name)) {
         return obj;
       }
     }
+    // if the obj does not exist, throw an exception
     throw new IllegalArgumentException("This shape does not exist.");
   }
 
@@ -119,12 +127,14 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Return a summary of each item in the model. For each item, the summary include a description of
-   * the shape and a description of each animation associated with the given shape.
+   * Returns a summary of each item in the model. For each item, the summary include a description of
+   * the shape and a description of each animation associated with the given shape. If the
+   * model is empty, returns an empty string.
    *
    * @return the model in a string
    */
   public String getDescription() {
+    // check if model is empty
     if (!(this.model.isEmpty())) {
       StringBuilder shapes = new StringBuilder();
       StringBuilder animations = animationDescriptions();
@@ -138,7 +148,7 @@ public class AnimationModelImpl implements AnimationModel {
         shapes.append(obj.getShape().getDescription());
         shapes.append("\n");
       }
-
+      // concatenate string
       return shapes.toString() + animations.toString();
 
     }

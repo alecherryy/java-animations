@@ -6,11 +6,24 @@ import java.util.List;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This is the ModelItemImpl class, which implements all methods listen in
+ * the ModelItem Interface. A model item is a composite object; it
+ * contains a String value as its name (which common to the shape), a
+ * shape object and an array of Animations to be executed on the shape.
+ */
 public class ModelItemImpl implements ModelItem {
   private String name;
   private Shape shape;
   private List<Animations> animations;
 
+  /**
+   * This is the class constructor. Its only parameter is a shape;
+   * once initialized it has a name and an empty array of
+   * Animations.
+   *
+   * @param s the shape
+   */
   public ModelItemImpl(Shape s) {
     this.shape = s;
     this.name = s.getName();
@@ -19,6 +32,8 @@ public class ModelItemImpl implements ModelItem {
 
   /**
    * Returns the name.
+   *
+   * @return the name in a string
    */
   public String getName() {
     return this.name;
@@ -26,6 +41,8 @@ public class ModelItemImpl implements ModelItem {
 
   /**
    * Returns the shape.
+   *
+   * @return the shape as an object
    */
   public Shape getShape() {
     return this.shape;
@@ -65,6 +82,8 @@ public class ModelItemImpl implements ModelItem {
   /**
    * Checks if an item has at least one animation and
    * returns true or false accordingly.
+   *
+   * @return true if the animations array is empty, otherwise returns false
    */
   public boolean hasAnimation() {
     return this.animations.size() != 0;
@@ -74,7 +93,7 @@ public class ModelItemImpl implements ModelItem {
    * Returns a summary of the item, including a description of the
    * Shape and all the animations.
    *
-   * @return a summary in a string
+   * @return a summary of the item in a string
    */
   public String toString() {
     StringBuilder str = new StringBuilder();

@@ -6,18 +6,18 @@ import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.Utils;
 
 /**
- * This class represents the first animation type -- changing the color of a shape.
- * We use the Java inbuilt color, which encapsulates colors in the default sRGB color space.
+ * This class represents the first animation type -- changing
+ * the color of a shape. We use the Java inbuilt color, which encapsulates
+ * colors in the default sRGB color space.
  */
-
 public class ChangeColor extends AbstractAnimations {
   private Color originalColor;
   private Color newColor; // color to change to.
 
   /**
-   * Constructs a ChangeColor object, with its given type, start and end times, original color and
-   * new color. Calls the AbstractAnimations super-constructor and sets the AnimationType parameter
-   * to CHANGECOLOR.
+   * Constructs a ChangeColor object, with its given type, start and end times,
+   * original color and new color. Calls the AbstractAnimations super-constructor
+   * and sets the AnimationType parameter to CHANGECOLOR.
    *
    * @param shape         the shape will be animated, type Shape.
    * @param start         the start time of the animation, an int.
@@ -104,7 +104,8 @@ public class ChangeColor extends AbstractAnimations {
     if ((time > this.getEndTime()) || (time < this.getStartTime())) {
       // do nothing.
       return;
-    } else {
+    }
+    else {
       float finalRed = originalRed + (changeRed * changeInTime);
       float finalGreen = originalGreen + (changeGreen * changeInTime);
       float finalBlue = originalBlue + (changeBlue * changeInTime);

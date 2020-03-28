@@ -5,8 +5,8 @@ import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.shapes.Coordinates;
 
 /**
- * This class represents the second animation type -- changing the coordinates of a shape. It
- * extends AbstractAnimation.
+ * This class represents the second animation type -- changing
+ * the coordinates of a shape. It extends AbstractAnimation.
  */
 public class ChangeCoordinates extends AbstractAnimations {
   private Coordinates originalCoordinates;

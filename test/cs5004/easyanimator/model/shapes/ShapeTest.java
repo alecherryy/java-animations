@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.awt.*;
 
 /**
- * This is the test class for all Shapes.
+ * A JUnit test class for all classes that extends the Shape Interface.
  */
 public class ShapeTest {
   private Shape rectangle;

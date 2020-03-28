@@ -14,7 +14,7 @@ import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
- * This is the test class for all AnimationModelImpl methods.
+ * A JUnit test class for the AnimationModelImpl class.
  */
 public class AnimationModelImplTest {
   private AnimationModelImpl clara;
