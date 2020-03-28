@@ -12,6 +12,9 @@ import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Oval;
 import cs5004.easyanimator.model.shapes.Rectangle;
 
+/**
+ * This is the test class for all ModelItemImpl methods.
+ */
 public class ModelItemImplTest {
   private ModelItemImpl clara;
   private ModelItemImpl alessia;

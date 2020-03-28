@@ -102,7 +102,7 @@ public class AnimationModelImpl implements AnimationModel {
    */
   private ModelItem returnShape(String name) {
     for (ModelItem obj : this.model) {
-      if (obj.getName().equals(name)) {
+      if (obj.getName().equalsIgnoreCase(name)) {
         return obj;
       }
     }
@@ -125,20 +125,25 @@ public class AnimationModelImpl implements AnimationModel {
    * @return the model in a string
    */
   public String getDescription() {
-    StringBuilder shapes = new StringBuilder();
-    StringBuilder animations = animationDescriptions();
+    if (!(this.model.isEmpty())) {
+      StringBuilder shapes = new StringBuilder();
+      StringBuilder animations = animationDescriptions();
 
-    // append title
-    shapes.append("Shapes:\n");
+      // append title
+      shapes.append("Shapes:\n");
 
-    for (ModelItem obj : this.model) {
-      // call toString() method on each obj and append it
-      // to the StringBuilder
-      shapes.append(obj.getShape().getDescription());
-      shapes.append("\n");
+      for (ModelItem obj : this.model) {
+        // call toString() method on each obj and append it
+        // to the StringBuilder
+        shapes.append(obj.getShape().getDescription());
+        shapes.append("\n");
+      }
+
+      return shapes.toString() + animations.toString();
+
     }
 
-    return shapes.toString() + animations.toString();
+    return "";
   }
 
   /**
@@ -180,6 +185,7 @@ public class AnimationModelImpl implements AnimationModel {
     // iterate through the array and append each description to the StringBuilder
     for (Animations a : animations) {
       str.append(a.getDescription());
+      str.append("\n");
     }
 
     return str;
