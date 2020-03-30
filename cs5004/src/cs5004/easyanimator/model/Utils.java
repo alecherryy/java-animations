@@ -2,17 +2,25 @@ package cs5004.easyanimator.model;
 
 import java.awt.Color;
 
-import cs5004.easyanimator.model.shapes.*;
+import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.view.View;
+import cs5004.easyanimator.view.InteractiveView;
+import cs5004.easyanimator.view.SVGView;
+import cs5004.easyanimator.view.TextualView;
+import cs5004.easyanimator.view.VisualAnimationView;
 
 
 /**
- * This class contains static methods that are common to a few classes. They are used for testing.
+ * This class contains static methods that are common to a few classes.
+ * They are used for testing and to standardized methods shared among
+ * multiple classes
  */
 public class Utils {
 
   /**
-   * Check if a number is negative or not. This will be used for throwing exceptions inside
-   * constructors.
+   * Check if a number is negative or not. This will be used for throwing
+   * exceptions inside constructors.
    *
    * @param n The number we are checking
    * @return true if number is negative, false if it isn't
@@ -57,7 +65,8 @@ public class Utils {
     String width = "";
     String height = "";
 
-    switch(s.getType()) {
+    // format string based on shape type
+    switch (s.getType()) {
       case RECTANGLE:
         width = "Width: ";
         height = "Height: ";
@@ -88,8 +97,28 @@ public class Utils {
    * Returns the string representation of a color with its RGB value (not as a float).
    *
    * @param color the color
+   * @return the RGB value of the color in a string
    */
   public static String getRGBColorString(Color color) {
     return "(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")";
   }
+
+  public static View createView(String view, AnimationModel model, double tick) {
+    // TODO: Implement code.
+    /*
+    if (view.equals("text")) {
+      return new TextualView(tick, model.getShapes(), model.getAnimations());
+    } else if (view.equals("visual")) {
+      return new VisualAnimationView(tick, model.getShapes());
+    } else if (view.equals("svg")) {
+      return new SVGView(tick,  model.getShapes(), model.getAnimations());
+    } else if (view.equals("interactive")) {
+      return new InteractiveView(tick, model.getShapes(), model.getAnimations(), model.getLastTime());
+    } else {
+      throw new IllegalArgumentException("Invalid view type");
+    } */
+    return null;
+  }
 }
+
+

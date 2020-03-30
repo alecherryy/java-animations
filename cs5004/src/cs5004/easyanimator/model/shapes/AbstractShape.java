@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import cs5004.easyanimator.model.Utils;
 
-
 /**
  * This abstract class implements Shape and all of its methods. It contains the code for an abstract
  * shape and represents the behavior shared by all shapes.
@@ -104,7 +103,7 @@ public abstract class AbstractShape implements Shape {
   /**
    * Returns the color of the shape.
    *
-   * @return the color of the shape as a string.
+   * @return the color of the shape as a string
    */
   public Color getColor() {
     return this.color;
@@ -128,77 +127,74 @@ public abstract class AbstractShape implements Shape {
     return this.position;
   }
 
-  @Override
-  public int getAppear() {
-    return this.appear;
+  /**
+   * Changes the color of this shape to a new color.
+   *
+   * @param c the color to which we are changing this shape's color
+   */
+  public void changeColor(Color c) {
+    this.color = c;
   }
 
-  @Override
-  public int getDisappear() {
-    return this.disappear;
-  }
-
-  @Override
-  public void changeColor(Color newColor) {
-    this.color = newColor;
-  }
-
-  @Override
+  /**
+   * Changes the width of this shape to a new width.
+   *
+   * @param w the width to which we are changing this shape's width
+   * @throws IllegalArgumentException if new width is negative
+   */
   public void changeWidth(double w) throws IllegalArgumentException {
+    // check for bad input
     if (Utils.isNegative(w)) {
-      throw new IllegalArgumentException("New width cannot be negative");
+      throw new IllegalArgumentException("New width cannot be negative.");
     }
     this.width = w;
   }
 
-  @Override
+  /**
+   * Changes the height of this shape to a new height.
+   *
+   * @param h the height to which we are changing this shape's height
+   * @throws IllegalArgumentException if new height is negative
+   */
   public void changeHeight(double h) throws IllegalArgumentException {
+    // check for bad input
     if (Utils.isNegative(h)) {
-      throw new IllegalArgumentException("New height cannot be negative");
+      throw new IllegalArgumentException("New height cannot be negative.");
     }
     this.height = h;
   }
 
-  @Override
+  /**
+   * Changes the position of this shape to a new position.
+   *
+   * @param pos the position to which we are changing this shape's position
+   */
   public void changePosition(Coordinates pos) {
     this.position = pos;
   }
 
-  @Override
-  public void changeAppear(int newAppear) throws IllegalArgumentException {
-    if (newAppear > this.disappear) {
-      throw new IllegalArgumentException("New appear time can not be after disappear " +
-          "time");
-    }
-    this.appear = newAppear;
-  }
-
-  @Override
-  public void changeDisappear(int newDisappear) throws IllegalArgumentException {
-    if (newDisappear < this.appear) {
-      throw new IllegalArgumentException("New disappear time can not be before appear time");
-    }
-    this.appear = newDisappear;
-  }
-
-  @Override
+  /**
+   * Returns the string representation of the dimensions of the shape.
+   * We round to 1 decimal place.
+   *
+   * @return the dimensions of the shape as a string
+   */
   public String getDimensions() {
-    return this.widthString() + String.format("%.1f", this.width) + ", " + this.heightString() +
-        String.format("%.1f", this.height);
+    return Utils.formatSizeString(this, this.width, this.height);
   }
 
-  @Override
+  /**
+   * Returns a summary of the Shape in a string; meaning, a detailed
+   * description of the shape information and its expected behavior.
+   *
+   * @return a summary in a string
+   */
   public String getDescription() {
-    return "Name: " + this.name + "\n" + "Type: " + this.type.toString() + "\n"
+    return  "Name: " + this.name + "\n"
+        + "Type: " + this.type.toString() + "\n"
         + this.getLocation() + ", "
-        + this.getDimensions() + ", Color: "
-        + Utils.colorAsString(this.color) + "\n"
-        + "Appears at t=" + appear + "\n" + "Disappears at t=" + disappear + "\n";
-  }
-
-  @Override
-  public String getTimeDescription() {
-    return this.name + " appears at time t=" + appear + " and disappears at time t=" + disappear;
+        + this.getDimensions() + ", "
+        + "Color: " + Utils.colorAsString(this.color) + "\n";
   }
 }
 

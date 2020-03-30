@@ -4,34 +4,45 @@ import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
- * This interface represents an animation model. It contains methods to add shapes and
- * animations to the model, check whether there are shapes or animations in the model, removing
- * shapes from the model, and get a summary of each item in the model.
+ * This is the AnimationModel Interface. It includes all methods available to an
+ * Animation model; including actions such as adding a shape, removing a shape,
+ * adding an animation, removing an animation and get a summary of each shape and
+ * animation within the model.
  */
-
 public interface AnimationModel {
 
   /**
    * Add a new shape to the list.
    *
    * @param s the shape to add
+   * @throws IllegalArgumentException if a shape of the same name already exists
    */
-  void addShape(Shape s);
+  void addShape(Shape s) throws IllegalArgumentException;
 
   /**
-   * Removes a shape from the list, using its index as an identifier.
+   * Given a shape name returns the item inside the model matching
+   * the given name.
    *
-   * @param index the shape to add
+   * @param name the shape name
    */
-  void removeShape(int index);
+  ModelItem getItem(String name);
 
   /**
-   * Add a new animation to a specific shape, using the index to retrieve the correct shape.
+   * Removes a shape from the list, using its name as an identifier.
    *
-   * @param a the shape to add
-   * @param a the shape to add
+   * @param name of the shape to add
+   * @throws IllegalArgumentException if the shape does not exist
    */
-  void addAnimation(int index, Animations a);
+  void removeShape(String name) throws IllegalArgumentException;
+
+  /**
+   * Add a new animation to a specific shape, using the shape name as an identifier.
+   *
+   * @param name of the shape
+   * @param a     the animation to add
+   * @throws IllegalArgumentException if the shape does not exist
+   */
+  void addAnimation(String name, Animations a) throws IllegalArgumentException;
 
   /**
    * Returns true if the model is empty, otherwise returns false.
@@ -41,8 +52,9 @@ public interface AnimationModel {
   boolean isEmpty();
 
   /**
-   * Return a summary of each item in the model. For each item, the summary include a description of
-   * the shape and a description of each animation associated with the given shape.
+   * Return a summary of each item in the model. For each item,
+   * the summary include a description of the shape and a description
+   * of each animation associated with the given shape.
    *
    * @return the model in a string
    */

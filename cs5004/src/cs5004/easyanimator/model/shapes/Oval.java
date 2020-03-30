@@ -29,19 +29,16 @@ public class Oval extends AbstractShape {
 
   }
 
-  @Override
+  /**
+   * Returns the string representation of the location of the oval,
+   * using its center as a reference.
+   *
+   * @return the location of the rectangle as a string
+   */
   public String getLocation() {
-    return "Center: " + Utils.getPositionString(this.getPosition());
-  }
 
-  @Override
-  public String widthString() {
-    return "X radius: ";
-  }
-
-  @Override
-  public String heightString() {
-    return "Y radius: ";
+    return  "Center: "
+        + Utils.getPositionString(this.getPosition());
   }
 }
 

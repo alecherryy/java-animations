@@ -1,0 +1,2 @@
+- Implement Animation Builder as static class
+- Add new methods to each class

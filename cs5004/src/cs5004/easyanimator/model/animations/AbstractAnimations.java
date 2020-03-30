@@ -1,15 +1,14 @@
 package cs5004.easyanimator.model.animations;
 
-import cs5004.easyanimator.model.Utils;
-import cs5004.easyanimator.model.shapes.*;
-
 import java.awt.Color;
 
-/**
- * This abstract class implements Animation and all of its methods. It contains the code for an
- * abstract animation and represents the behavior shared by all animations.
- */
+import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Shape;
 
+/**
+ * This abstract class implements Animation and all of its methods. It contains the code
+ * for an abstract animation and represents the behavior shared by all animations.
+ */
 public abstract class AbstractAnimations implements Animations {
   private AnimationType type;
   private Shape shape;
@@ -17,24 +16,23 @@ public abstract class AbstractAnimations implements Animations {
   private int endTime;
 
   /**
-   * Constructs an AbstractAnimation object, with its given type, shape, and start and end times.
+   * This is the class constructor; it takes 4 parameters: a type, a shape, a start time and an end
+   * time.
    *
-   * @param type  the animation type, as defined by the AnimationType enum.
-   * @param shape the shape will be animated, type Shape.
-   * @param start the start time of the animation, an int.
-   * @param end   the end time of the animation, an int.
-   * @throws IllegalArgumentException if the start time is after the end time, or if either the
-   *                                  start or end times are negative, or if the type parameter is
-   *                                  null.
+   * @param type  of animation
+   * @param shape to be animated
+   * @param start of the animation
+   * @param end   of the animation
+   * @throws IllegalArgumentException if end time is greater than start time or if they're both
+   *                                  negative
    */
   public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
-    if (type == null) {
-      throw new IllegalArgumentException("The animation type must be specified");
-    }
+    // check if end is smaller than start
     if (end < start) {
       throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
     }
-    if (Utils.isNegative(start) || Utils.isNegative(end)) {
+    // check end and start are not negative
+    if (start < 0 || end < 0) {
       throw new IllegalArgumentException("Start and end time must be positive.");
     }
     this.type = type;
@@ -43,78 +41,139 @@ public abstract class AbstractAnimations implements Animations {
     this.endTime = end;
   }
 
-  @Override
+  /**
+   * Get the shape that will be animated.
+   *
+   * @return the shape that will receive the animation
+   */
   public Shape getShape() {
+
     return this.shape;
   }
 
-  @Override
+  /**
+   * Get the type of animation.
+   *
+   * @return the type of the animation, an AnimationType object
+   */
   public AnimationType getAnimationType() {
+
     return this.type;
   }
 
-  @Override
+  /**
+   * Get the start time of the animation.
+   *
+   * @return the start time of the animation, an int
+   */
   public int getStartTime() {
+
     return this.startTime;
   }
 
-  @Override
+  /**
+   * Get the end time of the animation.
+   *
+   * @return the end time of the animation, an int
+   */
   public int getEndTime() {
+
     return this.endTime;
   }
 
-  @Override
+  /**
+   * Get the string representation of the animation.
+   *
+   * @return the animation represented as a string.
+   */
   public String getDescription() {
-    return "Shape " + this.shape.getName() + " " + this.getChange() + "from "
-        + this.getStartState() + " to " + this.getEndState() + " from t=" + this.startTime
+    return "Shape "
+        + this.shape.getName() + " "
+        + this.getChange() + "from "
+        + this.getStartState() + " to "
+        + this.getEndState() + " from t=" + this.startTime
         + " to t=" + this.endTime;
   }
 
-  @Override
+  /**
+   * Resets the shape that the animation is being implemented on to a new shape.
+   *
+   * @param s a Shape object, which we are changing the shape animation field to
+   */
   public void resetShape(Shape s) {
+
     this.shape = s;
   }
 
-  @Override
+  /**
+   * Get the original color of the shape.
+   *
+   * @return the original color of the shape
+   */
   public Color getOriginalColor() {
     return null;
   }
 
-  @Override
+  /**
+   * Get the new color of the shape.
+   *
+   * @return the new color of the shape
+   */
   public Color getNewColor() {
     return null;
   }
 
-  @Override
+  /**
+   * Get the original coordinates of the shape.
+   *
+   * @return the original coordinates of the shape
+   */
   public Coordinates getOriginalCoordinates() {
     return null;
   }
 
-  @Override
+  /**
+   * Get the new coordinates of the shape.
+   *
+   * @return the new coordinates of the shape
+   */
   public Coordinates getNewCoordinates() {
     return null;
   }
 
-  @Override
+  /**
+   * Get the original width of the shape.
+   *
+   * @return the original width of the shape
+   */
   public double getOriginalWidth() {
     return -1;
   }
 
-  @Override
+  /**
+   * Get the original height of the shape.
+   *
+   * @return the original height of the shape
+   */
   public double getOriginalHeight() {
     return -1;
   }
 
-  @Override
+  /**
+   * Get the new width of the shape.
+   *
+   * @return the new width of the shape
+   */
   public double getNewWidth() {
     return -1;
   }
 
-  @Override
+  /**
+   * Get the new height of the shape.
+   *
+   * @return the new height of the shape
+   */
   public double getNewHeight() {
     return -1;
   }
-
-
 }
-

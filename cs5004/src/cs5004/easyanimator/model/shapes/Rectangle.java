@@ -30,20 +30,15 @@ public class Rectangle extends AbstractShape {
     super(name, ShapeType.RECTANGLE, appear, disappear, width, height, color, pos);
 
   }
-
-  @Override
+  /**
+   * Returns the string representation of the location of the rectangle,
+   * using its bottom left corner as a reference.
+   *
+   * @return the location of the rectangle as a string
+   */
   public String getLocation() {
-    return "Min corner: " + Utils.getPositionString(this.getPosition());
-  }
-
-  @Override
-  public String widthString() {
-    return "Width: ";
-  }
-
-  @Override
-  public String heightString() {
-    return "Height: ";
+    return  "Min corner: "
+        + Utils.getPositionString(this.getPosition());
   }
 }
 

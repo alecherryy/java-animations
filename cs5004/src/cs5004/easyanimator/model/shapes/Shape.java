@@ -31,7 +31,7 @@ public interface Shape {
   /**
    * Returns the height of the shape.
    *
-   * @return the width of the shape
+   * @return the height of the shape
    */
   double getHeight();
 
@@ -52,117 +52,60 @@ public interface Shape {
   /**
    * Returns the color of the shape as a string.
    *
-   * @return the color of the shape as a string.
+   * @return the color of the shape as a string
    */
   Color getColor();
 
   /**
-   * Returns the appear time of the shape.
-   *
-   * @return the appear time of the shape.
-   */
-  int getAppear();
-
-  /**
-   * Returns the disappear time of the shape.
-   *
-   * @return the disappear time of the shape.
-   */
-
-  int getDisappear();
-
-  /**
    * Changes the color of this shape to a new color.
    *
-   * @param c the color to which we are changing this shape's color.
+   * @param c the color to which we are changing this shape to
    */
   void changeColor(Color c);
 
   /**
    * Changes the width of this shape to a new width.
    *
-   * @param w the width to which we are changing this shape's width.
-   * @throws IllegalArgumentException if new width is negative.
+   * @param w the width to which we are changing this shape's width
+   * @throws IllegalArgumentException if new width is negative
    */
   void changeWidth(double w) throws IllegalArgumentException;
 
   /**
    * Changes the height of this shape to a new height.
    *
-   * @param h the height to which we are changing this shape's height.
-   * @throws IllegalArgumentException if new height is negative.
+   * @param h the height to which we are changing this shape's height
+   * @throws IllegalArgumentException if new height is negative
    */
   void changeHeight(double h) throws IllegalArgumentException;
 
   /**
    * Changes the position of this shape to a new position.
    *
-   * @param pos the position to which we are changing this shape's position.
+   * @param pos the position to which we are changing this shape's position
    */
   void changePosition(Coordinates pos);
 
   /**
-   * Changes the appear time of this shape to a new appear time.
-   *
-   * @param newAppear the new appear time to which we are changing this shape's appear time.
-   * @throws IllegalArgumentException if new appear time is greater than disappear time.
-   */
-  void changeAppear(int newAppear) throws IllegalArgumentException;
-
-  /**
-   * Changes the disappear time of this shape to a new disappear time.
-   *
-   * @param newDisappear the new disappear time to which we are changing this shape's disappear
-   *                     time.
-   * @throws IllegalArgumentException if new disappear time is less than appear time.
-   *                                  <p>
-   *                                  *
-   */
-  void changeDisappear(int newDisappear);
-
-  /**
    * Returns the string representation of the location of the shape.
    *
-   * @return the location of the shape as a string.
+   * @return the location of the shape as a string
    */
   String getLocation();
 
   /**
-   * Returns the string representation of the dimensions of the shape. We round to 1 decimal
-   * place.
+   * Returns the string representation of the dimensions of the shape.
+   * We round to 1 decimal place.
    *
-   * @return the dimensions of the shape as a string.
+   * @return the dimensions of the shape as a string
    */
   String getDimensions();
 
   /**
-   * Returns a summary of the Shape in a string; meaning, a detailed description of the shape
-   * information and its expected behavior.
+   * Returns a summary of the Shape in a string; meaning, a detailed
+   * description of the shape information and its expected behavior.
    *
    * @return a summary in a string
    */
   String getDescription();
-
-  /**
-   * Returns width as string.
-   *
-   * @return the width of this shape as a string.
-   */
-  String widthString();
-
-  /**
-   * Returns height as string.
-   *
-   * @return the height of this shape as a string.
-   */
-  String heightString();
-
-  /**
-   * Returns a String of the following format: [shape name] appears at time t=[appear time] and
-   * disappears at time t=[disappear time].
-   *
-   * @return a String with a description of when a shape appears and when it disappears.
-   */
-  String getTimeDescription();
-
 }

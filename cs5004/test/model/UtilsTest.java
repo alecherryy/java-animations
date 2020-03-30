@@ -1,5 +1,9 @@
-import org.junit.Before;
+package model;
+
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.awt.*;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Coordinates;
@@ -7,23 +11,15 @@ import cs5004.easyanimator.model.shapes.Oval;
 import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shape;
 
-import org.junit.Assert;
-
-import java.awt.Color;
-
 
 /**
  * A JUnit test class for the Utils class.
  */
-
 public class UtilsTest {
-  private Shape rectangle;
-  private Shape oval;
 
   /**
-   * Test for isNegative().
+   * Test for isNegative() method.
    */
-
   @Test
   public void isNegativeTest() {
     Assert.assertEquals(false, Utils.isNegative(0.0));
@@ -32,9 +28,8 @@ public class UtilsTest {
   }
 
   /**
-   * Test for rgbToFloat().
+   * Test for rgbToFloat() method.
    */
-
   @Test
   public void rgbToFloatTest() {
     Assert.assertEquals(1.0, Utils.rgbToFloat(255), 0.1);
@@ -44,10 +39,8 @@ public class UtilsTest {
   }
 
   /**
-   * Test for colorAsString().
+   * Test for colorAsString() method.
    */
-
-
   @Test
   public void colorAsStringTest() {
     Assert.assertEquals("(0.0,0.0,1.0)", Utils.colorAsString(Color.BLUE));
@@ -57,32 +50,24 @@ public class UtilsTest {
   }
 
   /**
-   * Test for formatSizeString().
+   * Test for formatSizeString() method.
    */
-
   @Test
   public void formatSizeStringTest() {
-    rectangle = new Rectangle("R", 0, 3, 2, 5, Color.BLUE, new Coordinates(25, 50));
-    ;
+    Shape rectangle = new Rectangle("R", 2, 5, Color.BLUE, new Coordinates(25, 50));
     Assert.assertEquals("Width: 2.0, Height: 5.0", Utils.formatSizeString(rectangle, 2.0, 5.0));
-    oval = new Oval("O", 3, 10, 7, 8, Color.GREEN, new Coordinates(0, 18.5));
-    ;
+    Shape oval = new Oval("O", 7, 8, Color.GREEN, new Coordinates(0, 18.5));
     Assert.assertEquals("X radius: 7.0, Y radius: 8.0", Utils.formatSizeString(oval, 7.0, 8.0));
 
   }
 
   /**
-   * Test for getRGBColorString().
+   * Test for getRGBColorString() method.
    */
-
-
   @Test
   public void getRGBColorStringTest() {
     Assert.assertEquals("(0,0,255)", Utils.getRGBColorString(Color.BLUE));
     Assert.assertEquals("(0,255,0)", Utils.getRGBColorString(Color.GREEN));
     Assert.assertEquals("(255,0,0)", Utils.getRGBColorString(Color.RED));
-
   }
-
-
 }

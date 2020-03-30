@@ -6,18 +6,18 @@ import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.Utils;
 
 /**
- * This class represents the first animation type -- changing the color of a shape. We use the Java
- * inbuilt color, which encapsulates colors in the default sRGB color space.
+ * This class represents the first animation type -- changing
+ * the color of a shape. We use the Java inbuilt color, which encapsulates
+ * colors in the default sRGB color space.
  */
-
 public class ChangeColor extends AbstractAnimations {
   private Color originalColor;
   private Color newColor; // color to change to.
 
   /**
-   * Constructs a ChangeColor object, with its given type, start and end times, original color and
-   * new color. Calls the AbstractAnimations super-constructor and sets the AnimationType parameter
-   * to CHANGECOLOR.
+   * Constructs a ChangeColor object, with its given type, start and end times,
+   * original color and new color. Calls the AbstractAnimations super-constructor
+   * and sets the AnimationType parameter to CHANGECOLOR.
    *
    * @param shape         the shape will be animated, type Shape.
    * @param start         the start time of the animation, an int.
@@ -42,32 +42,60 @@ public class ChangeColor extends AbstractAnimations {
     this.newColor = newColor;
   }
 
-  @Override
+  /**
+   * Get the original color of the shape.
+   *
+   * @return the original color of the shape
+   */
   public Color getOriginalColor() {
+
     return this.originalColor;
   }
 
-  @Override
+  /**
+   * Get the new color of the shape.
+   *
+   * @return the new color of the shape
+   */
   public Color getNewColor() {
+
     return this.newColor;
   }
 
-  @Override
+  /**
+   * Returns the string "moves".
+   *
+   * @return the animation change as a string
+   */
   public String getChange() {
+
     return "changes color ";
   }
 
-  @Override
+  /**
+   * Get the starting state of the animation as a string.
+   *
+   * @return the starting state of the animation as a string
+   */
   public String getStartState() {
+
     return Utils.colorAsString(this.originalColor);
   }
 
-  @Override
+  /**
+   * Get the end state of the animation as a string.
+   *
+   * @return the end state of the animation as a string
+   */
   public String getEndState() {
     return Utils.colorAsString(this.newColor);
   }
 
-  @Override
+  /**
+   * Implements the ChangeColor animation on a shape.
+   *
+   * @param time the current time of the animation
+   */
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
     float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
@@ -90,7 +118,8 @@ public class ChangeColor extends AbstractAnimations {
     if ((time > this.getEndTime()) || (time < this.getStartTime())) {
       // do nothing.
       return;
-    } else {
+    }
+    else {
       float finalRed = originalRed + (changeRed * changeInTime);
       float finalGreen = originalGreen + (changeGreen * changeInTime);
       float finalBlue = originalBlue + (changeBlue * changeInTime);
@@ -100,8 +129,14 @@ public class ChangeColor extends AbstractAnimations {
     }
   }
 
-  @Override
+  /**
+   * Changes the appropriate fields of the shape to match the changes
+   * implemented on the shape.
+   *
+   * @param s a Shape object, whose field will be changed
+   */
   public void updateField(Shape s) {
+
     s.changeColor(newColor);
   }
 }

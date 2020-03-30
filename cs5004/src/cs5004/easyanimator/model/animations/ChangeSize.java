@@ -1,12 +1,12 @@
 package cs5004.easyanimator.model.animations;
 
+import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Shape;
 
 /**
- * This class represents the third animation type -- changing the size of a shape, using its width
- * and height. It extends AbstractAnimation.
+ * This class represents the third animation type -- changing the size of a shape,
+ * using its width and height. It extends AbstractAnimation.
  */
-
 public class ChangeSize extends AbstractAnimations {
   private double originalWidth;
   private double originalHeight;
@@ -14,9 +14,10 @@ public class ChangeSize extends AbstractAnimations {
   private double newHeight;
 
   /**
-   * Constructs a Change Size object, with its given shape, start time, end time, original width,
-   * original height, new width, and new height. Calls the AbstractAnimations super-constructor and
-   * sets the AnimationType parameter to CHANGESIZE.
+   * Constructs a Change Size object, with its given shape, start time,
+   * end time, original width, original height, new width, and new height.
+   * Calls the AbstractAnimations super-constructor and sets the
+   * AnimationType parameter to CHANGESIZE.
    *
    * @param shape          the shape will be animated, type Shape.
    * @param start          the start time of the animation, an int.
@@ -35,40 +36,80 @@ public class ChangeSize extends AbstractAnimations {
     this.newHeight = newHeight;
   }
 
+  /**
+   * Get the original width of the shape.
+   *
+   * @return the original width of the shape
+   */
   public double getOriginalWidth() {
+
     return originalWidth;
   }
 
+  /**
+   * Get the original height of the shape.
+   *
+   * @return the original height of the shape
+   */
   public double getOriginalHeight() {
+
     return originalHeight;
   }
 
+  /**
+   * Get the new width of the shape.
+   *
+   * @return the new width of the shape
+   */
   public double getNewWidth() {
+
     return newWidth;
   }
 
+  /**
+   * Get the new height of the shape.
+   *
+   * @return the new height of the shape
+   */
   public double getNewHeight() {
     return newHeight;
   }
 
-  @Override
+  /**
+   * Returns the string "moves".
+   *
+   * @return the animation change as a string
+   */
   public String getChange() {
+
     return "scales ";
   }
 
-  @Override
+  /**
+   * Get the starting state of the animation as a string.
+   *
+   * @return the starting state of the animation as a string
+   */
   public String getStartState() {
-    return this.getShape().widthString() + this.originalWidth + ", " + this.getShape().heightString()
-        + this.originalHeight;
+
+    return Utils.formatSizeString(this.getShape(), this.originalWidth, this.originalHeight);
   }
 
-  @Override
+  /**
+   * Get the end state of the animation as a string.
+   *
+   * @return the end state of the animation as a string
+   */
   public String getEndState() {
-    return this.getShape().widthString() + this.newWidth + ", " + this.getShape().heightString()
-        + this.newHeight;
+
+    return Utils.formatSizeString(this.getShape(), this.newWidth, this.newHeight);
   }
 
-  @Override
+  /**
+   * Implements the ChangeSize animation on a shape.
+   *
+   * @param time the current time of the animation
+   */
   public void implementAnimation(double time) {
     double changeWidth = this.newWidth - this.originalWidth;
     double changeHeight = this.newHeight - this.originalHeight;
@@ -87,10 +128,14 @@ public class ChangeSize extends AbstractAnimations {
     }
   }
 
-  @Override
+  /**
+   * Changes the appropriate fields of the shape to match the changes
+   * implemented on the shape.
+   *
+   * @param s a Shape object, whose field will be changed
+   */
   public void updateField(Shape s) {
     s.changeWidth(newWidth);
     s.changeHeight(newHeight);
-
   }
 }
