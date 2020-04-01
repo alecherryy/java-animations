@@ -22,7 +22,7 @@ public class Oval extends AbstractShape {
    * @param color     the color of the shape
    * @param pos       the position of the shape
    */
-  public Oval(String name, double width, double height, Color color, Coordinates pos) {
+  public Oval(String name, int width, int height, Color color, Coordinates pos) {
     super(name, ShapeType.OVAL, width, height, color, pos);
   }
 

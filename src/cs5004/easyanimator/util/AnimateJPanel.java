@@ -1,17 +1,20 @@
 package cs5004.easyanimator.util;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Dimension;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.ModelItem;
 import cs5004.easyanimator.model.shapes.Shape;
 
-public class AnimateJPanel extends JPanel {
+public class AnimateJPanel extends JPanel implements ActionListener {
   private AnimationModel model;
+  Timer t = new Timer(5, this);
+  private int start;
+  private int vel = 2;
 
   public AnimateJPanel(AnimationModel model) {
     this.model = model;
@@ -27,31 +30,35 @@ public class AnimateJPanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    g.setColor(Color.BLUE);
-
-    int i = 0;
     for (ModelItem obj : this.model.getModel()) {
       // create shape variable for each obj
       Shape s = obj.getShape();
 
-      int R = (int) (Math.random() * 256);
-      int G = (int) (Math.random() * 256);
-      int B = (int) (Math.random() * 256);
-      Color c = new Color(R, G, B);
-
-      g.setColor(c);
+      start = s.getPosition().getX();
       // check shape and create graphics accordingly
       switch(s.getType()) {
+
         case RECTANGLE:
-          g.fillRect(10 + i, 10 + i, 50 + i, 50 + i);
+          g.setColor(s.getColor());
+          g.fillRect(start, s.getPosition().getY(), s.getWidth(), s.getHeight());
           break;
         case OVAL:
-          g.fillOval(10 + i, 10 + i, 50 + i, 50 + i);
+          g.setColor(s.getColor());
+          g.fillOval(start, s.getPosition().getY(), s.getWidth(), s.getHeight());
           break;
         default:
           break;
       }
-      i = 10;
+      t.start();
     }
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    for (ModelItem obj : this.model.getModel()) {
+      start = start + vel;
+      System.out.println(start);
+      repaint();
+    }
+
   }
 }
