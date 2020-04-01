@@ -11,8 +11,8 @@ import cs5004.easyanimator.model.Utils;
 public abstract class AbstractShape implements Shape {
   private String name;
   private ShapeType type;
-  private int width;
-  private int height;
+  private double width;
+  private double height;
   private Color color;
   private Coordinates position;
 
@@ -29,7 +29,7 @@ public abstract class AbstractShape implements Shape {
    *                                  height are less than 1 or appear or disappear time are
    *                                  negative, or appear time is after disappear time.
    */
-  public AbstractShape(String name, ShapeType type, int width, int height, Color color,
+  public AbstractShape(String name, ShapeType type, double width, double height, Color color,
                        Coordinates position) {
     // check for bad inputs
     if (Utils.isNegative(width) || Utils.isNegative(height)) {
@@ -77,7 +77,7 @@ public abstract class AbstractShape implements Shape {
    *
    * @return the width of the shape
    */
-  public int getWidth() {
+  public double getWidth() {
     return this.width;
   }
 
@@ -86,7 +86,7 @@ public abstract class AbstractShape implements Shape {
    *
    * @return the width of the shape
    */
-  public int getHeight() {
+  public double getHeight() {
     return this.height;
   }
 
@@ -132,7 +132,7 @@ public abstract class AbstractShape implements Shape {
    * @param w the width to which we are changing this shape's width
    * @throws IllegalArgumentException if new width is negative
    */
-  public void changeWidth(int w) throws IllegalArgumentException {
+  public void changeWidth(double w) throws IllegalArgumentException {
     // check for bad input
     if (Utils.isNegative(w)) {
       throw new IllegalArgumentException("New width cannot be negative.");
@@ -146,7 +146,7 @@ public abstract class AbstractShape implements Shape {
    * @param h the height to which we are changing this shape's height
    * @throws IllegalArgumentException if new height is negative
    */
-  public void changeHeight(int h) throws IllegalArgumentException {
+  public void changeHeight(double h) throws IllegalArgumentException {
     // check for bad input
     if (Utils.isNegative(h)) {
       throw new IllegalArgumentException("New height cannot be negative.");
@@ -187,4 +187,3 @@ public abstract class AbstractShape implements Shape {
             + "Color: " + Utils.colorAsString(this.color) + "\n";
   }
 }
-

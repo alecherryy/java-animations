@@ -6,8 +6,8 @@ import static cs5004.easyanimator.model.Utils.getPositionString;
  * This class represents the position of a shape.
  */
 public class Coordinates {
-  public final int x;
-  public final int y;
+  public final double x;
+  public final double y;
 
   /**
    * Constructs a Coordinates object with its given x-coordinate and y-coordinate.
@@ -15,7 +15,7 @@ public class Coordinates {
    * @param x coordinate of the shape
    * @param y coordinate of the shape
    */
-  public Coordinates(int x, int y) {
+  public Coordinates(double x, double y) {
     this.x = x;
     this.y = y;
   }
@@ -25,7 +25,7 @@ public class Coordinates {
    *
    * @return x value
    */
-  public int getX() {
+  public double getX() {
     return this.x;
   }
 
@@ -34,7 +34,7 @@ public class Coordinates {
    *
    * @return y value
    */
-  public int getY() {
+  public double getY() {
     return this.y;
   }
 

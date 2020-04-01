@@ -26,14 +26,14 @@ public interface Shape {
    *
    * @return the width of the shape
    */
-  int getWidth();
+  double getWidth();
 
   /**
    * Returns the height of the shape.
    *
    * @return the height of the shape
    */
-  int getHeight();
+  double getHeight();
 
   /**
    * Returns the size of the Shape in the form of value pair (width, height).
@@ -69,7 +69,7 @@ public interface Shape {
    * @param w the width to which we are changing this shape's width
    * @throws IllegalArgumentException if new width is negative
    */
-  void changeWidth(int w) throws IllegalArgumentException;
+  void changeWidth(double w) throws IllegalArgumentException;
 
   /**
    * Changes the height of this shape to a new height.
@@ -77,7 +77,7 @@ public interface Shape {
    * @param h the height to which we are changing this shape's height
    * @throws IllegalArgumentException if new height is negative
    */
-  void changeHeight(int h) throws IllegalArgumentException;
+  void changeHeight(double h) throws IllegalArgumentException;
 
   /**
    * Changes the position of this shape to a new position.

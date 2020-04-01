@@ -23,7 +23,7 @@ public class Rectangle extends AbstractShape {
    * @param color     the color of the shape
    * @param pos       the position of the shape
    */
-  public Rectangle(String name, int width, int height, Color color, Coordinates pos) {
+  public Rectangle(String name, double width, double height, Color color, Coordinates pos) {
     super(name, ShapeType.RECTANGLE, width, height, color, pos);
   }
 
@@ -38,4 +38,3 @@ public class Rectangle extends AbstractShape {
             + Utils.getPositionString(this.getPosition());
   }
 }
-
