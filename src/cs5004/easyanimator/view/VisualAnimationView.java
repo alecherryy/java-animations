@@ -45,6 +45,13 @@ public class VisualAnimationView extends JFrame implements iView {
   }
 
   /**
+   * Animate the panel.
+   */
+  public AnimationModel getModel() {
+    return this.model;
+  }
+
+  /**
    * Set view listener to be given parameter.
    *
    * @param listener of the view

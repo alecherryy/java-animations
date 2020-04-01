@@ -28,23 +28,30 @@ public class AnimateJPanel extends JPanel {
     super.paintComponent(g);
 
     g.setColor(Color.BLUE);
-    g.fillRect(0, 0, getWidth(), getHeight());
 
+    int i = 0;
     for (ModelItem obj : this.model.getModel()) {
       // create shape variable for each obj
       Shape s = obj.getShape();
 
+      int R = (int) (Math.random() * 256);
+      int G = (int) (Math.random() * 256);
+      int B = (int) (Math.random() * 256);
+      Color c = new Color(R, G, B);
+
+      g.setColor(c);
       // check shape and create graphics accordingly
       switch(s.getType()) {
         case RECTANGLE:
-          g.fillRect(0, 0, 34, 34);
+          g.fillRect(10 + i, 10 + i, 50 + i, 50 + i);
           break;
         case OVAL:
-          g.fillOval(0, 0, 34, 34);
+          g.fillOval(10 + i, 10 + i, 50 + i, 50 + i);
           break;
         default:
           break;
       }
+      i = 10;
     }
   }
 }
