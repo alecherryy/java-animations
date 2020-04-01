@@ -123,7 +123,6 @@ class MyJPanel extends JPanel {
 //  }
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.fillRect(0, 0, getWidth(), getHeight());
 
     int i = 0;
     for (ModelItem obj : this.model.getModel()) {

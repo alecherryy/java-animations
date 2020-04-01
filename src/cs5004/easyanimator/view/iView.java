@@ -6,13 +6,18 @@ import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
 
-public interface View {
+public interface iView {
   /**
    * TODO Return the description of the view? Model? I am not sure.
    *
    * @return description in a string
    */
   String getDescription();
+
+  /**
+   * Set view's visibility to true (i.e. show the JFrame)
+   */
+  void display();
 
   /**
    * Writes data to a given file.
@@ -26,7 +31,7 @@ public interface View {
    *
    * @return the animation model
    */
-//  AnimationPanel getAnimationPanel();
+  AnimateJPanel getAnimationPanel();
 
   /**
    * TODO returns the current tick? Not sure.
