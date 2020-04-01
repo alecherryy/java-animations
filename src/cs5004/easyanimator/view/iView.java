@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.util.AnimateJPanel;
 
 
 public interface iView {

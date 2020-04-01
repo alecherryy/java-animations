@@ -1,4 +1,4 @@
-package cs5004.easyanimator.view;
+package cs5004.easyanimator.util;
 
 import java.awt.Color;
 import java.awt.Graphics;

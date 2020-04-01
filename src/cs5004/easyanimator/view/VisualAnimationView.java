@@ -9,6 +9,7 @@ import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.AnimationModelImpl;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.util.AnimateJPanel;
 
 
 public class VisualAnimationView extends JFrame implements iView {
