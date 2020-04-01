@@ -1,4 +1,7 @@
 package cs5004.easyanimator.view;
+
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -8,12 +11,46 @@ import cs5004.easyanimator.model.shapes.Shape;
 
 
 public class VisualAnimationView extends JFrame implements View {
-  private AnimationPanel animatePanel;
-  private ArrayList<Shape> shapes;
+  private AnimationPanel panel;
+//  private ActionListener listener;
+//  private ArrayList<Shape> shapes;
 
-  public VisualAnimationView() {
-    this.animatePanel = new AnimationPanel();
-    this.shapes = new ArrayList<Shape>();
+  public VisualAnimationView(String title) {
+    super(title);
+    this.panel = new AnimationPanel();
+//    this.listener = null;
+
+    // JFrame SETTINGS
+    // set preferred size of the frame
+    // TODO set setMaximumSize(), setMinimumSize() or setResizable()
+    setSize(800, 800);
+    // place frame in the top left corner
+    setLocation(0, 0);
+    // exit the program when hit "close"
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLayout(new BorderLayout());
+
+//    this.label = new JLabel("Java Easy Animator - "
+//            + "Welcome to our Easy Animator Application. "
+//            + "To get started, add shape to the model.");
+//    this.add(this.label);
+    this.add(panel, BorderLayout.CENTER);
+  }
+
+  /**
+   * Set view listener to be given parameter.
+   *
+   * @param listener of the view
+   */
+  public void setListener(ActionListener listener) {
+    this.listener = listener;
+  }
+
+  /**
+   * Set view's visibility to true (i.e. show the JFrame)
+   */
+  public void display() {
+    setVisible(true);
   }
 
   /**
@@ -39,8 +76,8 @@ public class VisualAnimationView extends JFrame implements View {
    *
    * @return the animation model
    */
-  public AnimationPanel getModel() {
-    return this.animatePanel;
+  public AnimationPanel getAnimationPanel() {
+    return this.panel;
   }
 
   /**
@@ -56,6 +93,13 @@ public class VisualAnimationView extends JFrame implements View {
    * Set an object's visibility to true.
    */
   public void makeVisible() {
+    return;
+  }
+
+  /**
+   * Erases all Animations and Shapes from the view.
+   */
+  public void refreshView() {
     return;
   }
 
