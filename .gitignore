@@ -2,4 +2,4 @@
 .idea/
 java-animations.iml
 out/
-.DS_Store
+*.DS_Store
