@@ -1,36 +1,72 @@
 package cs5004.easyanimator.view;
 
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.List;
+import java.util.ArrayList;
 
-import javax.swing.*;
-
-import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
 
 public interface View {
-
+  /**
+   * TODO Return the description of the view? Model? I am not sure.
+   *
+   * @return description in a string
+   */
   String getDescription();
 
-  void writeOut(String fileName);
+  /**
+   * Writes data to a given file.
+   *
+   * @param file the name of the file
+   */
+  void writeOut(String file);
 
-  AnimationModel getModel();
+  /**
+   * Retrieves and returns the Animation Model.
+   *
+   * @return the animation model
+   */
+  AnimationPanel getModel();
 
+  /**
+   * TODO returns the current tick? Not sure.
+   *
+   * @return the tick as a double
+   */
   double getTick();
 
+  /**
+   * Set an object's visibility to true.
+   */
   void makeVisible();
 
-  void refresh();
+  /**
+   * Erases all Animations and Shapes from the view.
+   */
+  void refreshView();
 
-  void setShapes(List<Shape> shapes);
+  /**
+   * Resets the View, Animations and Shapes to their default values.
+   */
+  void resetView();
 
-  List<Shape> getShapes();
+  /**
+   * Takes a list of Shape objects and sets them within
+   * the view.
+   */
+  void setShapes(ArrayList<Shape> shapes);
 
-  List<Animations> getAnimations();
+  /**
+   * Returns a list of Shape objects.
+   *
+   * @return a list of Shape objects
+   */
+  ArrayList<Shape> getShapes();
 
-
-
+  /**
+   * Returns a list of Animations objects.
+   *
+   * @return a list of Animations objects
+   */
+  ArrayList<Animations> getAnimations();
 }
