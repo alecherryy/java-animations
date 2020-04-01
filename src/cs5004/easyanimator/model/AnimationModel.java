@@ -1,5 +1,7 @@
 package cs5004.easyanimator.model;
 
+import java.util.ArrayList;
+
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
 
@@ -10,6 +12,13 @@ import cs5004.easyanimator.model.shapes.Shape;
  * animation within the model.
  */
 public interface AnimationModel {
+
+  /**
+   * Returns the model.
+   *
+   * @return the model
+   */
+  ArrayList<ModelItem> getModel();
 
   /**
    * Add a new shape to the list.
@@ -59,5 +68,4 @@ public interface AnimationModel {
    * @return the model in a string
    */
   String getDescription();
-
 }

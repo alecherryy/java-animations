@@ -26,7 +26,7 @@ public interface View {
    *
    * @return the animation model
    */
-  AnimationPanel getAnimationPanel();
+//  AnimationPanel getAnimationPanel();
 
   /**
    * TODO returns the current tick? Not sure.

@@ -1,7 +1,6 @@
 package cs5004.easyanimator.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shape;
@@ -11,7 +10,7 @@ import cs5004.easyanimator.model.shapes.Shape;
  * AnimationModel Interface.
  */
 public class AnimationModelImpl implements AnimationModel {
-  private List<ModelItem> model;
+  private ArrayList<ModelItem> model;
 
   /**
    * This is the class constructor. It initializes a new empty
@@ -21,6 +20,14 @@ public class AnimationModelImpl implements AnimationModel {
     this.model = new ArrayList<ModelItem>();
   }
 
+  /**
+   * Returns the model.
+   *
+   * @return the model
+   */
+  public ArrayList<ModelItem> getModel() {
+    return this.model;
+  }
   /**
    * Add a new shape to the list.
    *
