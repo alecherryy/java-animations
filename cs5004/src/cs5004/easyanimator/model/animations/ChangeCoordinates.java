@@ -1,21 +1,21 @@
 package cs5004.easyanimator.model.animations;
 
 import cs5004.easyanimator.model.Utils;
-import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
- * This class represents the second animation type -- changing
- * the coordinates of a shape. It extends AbstractAnimation.
+ * This class represents the second animation type -- changing the coordinates of a shape. It
+ * extends AbstractAnimation.
  */
 public class ChangeCoordinates extends AbstractAnimations {
   private Coordinates originalCoordinates;
   private Coordinates newCoordinates;
 
   /**
-   * Constructs an AbstractAnimation object, with its given type, shape,
-   * and start and end times. Calls the AbstractAnimations super-constructor
-   * and sets the AnimationType parameter to CHANGECOORDINATES.
+   * Constructs an AbstractAnimation object, with its given type, shape, and start and end times.
+   * Calls the AbstractAnimations super-constructor and sets the AnimationType parameter to
+   * CHANGECOORDINATES.
    *
    * @param shape     the shape will be animated, type Shape.
    * @param start     the start time of the animation, an int.
@@ -23,63 +23,90 @@ public class ChangeCoordinates extends AbstractAnimations {
    * @param originalC the original coordinates of the object, type Pair.
    * @param newC      the new coordinates of the object, type Pair.
    */
-  public ChangeCoordinates(Shape shape, int start, int end,
+  public ChangeCoordinates(Shapes shape, int start, int end,
                            Coordinates originalC, Coordinates newC) {
     super(AnimationType.CHANGECOORDINATES, shape, start, end);
     this.originalCoordinates = originalC;
     this.newCoordinates = newC;
   }
 
-  /**
-   * Get the original coordinates of the shape.
-   *
-   * @return the original coordinates of the shape
-   */
+  @Override
   public Coordinates getOriginalCoordinates() {
     return originalCoordinates;
   }
 
-  /**
-   * Get the new coordinates of the shape.
-   *
-   * @return the new coordinates of the shape
-   */
+  @Override
   public Coordinates getNewCoordinates() {
     return newCoordinates;
   }
 
-  /**
-   * Returns the string "moves".
-   *
-   * @return the animation change as a string
-   */
-  public String getChange() {
-    return "moves ";
+  @Override
+  public String toSVGTag(double speed) {
+    String svg = "";
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    svg += "<animate attributeType=\"xml\" begin=\"" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"" + this.getShape().svgTagX() + "\" "
+        + "from=\"" + this.originalCoordinates.getX() + "\" to=\""
+        + this.newCoordinates.getX() + "\" fill=\"freeze\" />\n";
+
+    svg += "<animate attributeType=\"xml\" begin=\"" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"" + this.getShape().svgTagY() + "\" "
+        + "from=\"" + this.originalCoordinates.getY() + "\" to=\""
+        + this.newCoordinates.getY() + "\" fill=\"freeze\" />\n";
+
+    return svg;
   }
 
-  /**
-   * Get the starting state of the animation as a string.
-   *
-   * @return the starting state of the animation as a string
-   */
+  @Override
+  public String toSVGTagWithLoop(double speed) {
+    String svg = "";
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    // tag for moving animation
+    svg += "<animate attributeType=\"xml\" begin=\"base.begin+" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"" + this.getShape().svgTagX() + "\" "
+        + "from=\"" + this.originalCoordinates.getX() + "\" to=\""
+        + this.newCoordinates.getX() + "\" fill=\"freeze\" />\n";
+
+    svg += "<animate attributeType=\"xml\" begin=\"base.begin+" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"" + this.getShape().svgTagY() + "\" "
+        + "from=\"" + this.originalCoordinates.getY() + "\" to=\""
+        + this.newCoordinates.getY() + "\" fill=\"freeze\" />\n";
+
+    // tag for looping
+    svg += "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+        + "attributeName=\"" + this.getShape().svgTagX() + "\" "
+        + "from=\"" + this.newCoordinates.getX() + "\" to=\""
+        + this.originalCoordinates.getX() + "\" fill=\"freeze\" />\n";
+
+    svg += "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
+        + "attributeName=\"" + this.getShape().svgTagY() + "\" "
+        + "from=\"" + this.newCoordinates.getY() + "\" to=\""
+        + this.originalCoordinates.getY() + "\" fill=\"freeze\" />\n";
+    return svg;
+  }
+
+  @Override
+  public String getChange() {
+    return "moves";
+  }
+
+  @Override
   public String getStartState() {
     return Utils.getPositionString(originalCoordinates);
   }
 
-  /**
-   * Get the end state of the animation as a string.
-   *
-   * @return the end state of the animation as a string
-   */
+  @Override
   public String getEndState() {
     return Utils.getPositionString(newCoordinates);
   }
 
-  /**
-   * Implements the ChangeCoordinates animation on a shape.
-   *
-   * @param time the current time of the animation
-   */
+  @Override
   public void implementAnimation(double time) {
     double originalX = this.originalCoordinates.getX();
     double originalY = this.originalCoordinates.getY();
@@ -103,14 +130,8 @@ public class ChangeCoordinates extends AbstractAnimations {
     }
   }
 
-  /**
-   * Changes the appropriate fields of the shape to match the changes
-   * implemented on the shape (according to whether color, dimension,
-   * or coordinates are being changed).
-   *
-   * @param s a Shape object, whose field will be changed
-   */
-  public void updateField(Shape s) {
+  @Override
+  public void updateField(Shapes s) {
     s.changePosition(newCoordinates);
   }
 }

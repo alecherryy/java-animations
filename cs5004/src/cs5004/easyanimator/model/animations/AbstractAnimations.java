@@ -1,9 +1,9 @@
 package cs5004.easyanimator.model.animations;
 
-import java.awt.Color;
+import java.awt.*;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This abstract class implements Animation and all of its methods. It contains the code
@@ -11,7 +11,7 @@ import cs5004.easyanimator.model.shapes.Shape;
  */
 public abstract class AbstractAnimations implements Animations {
   private AnimationType type;
-  private Shape shape;
+  private Shapes shape;
   private int startTime;
   private int endTime;
 
@@ -26,7 +26,7 @@ public abstract class AbstractAnimations implements Animations {
    * @throws IllegalArgumentException if end time is greater than start time or if they're both
    *                                  negative
    */
-  public AbstractAnimations(AnimationType type, Shape shape, int start, int end) {
+  public AbstractAnimations(AnimationType type, Shapes shape, int start, int end) {
     // check if end is smaller than start
     if (end < start) {
       throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
@@ -46,7 +46,7 @@ public abstract class AbstractAnimations implements Animations {
    *
    * @return the shape that will receive the animation
    */
-  public Shape getShape() {
+  public Shapes getShape() {
 
     return this.shape;
   }
@@ -88,11 +88,11 @@ public abstract class AbstractAnimations implements Animations {
    */
   public String getDescription() {
     return "Shape "
-        + this.shape.getName() + " "
-        + this.getChange() + "from "
-        + this.getStartState() + " to "
-        + this.getEndState() + " from t=" + this.startTime
-        + " to t=" + this.endTime;
+            + this.shape.getName() + " "
+            + this.getChange() + "from "
+            + this.getStartState() + " to "
+            + this.getEndState() + " from t=" + this.startTime
+            + " to t=" + this.endTime;
   }
 
   /**
@@ -100,7 +100,7 @@ public abstract class AbstractAnimations implements Animations {
    *
    * @param s a Shape object, which we are changing the shape animation field to
    */
-  public void resetShape(Shape s) {
+  public void resetShape(Shapes s) {
 
     this.shape = s;
   }

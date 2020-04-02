@@ -1,7 +1,9 @@
 package cs5004.easyanimator.model;
 
+import java.util.ArrayList;
+
 import cs5004.easyanimator.model.animations.Animations;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This is the AnimationModel Interface. It includes all methods available to an
@@ -17,39 +19,30 @@ public interface AnimationModel {
    * @param s the shape to add
    * @throws IllegalArgumentException if a shape of the same name already exists
    */
-  void addShape(Shape s) throws IllegalArgumentException;
+  void addShape(Shapes s) throws IllegalArgumentException;
+
 
   /**
-   * Given a shape name returns the item inside the model matching
-   * the given name.
+   * Add a new animation to the list of animations.
    *
-   * @param name the shape name
-   */
-  ModelItem getItem(String name);
-
-  /**
-   * Removes a shape from the list, using its name as an identifier.
-   *
-   * @param name of the shape to add
+   * @param a the animation to add
    * @throws IllegalArgumentException if the shape does not exist
    */
-  void removeShape(String name) throws IllegalArgumentException;
+  void addAnimation(Animations a) throws IllegalArgumentException;
 
   /**
-   * Add a new animation to a specific shape, using the shape name as an identifier.
+   * Returns a list of shapes.
    *
-   * @param name of the shape
-   * @param a     the animation to add
-   * @throws IllegalArgumentException if the shape does not exist
+   * @return a list of shapes
    */
-  void addAnimation(String name, Animations a) throws IllegalArgumentException;
+  ArrayList<Shapes> getShapes();
 
   /**
-   * Returns true if the model is empty, otherwise returns false.
+   * Returns a list of animations.
    *
-   * @return true if empty, other returns false
+   * @return a list of animations
    */
-  boolean isEmpty();
+  ArrayList<Animations> getAnimations();
 
   /**
    * Return a summary of each item in the model. For each item,
@@ -59,5 +52,4 @@ public interface AnimationModel {
    * @return the model in a string
    */
   String getDescription();
-
 }

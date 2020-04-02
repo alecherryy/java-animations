@@ -1,9 +1,9 @@
 package cs5004.easyanimator.model.animations;
 
-import java.awt.Color;
+import java.awt.*;
 
-import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.Utils;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This class represents the first animation type -- changing
@@ -29,7 +29,7 @@ public class ChangeColor extends AbstractAnimations {
    *                                  and blue, or if the newColor is the same as the
    *                                  originalColor.
    */
-  public ChangeColor(Shape shape, int start, int end, Color originalColor, Color newColor) {
+  public ChangeColor(Shapes shape, int start, int end, Color originalColor, Color newColor) {
     super(AnimationType.CHANGECOLOR, shape, start, end);
     if (originalColor == null || newColor == null) {
       throw new IllegalArgumentException("Original color and new cannot be null.");
@@ -42,60 +42,35 @@ public class ChangeColor extends AbstractAnimations {
     this.newColor = newColor;
   }
 
-  /**
-   * Get the original color of the shape.
-   *
-   * @return the original color of the shape
-   */
+  @Override
   public Color getOriginalColor() {
-
     return this.originalColor;
   }
 
-  /**
-   * Get the new color of the shape.
-   *
-   * @return the new color of the shape
-   */
+  @Override
   public Color getNewColor() {
 
     return this.newColor;
   }
 
-  /**
-   * Returns the string "moves".
-   *
-   * @return the animation change as a string
-   */
+  @Override
   public String getChange() {
 
-    return "changes color ";
+    return "changes color";
   }
 
-  /**
-   * Get the starting state of the animation as a string.
-   *
-   * @return the starting state of the animation as a string
-   */
+  @Override
   public String getStartState() {
-
     return Utils.colorAsString(this.originalColor);
   }
 
-  /**
-   * Get the end state of the animation as a string.
-   *
-   * @return the end state of the animation as a string
-   */
+  @Override
+
   public String getEndState() {
     return Utils.colorAsString(this.newColor);
   }
 
-  /**
-   * Implements the ChangeColor animation on a shape.
-   *
-   * @param time the current time of the animation
-   */
+  @Override
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
     float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
@@ -113,7 +88,7 @@ public class ChangeColor extends AbstractAnimations {
     float changeBlue = newBlue - originalBlue;
 
     float changeInTime = (float) (time - this.getStartTime())
-        / (float) (this.getEndTime() - this.getStartTime());
+            / (float) (this.getEndTime() - this.getStartTime());
 
     if ((time > this.getEndTime()) || (time < this.getStartTime())) {
       // do nothing.
@@ -129,14 +104,41 @@ public class ChangeColor extends AbstractAnimations {
     }
   }
 
-  /**
-   * Changes the appropriate fields of the shape to match the changes
-   * implemented on the shape.
-   *
-   * @param s a Shape object, whose field will be changed
-   */
-  public void updateField(Shape s) {
+  @Override
+  public void updateField(Shapes s) {
 
     s.changeColor(newColor);
+  }
+
+  @Override
+  public String toSVGTag(double speed) {
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    return "<animate attributeType=\"xml\" begin=\"" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"fill\" from=\"rgb"
+        + Utils.getRGBColorString(this.originalColor) + "\" to=\"rgb"
+        + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
+  }
+
+  @Override
+  public String toSVGTagWithLoop(double speed) {
+    String tag = "";
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    tag += "<animate attributeType=\"xml\" begin=\"base.begin+" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"fill\" from=\"rgb"
+        + Utils.getRGBColorString(this.originalColor) + "\" to=\"rgb"
+        + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
+
+    tag += "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\""
+        + " attributeName=\"fill\" from=\"rgb"
+        + Utils.getRGBColorString(this.newColor) + "\" to=\"rgb"
+        + Utils.getRGBColorString(this.originalColor) + "\" fill=\"freeze\" />\n";
+
+    return tag;
   }
 }

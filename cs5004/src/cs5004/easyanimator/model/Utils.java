@@ -1,14 +1,9 @@
 package cs5004.easyanimator.model;
 
-import java.awt.Color;
+import java.awt.*;
 
-import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.shapes.Coordinates;
-import cs5004.easyanimator.view.View;
-import cs5004.easyanimator.view.InteractiveView;
-import cs5004.easyanimator.view.SVGView;
-import cs5004.easyanimator.view.TextualView;
-import cs5004.easyanimator.view.VisualAnimationView;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 
 /**
@@ -61,7 +56,7 @@ public class Utils {
    * @param h the width
    * @return the dimensions of the shape as a string
    */
-  public static String formatSizeString(Shape s, double w, double h) {
+  public static String formatSizeString(Shapes s, double w, double h) {
     String width = "";
     String height = "";
 
@@ -80,7 +75,7 @@ public class Utils {
     }
 
     return  width + String.format("%.1f", w) + ", "
-        + height + String.format("%.1f", h);
+            + height + String.format("%.1f", h);
   }
 
   /**
@@ -90,7 +85,7 @@ public class Utils {
    * @return the string representation of the position of the shape
    */
   public static String getPositionString(Coordinates pos) {
-    return "(" + pos.getX() + "," + pos.getY() + ")";
+    return "(" + pos.getX() + ", " + pos.getY() + ")";
   }
 
   /**
@@ -102,23 +97,5 @@ public class Utils {
   public static String getRGBColorString(Color color) {
     return "(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")";
   }
-
-  public static View createView(String view, AnimationModel model, double tick) {
-    // TODO: Implement code.
-    /*
-    if (view.equals("text")) {
-      return new TextualView(tick, model.getShapes(), model.getAnimations());
-    } else if (view.equals("visual")) {
-      return new VisualAnimationView(tick, model.getShapes());
-    } else if (view.equals("svg")) {
-      return new SVGView(tick,  model.getShapes(), model.getAnimations());
-    } else if (view.equals("interactive")) {
-      return new InteractiveView(tick, model.getShapes(), model.getAnimations(), model.getLastTime());
-    } else {
-      throw new IllegalArgumentException("Invalid view type");
-    } */
-    return null;
-  }
 }
-
 
