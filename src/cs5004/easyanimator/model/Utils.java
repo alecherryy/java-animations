@@ -1,9 +1,9 @@
 package cs5004.easyanimator.model;
 
-import java.awt.Color;
+import java.awt.*;
 
-import cs5004.easyanimator.model.shapes.Shape;
 import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 
 /**
@@ -56,7 +56,7 @@ public class Utils {
    * @param h the width
    * @return the dimensions of the shape as a string
    */
-  public static String formatSizeString(Shape s, double w, double h) {
+  public static String formatSizeString(Shapes s, double w, double h) {
     String width = "";
     String height = "";
 
@@ -85,7 +85,7 @@ public class Utils {
    * @return the string representation of the position of the shape
    */
   public static String getPositionString(Coordinates pos) {
-    return "(" + pos.getX() + "," + pos.getY() + ")";
+    return "(" + pos.getX() + ", " + pos.getY() + ")";
   }
 
   /**
