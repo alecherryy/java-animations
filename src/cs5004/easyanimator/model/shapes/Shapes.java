@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * This is a Shape interface. It includes all methods available to a shape.
  */
-public interface Shape {
+public interface Shapes {
 
   /**
    * Returns the name of the shape.

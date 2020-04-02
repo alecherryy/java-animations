@@ -8,7 +8,7 @@ import cs5004.easyanimator.model.Utils;
  * This abstract class implements Shape and all of its methods. It contains the code for
  * an abstract shape and represents the behavior shared by all shapes.
  */
-public abstract class AbstractShape implements Shape {
+public abstract class AbstractShape implements Shapes {
   private String name;
   private ShapeType type;
   private double width;

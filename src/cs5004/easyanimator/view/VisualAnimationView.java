@@ -5,14 +5,18 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
-
-public class VisualAnimationView extends JFrame implements iView {
+/**
+ * This class represents a view for a simple Visual Animation model. It
+ * extends the JFrame abstract class and implements all methods listed
+ * in the iView interface.
+ */
+public class VisualAnimationView extends JFrame implements View {
   private AnimateJPanel animationPanel;
-  private ArrayList<Shape> shapes;
+  private ArrayList<Shapes> shapes;
 
-  public VisualAnimationView(int speed, ArrayList<Shape> shapes) {
+  public VisualAnimationView(int speed, ArrayList<Shapes> shapes) {
     super("Java Easy Animator");
 
     this.shapes = shapes;
@@ -40,10 +44,12 @@ public class VisualAnimationView extends JFrame implements iView {
   }
 
   /**
-   * Takes a list of Shape objects and sets them within
-   * the view.
+   * Takes a list of Shape objects and sets them
+   * within the view.
+   *
+   * @param shapes a list of shapes
    */
-  public void setShapes(ArrayList<Shape> shapes) {
+  public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
     animationPanel.setShapes(shapes);
   }
@@ -60,7 +66,7 @@ public class VisualAnimationView extends JFrame implements iView {
    *
    * @return a list of Shape objects
    */
-  public ArrayList<Shape> getShapes() {
+  public ArrayList<Shapes> getShapes() {
     return this.shapes;
   }
 }

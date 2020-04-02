@@ -10,10 +10,10 @@ import java.awt.Color;
  * A JUnit test class for all classes that extends the Shape Interface.
  */
 public class ShapeTest {
-  private Shape rectangle;
-  private Shape square;
-  private Shape oval;
-  private Shape circle;
+  private Shapes rectangle;
+  private Shapes square;
+  private Shapes oval;
+  private Shapes circle;
 
   /**
    * This is a test for ShapeImpl class constructor.

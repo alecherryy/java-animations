@@ -2,7 +2,7 @@ package cs5004.easyanimator.model.animations;
 
 import java.awt.Color;
 
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 import cs5004.easyanimator.model.Utils;
 
 /**
@@ -29,7 +29,7 @@ public class ChangeColor extends AbstractAnimations {
    *                                  and blue, or if the newColor is the same as the
    *                                  originalColor.
    */
-  public ChangeColor(Shape shape, int start, int end, Color originalColor, Color newColor) {
+  public ChangeColor(Shapes shape, int start, int end, Color originalColor, Color newColor) {
     super(AnimationType.CHANGECOLOR, shape, start, end);
     if (originalColor == null || newColor == null) {
       throw new IllegalArgumentException("Original color and new cannot be null.");
@@ -135,7 +135,7 @@ public class ChangeColor extends AbstractAnimations {
    *
    * @param s a Shape object, whose field will be changed
    */
-  public void updateField(Shape s) {
+  public void updateField(Shapes s) {
 
     s.changeColor(newColor);
   }

@@ -1,7 +1,7 @@
 package cs5004.easyanimator.model.animations;
 
 import cs5004.easyanimator.model.Utils;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This class represents the third animation type -- changing the size of a shape,
@@ -27,7 +27,7 @@ public class ChangeSize extends AbstractAnimations {
    * @param newWidth       the new width of the object, to which the width will be changed.
    * @param newHeight      the new height of the object, to which the height will be changed.
    */
-  public ChangeSize(Shape shape, int start, int end, double originalWidth, double originalHeight,
+  public ChangeSize(Shapes shape, int start, int end, double originalWidth, double originalHeight,
                     double newWidth, double newHeight) {
     super(AnimationType.CHANGESIZE, shape, start, end);
     this.originalWidth = originalWidth;
@@ -134,7 +134,7 @@ public class ChangeSize extends AbstractAnimations {
    *
    * @param s a Shape object, whose field will be changed
    */
-  public void updateField(Shape s) {
+  public void updateField(Shapes s) {
     s.changeWidth(newWidth);
     s.changeHeight(newHeight);
   }

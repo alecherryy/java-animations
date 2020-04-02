@@ -27,8 +27,9 @@ public interface TweenModelBuilder<T> {
       float oldR, float oldG, float oldB, float newR, float newG, float newB,
       int start, int end);
 
-  TweenModelBuilder<T> addScaleChange(String name, float fromSx, float
-      fromSy, float toSx, float toSy, int start, int end);
+  TweenModelBuilder<T> addScaleChange(
+          String name,
+          float fromSx, float fromSy, float toSx, float toSy, int start, int end);
 
   T build();
 

@@ -3,7 +3,7 @@ package cs5004.easyanimator.model;
 import java.util.ArrayList;
 
 import cs5004.easyanimator.model.animations.Animations;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This is the ModelItem Interface. It includes all methods available
@@ -14,7 +14,7 @@ public interface ModelItem {
   /**
    * Returns the shape.
    */
-  Shape getShape();
+  Shapes getShape();
 
   /**
    * Returns the name.

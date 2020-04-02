@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 public class AnimateJPanel extends JPanel {
-  private ArrayList<Shape> shapes;
+  private ArrayList<Shapes> shapes;
 
   public AnimateJPanel() {
-    this.shapes = new ArrayList<Shape>();
+    this.shapes = new ArrayList<Shapes>();
     this.setBackground(Color.WHITE);
   }
 
@@ -33,7 +33,7 @@ public class AnimateJPanel extends JPanel {
 
     AffineTransform originalTransform = g2d.getTransform();
 
-    for (Shape s : this.shapes) {
+    for (Shapes s : this.shapes) {
       // shape's coordinates
       Coordinates pos = s.getPosition();
       int x = (int) pos.getX();
@@ -69,7 +69,7 @@ public class AnimateJPanel extends JPanel {
    *
    * @param shapes the list of the shapes
    */
-  public void setShapes(ArrayList<Shape> shapes) {
+  public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
   }
 }

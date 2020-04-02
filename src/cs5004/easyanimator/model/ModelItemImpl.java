@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cs5004.easyanimator.model.animations.Animations;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This is the ModelItemImpl class, which implements all methods listen in
@@ -14,7 +14,7 @@ import cs5004.easyanimator.model.shapes.Shape;
  */
 public class ModelItemImpl implements ModelItem {
   private String name;
-  private Shape shape;
+  private Shapes shape;
   private List<Animations> animations;
 
   /**
@@ -24,7 +24,7 @@ public class ModelItemImpl implements ModelItem {
    *
    * @param s the shape
    */
-  public ModelItemImpl(Shape s) {
+  public ModelItemImpl(Shapes s) {
     this.shape = s;
     this.name = s.getName();
     this.animations = new ArrayList<Animations>();
@@ -44,7 +44,7 @@ public class ModelItemImpl implements ModelItem {
    *
    * @return the shape as an object
    */
-  public Shape getShape() {
+  public Shapes getShape() {
 
     return this.shape;
   }

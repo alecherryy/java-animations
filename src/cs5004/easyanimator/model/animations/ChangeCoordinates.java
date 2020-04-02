@@ -1,7 +1,7 @@
 package cs5004.easyanimator.model.animations;
 
 import cs5004.easyanimator.model.Utils;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 import cs5004.easyanimator.model.shapes.Coordinates;
 
 /**
@@ -23,7 +23,7 @@ public class ChangeCoordinates extends AbstractAnimations {
    * @param originalC the original coordinates of the object, type Pair.
    * @param newC      the new coordinates of the object, type Pair.
    */
-  public ChangeCoordinates(Shape shape, int start, int end,
+  public ChangeCoordinates(Shapes shape, int start, int end,
                            Coordinates originalC, Coordinates newC) {
     super(AnimationType.CHANGECOORDINATES, shape, start, end);
     this.originalCoordinates = originalC;
@@ -110,7 +110,7 @@ public class ChangeCoordinates extends AbstractAnimations {
    *
    * @param s a Shape object, whose field will be changed
    */
-  public void updateField(Shape s) {
+  public void updateField(Shapes s) {
     s.changePosition(newCoordinates);
   }
 }

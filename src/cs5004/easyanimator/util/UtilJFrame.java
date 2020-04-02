@@ -1,14 +1,5 @@
 package cs5004.easyanimator.util;//package cs5004.easyanimator.util;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import cs5004.easyanimator.model.shapes.Coordinates;
-import cs5004.easyanimator.model.shapes.Oval;
-import cs5004.easyanimator.model.shapes.Rectangle;
-import cs5004.easyanimator.view.VisualAnimationView;
-
 public class UtilJFrame {
 
   public static void main(String[] args) throws InterruptedException {

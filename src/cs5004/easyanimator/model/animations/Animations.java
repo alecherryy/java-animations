@@ -3,7 +3,7 @@ package cs5004.easyanimator.model.animations;
 import java.awt.Color;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This interface represents the operations offered by the animation model. It supports all types of
@@ -17,7 +17,7 @@ public interface Animations {
    *
    * @return the shape that will receive the animation, a Shapes object.
    */
-  Shape getShape();
+  Shapes getShape();
 
   /**
    * Get the type of animation.
@@ -87,14 +87,14 @@ public interface Animations {
    *
    * @param s a Shape object, whose field will be changed
    */
-  void updateField(Shape s);
+  void updateField(Shapes s);
 
   /**
    * Resets the shape that the animation is being implemented on to a new shape.
    *
    * @param s a Shape object, which we are changing the shape animation field to
    */
-  void resetShape(Shape s);
+  void resetShape(Shapes s);
 
   /**
    * Get the original color of the shape.

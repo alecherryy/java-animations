@@ -3,41 +3,37 @@ package cs5004.easyanimator.model;
 import java.util.ArrayList;
 
 import cs5004.easyanimator.model.animations.Animations;
-import cs5004.easyanimator.model.shapes.Shape;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
  * This is the AnimationModel class; it implements all methods available on the
  * AnimationModel Interface.
  */
 public class AnimationModelImpl implements AnimationModel {
-  private ArrayList<ModelItem> model;
+  private ArrayList<Shapes> shapes;
+  private ArrayList<Animations> animations;
 
   /**
    * This is the class constructor. It initializes a new empty
    * list of objects (i.e., AnimationModelItem).
    */
   public AnimationModelImpl() {
-    this.model = new ArrayList<ModelItem>();
+
+    this.shapes = new ArrayList<Shapes>();
+    this.animations = new ArrayList<Animations>();
   }
 
-  /**
-   * Returns the model.
-   *
-   * @return the model
-   */
-  public ArrayList<ModelItem> getModel() {
-    return this.model;
-  }
   /**
    * Add a new shape to the list.
    *
    * @param s the shape to add
    * @throws IllegalArgumentException if a shape of the same name already exists
    */
-  public void addShape(Shape s) {
+  public void addShape(Shapes s) {
     String name = s.getName();
+
     if (helperAddShape(name)) {
-      this.model.add(new ModelItemImpl(s));
+      this.shapes.add(s);
       // exit method
       return;
     }
@@ -51,8 +47,8 @@ public class AnimationModelImpl implements AnimationModel {
    * @throws IllegalArgumentException if the shape does not exist
    */
   private boolean helperAddShape(String name) {
-    for (ModelItem obj : this.model) {
-      if (obj.getName().equalsIgnoreCase(name)) {
+    for (Shapes s : this.shapes) {
+      if (s.getName().equalsIgnoreCase(name)) {
         return false;
       }
     }
@@ -61,153 +57,68 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Given a shape name returns the item inside the model matching
-   * the given name.
-   *
-   * @param name the shape name
-   */
-  public ModelItem getItem(String name) {
-    return returnShape(name);
-  }
-
-  /**
-   * Removes a shape from the list, using its name as an identifier.
-   *
-   * @param name of the shape to add
-   * @throws IllegalArgumentException if the shape does not exist
-   */
-  public void removeShape(String name) {
-    int i = 0;
-
-    for (ModelItem obj : this.model) {
-      if (obj.getName().equals(name)) {
-        // remove shape at the current index
-        this.model.remove(i);
-        // exit method
-        return;
-      }
-      i++;
-    }
-    throw new IllegalArgumentException("This index does not exist.");
-  }
-
-  /**
    * Add a new animation to a specific shape, using the shape name as an identifier.
    *
-   * @param name of the shape
-   * @param a     the animation to add
+   * @param a the animation to add
    * @throws IllegalArgumentException if the shape does not exist
    */
-  public void addAnimation(String name, Animations a) {
-    // throw an exception if there are no shapes
-    if ((this.model.isEmpty())) {
-      throw new IllegalArgumentException("You need to add a shape, "
-              + "before you can add an animation");
-    }
-
-    returnShape(name).addAnimation(a);
+  public void addAnimation(Animations a) {
+    this.animations.add(a);
   }
 
   /**
-   * Helper function to return an item in the model based on the shape's name.
+   * Returns a list of shapes.
    *
-   * @param name of the shape
-   * @throws IllegalArgumentException if the shape does not exist
+   * @return a list of shapes
    */
-  private ModelItem returnShape(String name) {
-    // look for obj whose name matches the given name
-    for (ModelItem obj : this.model) {
-      if (obj.getName().equalsIgnoreCase(name)) {
-        return obj;
-      }
-    }
-    // if the obj does not exist, throw an exception
-    throw new IllegalArgumentException("This shape does not exist.");
+  public ArrayList<Shapes> getShapes() {
+    return this.shapes;
   }
 
   /**
-   * Returns true if the model is empty, otherwise returns false.
+   * Returns a list of animations.
    *
-   * @return true if empty, other returns false
+   * @return a list of animations
    */
-  public boolean isEmpty() {
-    return this.model.size() == 0;
+  public ArrayList<Animations> getAnimations() {
+    return this.animations;
   }
 
   /**
-   * Returns a summary of each item in the model. For each item,
-   * the summary include a description of the shape and a description of
-   * each animation associated with the given shape. If the
-   * model is empty, returns an empty string.
+   * Returns a description of all shapes and animations in the
+   * following format:
+   *
+   *
    *
    * @return the model in a string
    */
   public String getDescription() {
     // check if model is empty
-    if (!(this.model.isEmpty())) {
-      StringBuilder shapes = new StringBuilder();
-      StringBuilder animations = animationDescriptions();
-
-      // append title
-      shapes.append("Shapes:\n");
-
-      for (ModelItem obj : this.model) {
-        // call toString() method on each obj and append it
-        // to the StringBuilder
-        shapes.append(obj.getShape().getDescription());
-        shapes.append("\n");
-      }
-      // concatenate string
-      return shapes.toString() + animations.toString();
-
-    }
-
-    return "";
-  }
-
-  /**
-   * This is a private helper function to help format the model's getDescription() method.
-   * It iterates through the model and groups all animations into a separate array. Then, sorts
-   * the animations by their start time in ascending order (i.e. from the smallest to biggest).
-   *
-   * @return a StringBuilder containing all the animations descriptions
-   */
-  private ArrayList<Animations> createAnimationsList() {
-    ArrayList<Animations> animations = new ArrayList<Animations>();
-
-    // iterate through the model
-    for (ModelItem obj : this.model) {
-      // if object has animations, it groups them into one array
-      if (obj.hasAnimation()) {
-        for (Animations a : obj.getAllAnimations()) {
-          animations.add(a);
-        }
-      }
-    }
-
-    // sort animations by start time
-    animations.sort((Animations a, Animations b) ->
-            Integer.compare(a.getStartTime(), b.getStartTime()));
-
-    return animations;
-  }
-
-  /**
-   * This is a private helper function to help format the model's getDescription() method.
-   *
-   * @return a StringBuilder containing all the animations descriptions
-   */
-  private StringBuilder animationDescriptions() {
-    // call createAnimationsList() to create an array of animations
-    ArrayList<Animations> animations = createAnimationsList();
     StringBuilder str = new StringBuilder();
 
-    // iterate through the array and append each description to the StringBuilder
-    for (Animations a : animations) {
-      str.append(a.getDescription());
-      str.append("\n");
+    if (this.shapes.size() != 0) {
+      // append title
+      str.append("Shapes:\n");
+
+      for (Shapes s : this.shapes) {
+        // call toString() method on each obj and append it
+        // to the StringBuilder
+        str.append(s.getDescription());
+        str.append("\n");
+      }
+
     }
 
-    return str;
+    if (this.animations.size() != 0) {
+      this.animations.sort((Animations a, Animations b) ->
+              Integer.compare(a.getStartTime(), b.getStartTime()));
+
+      for (Animations a : this.animations) {
+        str.append(a.getDescription());
+        str.append("\n");
+      }
+    }
+
+    return str.toString();
   }
 }
