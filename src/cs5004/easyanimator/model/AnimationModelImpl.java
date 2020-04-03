@@ -1,32 +1,30 @@
 package cs5004.easyanimator.model;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Color;
 
 import cs5004.easyanimator.model.animations.Animations;
-import cs5004.easyanimator.model.animations.AnimationType;
-import cs5004.easyanimator.model.animations.ChangeSize;
 import cs5004.easyanimator.model.animations.ChangeColor;
 import cs5004.easyanimator.model.animations.ChangeCoordinates;
+import cs5004.easyanimator.model.animations.ChangeSize;
+import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Oval;
+import cs5004.easyanimator.model.shapes.Rectangle;
+import cs5004.easyanimator.model.shapes.Shapes;
 import cs5004.easyanimator.model.shapes.ShapesVisitorImpl;
 import cs5004.easyanimator.util.TweenModelBuilder;
-import cs5004.easyanimator.model.shapes.Coordinates;
-import cs5004.easyanimator.model.shapes.Shapes;
-import cs5004.easyanimator.model.shapes.Rectangle;
-import cs5004.easyanimator.model.shapes.Oval;
-
 
 /**
- * This is the AnimationModel class; it implements all methods available on the AnimationModel
- * Interface.
+ * This is the AnimationModel class; it implements all methods available
+ * on the AnimationModel Interface.
  */
 public class AnimationModelImpl implements AnimationModel {
   private ArrayList<Shapes> shapes;
   private ArrayList<Animations> animations;
 
   /**
-   * This is the class constructor. It initializes a new empty list of objects (i.e.,
-   * AnimationModelItem).
+   * This is the class constructor. It initializes a new empty list
+   * of objects (i.e., AnimationModelItem).
    */
   public AnimationModelImpl() {
 
@@ -35,9 +33,11 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Private constructor, later used in our static class where we implement our model builder.
-   * This will allow us to return an AnimationModelImpl object with the appropriate changes
-   * made to it.
+   * Private constructor, later used in our static class where we implement our
+   * model builder. This will allow us to return an AnimationModelImpl object
+   * with the appropriate changes made to it.
+   *
+   * @param builder animation model builder
    */
   private AnimationModelImpl(AnimationModelBuilder builder) {
     this.shapes = builder.shapesList;
@@ -106,7 +106,7 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * Returns a description of all shapes and animations in the following format:
+   * Returns a description of all shapes and animations in a string.
    *
    * @return the model in a string
    */
@@ -128,8 +128,7 @@ public class AnimationModelImpl implements AnimationModel {
     }
 
     if (this.animations.size() != 0) {
-      this.animations.sort((Animations a, Animations b) ->
-          Integer.compare(a.getStartTime(), b.getStartTime()));
+      Utils.sortAnimations(this.animations);
 
       for (Animations a : this.animations) {
         str.append(a.getDescription());
@@ -141,49 +140,73 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
-   * This is a static class that implements our Tween Model Builder, and will add shapes and
-   * animations to our model.
+   * This is a static class that implements our Tween Model Builder, and will
+   * add shapes and animations to our model.
    */
-
-  public static final class AnimationModelBuilder
-      implements TweenModelBuilder<AnimationModel> {
-
+  public static final class AnimationModelBuilder implements TweenModelBuilder<AnimationModel> {
     private ArrayList<Animations> animationsList;
     private ArrayList<Shapes> shapesList;
 
-
     /**
-     * Constructs a {@code SimpleAnimationBuilder} object.
+     * Constructs a SimpleAnimationBuilder object.
      **/
     public AnimationModelBuilder() {
       this.animationsList = new ArrayList<Animations>();
       this.shapesList = new ArrayList<Shapes>();
     }
 
-    @Override
+    /**
+     * Add a new oval to the model.
+     *
+     * @param name the name of the oval
+     * @param x the x-coordinate of the center of the oval
+     * @param y the y-coordinate of the center of the oval
+     * @param xRadius the x-radius of the oval
+     * @param yRadius the y-radius of the oval
+     * @param red the red component of the color of the oval as a float
+     * @param green the green component of the color of the oval as a float
+     * @param blue the blue component of the color of the oval as a float
+     * @param appear the appear time of the oval
+     * @param disappear the disappear time of the oval.
+     * @return the builder object
+     */
     public TweenModelBuilder<AnimationModel> addOval(
         String name,
         float x, float y,
         float xRadius, float yRadius,
         float red, float green, float blue,
-        int start, int end) {
+        int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Color c = new Color(red, green, blue);
-      Shapes shape = new Oval(name, start, end, xRadius, yRadius, c, pos);
+      Shapes shape = new Oval(name, appear, disappear, xRadius, yRadius, c, pos);
       shapesList.add(shape);
       return this;
     }
 
-    @Override
+    /**
+     * Add a new rectangle to the model.
+     *
+     * @param name the name of the oval
+     * @param x the x-coordinate of the lower left corner of the rectangle
+     * @param y the y-coordinate of the lower left corner of the rectangle
+     * @param width the width of the rectangle
+     * @param height the height of the rectangle
+     * @param red the red component of the color of the rectangle
+     * @param green the green component of the color of the rectangle
+     * @param blue the blue component of the color of the rectangle
+     * @param appear the appear time of the rectangle
+     * @param disappear the disappear time of the rectangle
+     * @return the builder object
+     */
     public TweenModelBuilder<AnimationModel> addRectangle(
         String name,
         float x, float y,
         float width, float height,
         float red, float green, float blue,
-        int start, int end) {
+        int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Color c = new Color(red, green, blue);
-      Shapes shape = new Rectangle(name, start, end, width, height, c, pos);
+      Shapes shape = new Rectangle(name, appear, disappear, width, height, c, pos);
       shapesList.add(shape);
       return this;
     }
@@ -194,47 +217,75 @@ public class AnimationModelImpl implements AnimationModel {
      * @param a animation to add to list of animations
      */
     private void addAnimations(Animations a) {
-      AnimationType addType = a.getAnimationType();
-      Shapes addShape = a.getShape();
-      int addStart = a.getStartTime();
 
-      for (int i = 0; i < animationsList.size(); i++) {
-        Animations current = animationsList.get(i);
-        AnimationType type = current.getAnimationType();
-        Shapes shape = current.getShape();
-        int start = current.getStartTime();
-        int end = current.getEndTime();
-
-        if (addType == type) {
-          if (addShape.getName().equals(shape.getName())) {
-            if ((addStart >= start) && (addStart <= end)) {
-              throw new IllegalArgumentException("Incompatible move for the same shape "
-                  + "during overlapping time intervals");
-            }
+      for (Animations obj : this.animationsList) {
+        if (a.getAnimationType() == obj.getAnimationType()) {
+          if (invalidAnimation(a, obj)) {
+            throw new IllegalArgumentException(
+                    "Incompatible move for the same shape "
+                    + "during overlapping time intervals");
           }
         }
       }
       animationsList.add(a);
     }
 
-    @Override
+    /**
+     * Helper private method to ensure the animation being added does not conflict
+     * with an existing one.
+     *
+     * @param a one animation
+     * @param b another animation
+     * @return true if animation is invalid, otherwise return false
+     */
+    private boolean invalidAnimation(Animations a, Animations b) {
+      // since shape names are unique, check those first
+      if (a.getShape().getName().equals(b.getShape().getName())) {
+        if (a.getAnimationType() == b.getAnimationType()) {
+          if (a.getStartTime() >= b.getStartTime() && a.getEndTime() <= b.getEndTime()) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    /**
+     * Move the shape that is passed in to the given position that is passed in
+     * during the time interval that is passed in.
+     *
+     * @param name the name of the shape that will be moved
+     * @param fromX the x-coordinate from which the shape will be moved
+     * @param fromY the y-coordinate to which the shape will be moved
+     * @param toX the x-coordinate to which the shape will be moved
+     * @param toY the y-coordinate to which the shape will be moved
+     * @param start the time when the move starts
+     * @param end the time when the move ends
+     */
     public TweenModelBuilder<AnimationModel> addMove(
-        String name,
-        float moveFromX, float moveFromY, float moveToX, float moveToY,
-        int start, int end) {
-      Coordinates originalPos = new Coordinates(moveFromX, moveFromY);
-      Coordinates newPos = new Coordinates(moveToX, moveToY);
+            String name,
+            float fromX,
+            float fromY,
+            float toX,
+            float toY,
+            int start,
+            int end) {
       Shapes s = null;
-      for (int i = 0; i < shapesList.size(); i++) {
-        Shapes current = shapesList.get(i);
-        if (current.getName().equals(name)) {
-          s = current.visitShape(new ShapesVisitorImpl());
-          s.changePosition(originalPos);
+
+      for (Shapes obj : this.shapesList) {
+        if (obj.getName().equals(name)) {
+          s = obj.visitShape(new ShapesVisitorImpl());
+          s.changePosition(new Coordinates(fromX, fromY));
         }
       }
 
       try {
-        Animations animation = new ChangeCoordinates(s, start, end, originalPos, newPos);
+        Animations animation = new ChangeCoordinates(
+                s,
+                start,
+                end,
+                new Coordinates(fromX, fromY),
+                new Coordinates(toX, toY));
         this.addAnimations(animation);
       } catch (Exception e) {
         // do nothing
@@ -242,22 +293,43 @@ public class AnimationModelImpl implements AnimationModel {
       return this;
     }
 
-    @Override
+    /**
+     * Change the color of the shape that is passed in to the given position
+     * that is passed in during the time interval that is passed in.
+     *
+     * @param name the name of the shape whose color will be changed
+     * @param oldR the r-value of the shape's original color
+     * @param oldG the g-value of the shape's original color
+     * @param oldB the b-value of the shape's original color
+     * @param newR the r-value of the shape's new color
+     * @param newG the g-value of the shape's new color
+     * @param newB the b-value of the shape's new color
+     * @param start the time when the color change starts
+     * @param end the time when the color change ends
+     * @return the animation builder model
+     */
     public TweenModelBuilder<AnimationModel> addColorChange(
-        String name,
-        float oldR, float oldG, float oldB, float newR, float newG, float newB,
-        int start, int end) {
+            String name,
+            float oldR,
+            float oldG,
+            float oldB,
+            float newR,
+            float newG,
+            float newB,
+            int start,
+            int end) {
       Color oldColor = new Color(oldR, oldG, oldB);
       Color newColor = new Color(newR, newG, newB);
 
       Shapes s = null;
-      for (int i = 0; i < shapesList.size(); i++) {
-        Shapes current = shapesList.get(i);
-        if (current.getName().equals(name)) {
-          s = current.visitShape(new ShapesVisitorImpl());
+
+      for (Shapes obj : this.shapesList) {
+        if (obj.getName().equals(name)) {
+          s = obj.visitShape(new ShapesVisitorImpl());
           s.changeColor(oldColor);
         }
       }
+
       try {
         Animations animation = new ChangeColor(s, start, end, oldColor, newColor);
         this.addAnimations(animation);
@@ -267,22 +339,40 @@ public class AnimationModelImpl implements AnimationModel {
       return this;
     }
 
-    @Override
-    public TweenModelBuilder<AnimationModel> addSizeChange(String name, float orgWidth, float
-        orgHeight, float newWidth, float newHeight, int start, int end) {
+    /**
+     * Change the width and height of the shape that is passed in to
+     * the width and height that are passed in during the time interval that is passed in.
+     *
+     * @param name the name of the shape whose size will be changed
+     * @param oldW the original width of the shape
+     * @param oldH the original height of the shape
+     * @param newW the new width of the shape, to which its width will be changed
+     * @param newH the new width of the shape, to which its height will be changed
+     * @param start the time when the scale change starts
+     * @param end the time when the scale change ends
+     * @return the animation builder model
+     */
+    public TweenModelBuilder<AnimationModel> addSizeChange(
+            String name,
+            float oldW,
+            float oldH,
+            float newW,
+            float newH,
+            int start,
+            int end) {
 
       Shapes s = null;
-      for (int i = 0; i < shapesList.size(); i++) {
-        Shapes current = shapesList.get(i);
-        if (current.getName().equals(name)) {
-          s = current.visitShape(new ShapesVisitorImpl());
-          s.changeWidth(orgWidth);
-          s.changeHeight(orgHeight);
+
+      for (Shapes obj : this.shapesList) {
+        if (obj.getName().equals(name)) {
+          s = obj.visitShape(new ShapesVisitorImpl());
+          s.changeWidth(oldW);
+          s.changeHeight(oldH);
         }
       }
+
       try {
-        Animations animation = new ChangeSize(s, start, end, orgWidth,
-            orgHeight, newWidth, newHeight);
+        Animations animation = new ChangeSize(s, start, end, oldW, oldH, newW, newH);
         this.addAnimations(animation);
       } catch (Exception e) {
         // do nothing

@@ -7,7 +7,7 @@ import cs5004.easyanimator.model.Utils;
 
 /**
  * This class represents the first animation type -- changing
- * the color of a shape. We use the Java inbuilt color, which encapsulates
+ * the color of a shape. We use the Java inbuilt Color, which encapsulates
  * colors in the default sRGB color space.
  */
 public class ChangeColor extends AbstractAnimations {
@@ -19,11 +19,11 @@ public class ChangeColor extends AbstractAnimations {
    * original color and new color. Calls the AbstractAnimations super-constructor
    * and sets the AnimationType parameter to CHANGECOLOR.
    *
-   * @param shape         the shape will be animated, type Shape.
-   * @param start         the start time of the animation, an int.
-   * @param end           the end time of the animation, an int.
+   * @param shape the shape will be animated, type Shape.
+   * @param start the start time of the animation, an int.
+   * @param end the end time of the animation, an int.
    * @param originalColor the original color of the object, type Color.
-   * @param newColor      the color to which the object will be changed to, type Color.
+   * @param newColor the color to which the object will be changed to, type Color.
    * @throws IllegalArgumentException if the originalColor or newColor are null, or if the
    *                                  originalColor or newColor are something other than red, green,
    *                                  and blue, or if the newColor is the same as the
@@ -42,35 +42,78 @@ public class ChangeColor extends AbstractAnimations {
     this.newColor = newColor;
   }
 
-  @Override
+  /**
+   * Get the original color of the shape.
+   *
+   * @return the original color of the shape
+   */
   public Color getOriginalColor() {
     return this.originalColor;
   }
 
-  @Override
+  /**
+   * Get the new color of the shape.
+   *
+   * @return the new color of the shape
+   */
   public Color getNewColor() {
 
     return this.newColor;
   }
 
-  @Override
+  /**
+   * Returns the string "changes color ".
+   *
+   * @return the animation change as a string
+   */
   public String getChange() {
 
-    return "changes color";
+    return "changes color ";
   }
 
-  @Override
+  /**
+   * Get the starting state of the animation as a string.
+   *
+   * @return the starting state of the animation as a string
+   */
   public String getStartState() {
     return Utils.colorAsString(this.originalColor);
   }
 
-  @Override
-
+  /**
+   * Get the end state of the animation as a string.
+   *
+   * @return the end state of the animation as a string
+   */
   public String getEndState() {
     return Utils.colorAsString(this.newColor);
   }
 
-  @Override
+  /**
+   * Returns the svg tag of the animation.
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation
+   */
+  public String toSVGTag(double speed) {
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    return  "<animate attributeType=\"xml\" begin=\""
+            + begin + "ms\" dur=\""
+            + dur + "ms\" attributeName=\"fill\" "
+            + "from=\"rgb" + Utils.getRGBColorString(this.originalColor)
+            + "\" to=\"rgb" + Utils.getRGBColorString(this.newColor)
+            + "\" fill=\"freeze\" />\n";
+  }
+
+  /**
+   * Implements the animation on a shape (whether it is changing color,
+   * changing size, or changing coordinates).
+   *
+   * @param time the current time of the animation
+   */
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
     float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
@@ -104,25 +147,21 @@ public class ChangeColor extends AbstractAnimations {
     }
   }
 
-  @Override
+  /**
+   * Changes the appropriate fields of the shape.
+   *
+   * @param s a Shape object, whose field will be changed
+   */
   public void updateField(Shapes s) {
-
     s.changeColor(newColor);
   }
 
-  @Override
-  public String toSVGTag(double speed) {
-    double begin = (this.getStartTime() / speed) * 1000;
-    double end = (this.getEndTime() / speed) * 1000;
-    double dur = end - begin;
-
-    return "<animate attributeType=\"xml\" begin=\"" + begin + "ms\" dur=\""
-        + dur + "ms\" attributeName=\"fill\" from=\"rgb"
-        + Utils.getRGBColorString(this.originalColor) + "\" to=\"rgb"
-        + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
-  }
-
-  @Override
+  /**
+   * Returns the svg tag of the animation.
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation when there's a loop
+   */
   public String toSVGTagWithLoop(double speed) {
     String tag = "";
     double begin = (this.getStartTime() / speed) * 1000;

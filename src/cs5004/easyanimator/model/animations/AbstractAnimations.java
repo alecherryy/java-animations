@@ -87,12 +87,30 @@ public abstract class AbstractAnimations implements Animations {
    * @return the animation represented as a string.
    */
   public String getDescription() {
-    return "Shape "
+    return  "Shape "
             + this.shape.getName() + " "
             + this.getChange() + "from "
             + this.getStartState() + " to "
             + this.getEndState() + " from t=" + this.startTime
             + " to t=" + this.endTime;
+  }
+
+  /**
+   * Overload getDescription method to take in a speed parameter
+   * and calculate start and end time within a time reference.
+   *
+   * @param speed animation speed
+   * @return the animation represented as a string.
+   */
+  public String getDescription(float speed ) {
+    double startT = (double) this.startTime / speed;
+    double endT = (double) this.endTime / speed;
+    return "Shape "
+            + this.shape.getName() + " "
+            + this.getChange() + "from "
+            + this.getStartState() + " to "
+            + this.getEndState() + " from t=" + startT
+            + "s to t=" + endT +"s";
   }
 
   /**

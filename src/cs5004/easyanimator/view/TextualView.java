@@ -1,23 +1,18 @@
 package cs5004.easyanimator.view;
-import cs5004.easyanimator.model.Utils;
-import cs5004.easyanimator.model.shapes.Shapes;
-import cs5004.easyanimator.model.shapes.AbstractShape;
-import cs5004.easyanimator.model.animations.Animations;
-import cs5004.easyanimator.model.Utils;
-
-import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import javax.swing.JCheckBox;
+
+import cs5004.easyanimator.model.Utils;
+import cs5004.easyanimator.model.animations.Animations;
+import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
- * This class implements all the methods in View and represents the view as a text object.
+ * This class implements all the methods in View and
+ * represents the view as a text object.
  */
 public class TextualView implements View {
   private float speed;
@@ -25,7 +20,8 @@ public class TextualView implements View {
   private ArrayList<Animations> animations;
 
   /**
-   * Constructs a TextualView object with its given speed, shapes list, and animations list.
+   * This is the class constructor for the TextualView with its given speed,
+   * shapes list, and animations list.
    *
    * @param speed the speed at which the animation happens as a double
    * @param shapes the lists of the shapes present in the  model
@@ -37,77 +33,96 @@ public class TextualView implements View {
     this.animations = animations;
   }
 
-  @Override
+  /**
+   * Sets the view's visibility to true (i.e. view is visible within the JFrame).
+   *
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public void display() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("Textual view does not include this functionality.");
-
+    throw new UnsupportedOperationException(""
+            + "Textual view does not include this functionality.");
   }
 
-  @Override
+  /**
+   * Takes a list of Shape objects and sets them within the view.
+   *
+   * @param shapes a list of shapes
+   */
   public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
-
   }
 
-  @Override
+  /**
+   * Repaints the view.
+   *
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public void refresh() {
-    throw new UnsupportedOperationException("Textual view does not include this functionality.");
-
+    throw new UnsupportedOperationException(""
+            + "Textual view does not include this functionality.");
   }
 
-  @Override
+  /**
+   * Returns a list of Shape objects.
+   *
+   * @return a list of Shape objects
+   */
   public ArrayList<Shapes> getShapes() {
     return this.shapes;
   }
 
-  @Override
+  /**
+   * Returns a list of Animations objects.
+   *
+   * @return a list of Animation objects
+   */
   public ArrayList<Animations> getAnimations() {
     return this.animations;
   }
 
-  @Override
+  /**
+   * Returns the description of the view in a string.
+   *
+   * @return the view description in a string
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public String getTextDescription() throws UnsupportedOperationException {
-    String state = "";
+    StringBuilder str = new StringBuilder();
 
     if (shapes.size() != 0) {
-      state += "Shapes:\n";
+      str.append("Shapes:\n");
+
+      for (Shapes s : this.shapes) {
+        // call shape description
+        str.append(s.getDescription(speed));
+        str.append("\n");
+      }
     }
 
-    for (int i = 0; i < shapes.size(); i++) {
-      Shapes currentShape = shapes.get(i);
-      double newAppearTime = (double) currentShape.getAppearTime() / this.speed;
-      double newDisappearTime = (double) currentShape.getDisappearTime() / this.speed;
-      String currentStr = "";
-      currentStr += "Name: " + currentShape.getName() + "\n" + "Type: "
-          + currentShape.getShapeType().toString() + "\n"
-          + currentShape.getLocation() + ", "
-          + currentShape.getDimensions() + ", Color: "
-          + Utils.colorAsString(currentShape.getColor()) + "\n"
-          + "Appears at t=" + newAppearTime + "s\n" + "Disappears at t="
-          + newDisappearTime + "s\n";
-      state += currentStr+ "\n";
-    }
-    
+    if (this.animations.size() != 0) {
+      // sort animations by start time
+      Utils.sortAnimations(this.animations);
 
-    for (int i = 0; i < animations.size(); i++) {
-      Animations currentAnimation = animations.get(i);
-      double newAppearTime = (double) currentAnimation.getStartTime() / this.speed;
-      double newDisappearTime = (double) currentAnimation.getEndTime() / this.speed;
-
-      String currentStr = "";
-      currentStr+= "shape " + currentAnimation.getShape().getName() + " "
-          + currentAnimation.getChange() + " from "
-          + currentAnimation.getStartState() + " to " + currentAnimation.getEndState()
-          + " from t=" + newAppearTime
-          + "s to t=" + newDisappearTime + "s";
-      state += currentStr + "\n";
+      for (Animations a : this.animations) {
+        // call animation description
+        str.append(a.getDescription(this.speed));
+        str.append("\n");
+      }
     }
-    return state;
+
+    return str.toString();
   }
 
-  @Override
+  /**
+   * Writes out the text description of the animation to a file specified in the parameters.
+   *
+   * @param fileName the file to which we are outputting the
+   *                 string representation of the animation.
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public void write(String fileName) {
     String description = this.getTextDescription();
+
     try {
       BufferedWriter output;
       if (fileName.equals("System.out")) {
@@ -123,20 +138,25 @@ public class TextualView implements View {
     }
   }
 
-  @Override
+  /**
+   * Get the speed at which the animation occurs.
+   *
+   * @return the speed of the animation
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public float getSpeed() throws UnsupportedOperationException {
     return this.speed;
   }
 
-  @Override
+  /**
+   * Display the error message on the screen.
+   *
+   * @param error the error message as a string.
+   * @throws UnsupportedOperationException if the view does not support this method
+   **/
   public void displayErrorMsg(String error) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("Textual view does not include this functionality.");
-
-  }
-
-  @Override
-  public void displayButton(ActionListener event) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("Textual view does not include this functionality.");
+    throw new UnsupportedOperationException(""
+            + "Textual view does not include this functionality.");
   }
 }
 

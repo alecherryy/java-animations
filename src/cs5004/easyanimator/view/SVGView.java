@@ -1,47 +1,51 @@
 package cs5004.easyanimator.view;
 import java.util.ArrayList;
-import java.util.List;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 
+/**
+ * This class represents an SVGView, it extends the TextualView class and includes
+ * all methods available on the View interface.
+ */
 public class SVGView extends TextualView {
+
   /**
-   * Constructs a TextualView object with its given speed, shapes list, and animations list.
+   * Class constructor for the SVGView object with its given speed,
+   * shapes list and animations list.
    *
-   * @param speed      the speed at which the animation happens as a double
-   * @param shapes     the lists of the shapes present in the  model
-   * @param animations the list of the animations present in model
+   * @param speed the speed of the animation
+   * @param shapes the lists of the shapes in the  model
+   * @param animations the list of the animations in model
    */
   public SVGView(float speed, ArrayList<Shapes> shapes, ArrayList<Animations> animations) {
     super(speed, shapes, animations);
   }
 
-  @Override
+  /**
+   * Returns the description of the view in a string.
+   *
+   * @return the view description in a string
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public String getTextDescription() {
-    List<Shapes> shapes = this.getShapes();
-    List<Animations> animations = this.getAnimations();
-    float speed = this.getSpeed();
-    String svg = "<svg width=\"800\" height=\"800\" version=\"1.1\"\n"
-        + "xmlns=\"http://www.w3.org/2000/svg\">\n";
+    StringBuilder svg = new StringBuilder();
+
+    // create svg mark up
+    svg.append("<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+            + "xmlns=\"http://www.w3.org/2000/svg\">\n");
 
     for (Shapes s : this.getShapes()) {
-
-    }
-    for (int i = 0; i < shapes.size(); i++) {
-      Shapes currentShape = shapes.get(i);
-      svg += currentShape.toSVGTag();
-      for (int j = 0; j < animations.size(); j++) {
-        Animations currentA = animations.get(j);
-        Shapes currentS = currentA.getShape();
-        if (currentShape.getName().equals(currentS.getName())) {
-          svg += currentA.toSVGTag(this.getSpeed());
+      svg.append(s.toSVGTag());
+      for (Animations a : this.getAnimations()) {
+        if (s.getName().equals(a.getShape().getName())) {
+          svg.append(a.toSVGTag(this.getSpeed()));
         }
       }
-      svg += currentShape.svgEndTag() + "\n";
+      svg.append(s.svgEndTag());
     }
-    svg += "</svg>";
+    svg.append("</svg>");
 
-    return svg;
+    return svg.toString();
   }
 }

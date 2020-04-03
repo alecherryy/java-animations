@@ -14,21 +14,21 @@ public class ShapesVisitorImpl implements ShapesVisitor {
     // returns a Color object.
     Color col = oval.getColor();
     Color rgbCol = new Color(col.getRed(), col.getGreen(),
-        col.getBlue());
+            col.getBlue());
     Shapes newOval = new Oval(oval.getName(), oval.getAppearTime(), oval.getDisappearTime(),
-        oval.getD1(), oval.getD2(), rgbCol, pos);
+            oval.getD1(), oval.getD2(), rgbCol, pos);
     return newOval;
   }
 
   @Override
   public Shapes visit(Rectangle rectangle) {
     Coordinates pos = new Coordinates(rectangle.getPosition().getX(),
-        rectangle.getPosition().getY());
+            rectangle.getPosition().getY());
     // returns a Color object.
     Color col = rectangle.getColor();
     Color rgbCol = new Color(col.getRed(), col.getGreen(), col.getBlue());
     Shapes newRectangle = new Rectangle(rectangle.getName(), rectangle.getAppearTime(),
-        rectangle.getDisappearTime(), rectangle.getD1(), rectangle.getD2(), rgbCol, pos);
+            rectangle.getDisappearTime(), rectangle.getD1(), rectangle.getD2(), rgbCol, pos);
     return newRectangle;
   }
 }

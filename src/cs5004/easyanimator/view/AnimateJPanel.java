@@ -34,6 +34,7 @@ public class AnimateJPanel extends JPanel {
 
     AffineTransform originalTransform = g2d.getTransform();
 
+    // iterate through shapes and paint on JPanel
     for (Shapes s : this.shapes) {
       // shape's coordinates
       Coordinates pos = s.getPosition();

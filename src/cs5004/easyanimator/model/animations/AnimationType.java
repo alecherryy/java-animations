@@ -12,7 +12,6 @@ public enum AnimationType { CHANGECOLOR, CHANGECOORDINATES, CHANGESIZE;
    * @return the type in a string
    * @throws IllegalArgumentException if the type is null or invalid.
    */
-
   public String toString() {
     // initialize switch statement using shape type
     switch (this) {

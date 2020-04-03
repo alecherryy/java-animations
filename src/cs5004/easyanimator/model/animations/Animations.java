@@ -73,6 +73,15 @@ public interface Animations {
   String getDescription();
 
   /**
+   * Overload toString() method to accept a single float
+   * parameter.
+   *
+   * @param speed of animation
+   * @return the animation represented as a string
+   */
+  String getDescription(float speed);
+
+  /**
    * Implements the animation on a shape (whether it is changing color,
    * changing size, or changing coordinates).
    *

@@ -18,16 +18,22 @@ public class ChangeSize extends AbstractAnimations {
    * original height, new width, and new height. Calls the AbstractAnimations super-constructor and
    * sets the AnimationType parameter to CHANGESIZE.
    *
-   * @param shape          the shape will be animated, type Shape.
-   * @param start          the start time of the animation, an int.
-   * @param end            the end time of the animation, an int.
-   * @param originalWidth  the original coordinates of the object, type Pair.
+   * @param shape the shape will be animated, type Shape.
+   * @param start  the start time of the animation, an int.
+   * @param end the end time of the animation, an int.
+   * @param originalWidth the original coordinates of the object, type Pair.
    * @param originalHeight the original height of the object, type float.
-   * @param newWidth       the new width of the object, to which the width will be changed.
-   * @param newHeight      the new height of the object, to which the height will be changed.
+   * @param newWidth the new width of the object, to which the width will be changed.
+   * @param newHeight the new height of the object, to which the height will be changed.
    */
-  public ChangeSize(Shapes shape, int start, int end, double originalWidth, double originalHeight,
-                    double newWidth, double newHeight) {
+  public ChangeSize(
+          Shapes shape,
+          int start,
+          int end,
+          double originalWidth,
+          double originalHeight,
+          double newWidth,
+          double newHeight) {
     super(AnimationType.CHANGESIZE, shape, start, end);
     this.originalWidth = originalWidth;
     this.originalHeight = originalHeight;
@@ -35,50 +41,72 @@ public class ChangeSize extends AbstractAnimations {
     this.newHeight = newHeight;
   }
 
-  @Override
+  /**
+   * Get the original width of the shape.
+   *
+   * @return the original width of the shape
+   */
   public double getOriginalWidth() {
 
     return originalWidth;
   }
 
-  @Override
+  /**
+   * Get the original height of the shape.
+   *
+   * @return the original height of the shape
+   */
   public double getOriginalHeight() {
 
     return originalHeight;
   }
 
-  @Override
+  /**
+   * Get the new width of the shape.
+   *
+   * @return the new width of the shape
+   */
   public double getNewWidth() {
 
     return newWidth;
   }
 
-  @Override
+  /**
+   * Get the new height of the shape.
+   *
+   * @return the new height of the shape
+   */
   public double getNewHeight() {
     return newHeight;
   }
 
-  @Override
+  /**
+   * Returns the svg tag of the animation
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation
+   */
   public String toSVGTag(double speed) {
+    StringBuilder svg = new StringBuilder();
     double begin = (this.getStartTime() / speed) * 1000;
     double end = (this.getEndTime() / speed) * 1000;
     double dur = end - begin;
 
-    String svg = "";
+    // initial state
+    svg.append("<animate attributeType=\"xml\" type=\"scale\" "
+            + "begin=\"" + begin + "ms\" dur=\"" + dur + "ms\" attributeName=\""
+            + this.getShape().svgD1Tag() + "\" "
+            + "from=\"" + this.originalWidth
+            + "\" to=\"" + this.newWidth + "\" fill=\"freeze\" /> \n");
 
-    svg += "<animate attributeType=\"xml\" type=\"scale\" "
-        + "begin=\"" + begin + "ms\" dur=\"" + dur + "ms\" attributeName=\""
-        + this.getShape().svgD1Tag() + "\" "
-        + "from=\"" + this.originalWidth
-        + "\" to=\"" + this.newWidth + "\" fill=\"freeze\" /> \n";
+    // post-animation state
+    svg.append("<animate attributeType=\"xml\" type=\"scale\" "
+            + "begin=\"" + begin + "ms\" dur=\"" + dur + "ms\" attributeName=\""
+            + this.getShape().svgD2Tag() + "\" "
+            + "from=\"" + this.originalHeight
+            + "\" to=\"" + this.newHeight + "\" fill=\"freeze\" />\n");
 
-    svg += "<animate attributeType=\"xml\" type=\"scale\" "
-        + "begin=\"" + begin + "ms\" dur=\"" + dur + "ms\" attributeName=\""
-        + this.getShape().svgD2Tag() + "\" "
-        + "from=\"" + this.originalHeight
-        + "\" to=\"" + this.newHeight + "\" fill=\"freeze\" />\n";
-
-    return svg;
+    return svg.toString();
   }
 
 
@@ -119,25 +147,41 @@ public class ChangeSize extends AbstractAnimations {
     return svg;
   }
 
-  @Override
+  /**
+   * Returns the string "moves".
+   *
+   * @return the animation change as a string
+   */
   public String getChange() {
 
-    return "scales";
+    return "scales ";
   }
 
-  @Override
+  /**
+   * Get the starting state of the animation as a string.
+   *
+   * @return the starting state of the animation as a string
+   */
   public String getStartState() {
 
     return Utils.formatSizeString(this.getShape(), this.originalWidth, this.originalHeight);
   }
 
-  @Override
+  /**
+   * Get the end state of the animation as a string.
+   *
+   * @return the end state of the animation as a string
+   */
   public String getEndState() {
 
     return Utils.formatSizeString(this.getShape(), this.newWidth, this.newHeight);
   }
 
-  @Override
+  /**
+   * Implements the animation on a shape.
+   *
+   * @param time the current time of the animation
+   */
   public void implementAnimation(double time) {
     double changeWidth = this.newWidth - this.originalWidth;
     double changeHeight = this.newHeight - this.originalHeight;
@@ -156,7 +200,11 @@ public class ChangeSize extends AbstractAnimations {
     }
   }
 
-  @Override
+  /**
+   * Changes the appropriate fields of the shape.
+   *
+   * @param s a Shape object, whose field will be changed
+   */
   public void updateField(Shapes s) {
     s.changeWidth(newWidth);
     s.changeHeight(newHeight);

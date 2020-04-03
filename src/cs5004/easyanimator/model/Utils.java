@@ -1,7 +1,9 @@
 package cs5004.easyanimator.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
+import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 import cs5004.easyanimator.model.shapes.Coordinates;
 
@@ -96,6 +98,17 @@ public class Utils {
    */
   public static String getRGBColorString(Color color) {
     return "(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")";
+  }
+
+  /**
+   * Given a list of animations, sorts the list by start time (first to last) and
+   * returns a sorted animations array.
+   *
+   * @param animations this list of animations
+   */
+  public static void sortAnimations(ArrayList<Animations> animations) {
+    animations.sort((Animations a, Animations b) ->
+            Integer.compare(a.getStartTime(), b.getStartTime()));
   }
 }
 

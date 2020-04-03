@@ -20,11 +20,9 @@ import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shapes;
 import static org.junit.Assert.assertEquals;
 
-
 /**
  * A JUnit test class for the TextualView class.
  */
-
 public class TextualViewTest {
   AnimationModel model;
   Shapes rectangle;
@@ -71,6 +69,9 @@ public class TextualViewTest {
     shapesList = view.getShapes();
   }
 
+  /**
+   * Test for getDescription() method.
+   */
   @Test
   public void testGetDescription() {
     assertEquals("Shapes:\n"
@@ -78,19 +79,20 @@ public class TextualViewTest {
             + "Type: rectangle\n"
             + "Min corner: (200.0, 200.0), Width: 50.0, Height: 100.0, "
             + "Color: (1.0,0.0,0.0)\n" + "Appears at t=0.1s\n"
-            + "Disappears at t=10.0s\n" + "\n" + "Name: O\n" + "Type: oval\n"
+            + "Disappears at t=10.0s\n"
+            + "\n"
+            + "Name: O\n" + "Type: oval\n"
             + "Center: (500.0, 100.0), X radius: 60.0, Y radius: 30.0, "
             + "Color: (0.0,0.0,1.0)\n"
-            + "Appears at t=0.6s\n" + "Disappears at t=10.0s\n" + "\n"
-            + "shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s\n"
-            + "shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s\n"
-            + "shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) "
+            + "Appears at t=0.6s\n" + "Disappears at t=10.0s\n"
+            + "\n"
+            + "Shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s\n"
+            + "Shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s\n"
+            + "Shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) "
             + "from t=5.0s to t=8.0s\n"
-            + "shape R moves from (300.0, 300.0) to (200.0, 200.0) "
-            + "from t=7.0s to t=10.0s\n"
-            + "shape R scales from Width: 50.0, "
-            + "Height: 100.0 to Width: 25.0, Height: 100.0 "
-            + "from t=5.1s to t=7.0s\n",
+            + "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 "
+            + "from t=5.1s to t=7.0s\n"
+            + "Shape R moves from (300.0, 300.0) to (200.0, 200.0) from t=7.0s to t=10.0s\n",
         this.view.getTextDescription());
 
     TextualView empty = new TextualView(10, new ArrayList<Shapes>(),
@@ -99,6 +101,9 @@ public class TextualViewTest {
     assertEquals("", empty.getTextDescription());
   }
 
+  /**
+   * Test for write() method.
+   */
   @Test
   public void testWrite() {
     this.view.write("test/output.txt");
@@ -123,18 +128,16 @@ public class TextualViewTest {
           + "Name: O\n" + "Type: oval\n"
           + "Center: (500.0, 100.0), X radius: 60.0, Y radius: 30.0, Color: (0.0,0.0,1.0)\n"
           + "Appears at t=0.6s\n" + "Disappears at t=10.0s\n" + "\n"
-          + "shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s\n"
-          + "shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s\n"
-          + "shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) from t=5.0s to t=8.0s\n"
-          + "shape R moves from (300.0, 300.0) to (200.0, 200.0) "
-          + "from t=7.0s to t=10.0s\nshape R scales from Width: 50.0, Height: 100.0 to Width: "
-          + "25.0, Height: 100.0 from t=5.1s to t=7.0s\n", sb.toString());
+          + "Shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s\n"
+          + "Shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s\n"
+          + "Shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) from t=5.0s to t=8.0s\n"
+          + "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 "
+          + "from t=5.1s to t=7.0s\n"
+          + "Shape R moves from (300.0, 300.0) to (200.0, 200.0) from t=7.0s to t=10.0s\n",
+              sb.toString());
       br.close();
     } catch (Exception e) {
       // do nothing
     }
-
   }
-
-
 }

@@ -67,6 +67,9 @@ public class VisualAnimationViewTest {
 
   }
 
+  /**
+   * Test for display() method.
+   */
   @Test
   public void testMakeVisible() {
     assertEquals(false, ((VisualAnimationView)this.view).isVisible());
