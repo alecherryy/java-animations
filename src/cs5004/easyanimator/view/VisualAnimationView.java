@@ -1,10 +1,12 @@
 package cs5004.easyanimator.view;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
+import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
@@ -16,57 +18,83 @@ public class VisualAnimationView extends JFrame implements View {
   private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
 
-  public VisualAnimationView(int speed, ArrayList<Shapes> shapes) {
-    super("Java Easy Animator");
+  public VisualAnimationView(float speed, ArrayList<Shapes> shapes) {
+    super();
 
     this.shapes = shapes;
+    this.setTitle("Simple Animation");
+    this.setSize(700, 700);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    // set preferred size of the frame
-    // TODO set setMaximumSize(), setMinimumSize() or setResizable()
-    setSize(800, 800);
-    setResizable(false);
-    setLocation(0, 0);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    animationPanel = new AnimateJPanel();
+    animationPanel.setPreferredSize(new Dimension(700, 700));
 
-    // create panel
-    this.animationPanel = new AnimateJPanel();
-    this.animationPanel.setPreferredSize(new Dimension(800, 800));
+    animationPanel.setShapes(shapes);
 
-    // TODO add scrollPanel
-    pack();
+    JScrollPane scrollPane = new JScrollPane(animationPanel);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    scrollPane.setBounds(50, 30, 300, 50);
+
+    this.add(scrollPane, BorderLayout.CENTER);
+
+    this.pack();
   }
 
-  /**
-   * Set an object's visibility to true.
-   */
+  @Override
   public void display() {
     setVisible(true);
   }
 
-  /**
-   * Takes a list of Shape objects and sets them
-   * within the view.
-   *
-   * @param shapes a list of shapes
-   */
+ @Override
   public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
     animationPanel.setShapes(shapes);
   }
 
-  /**
-   * Resets the view.
-   */
+  @Override
   public void refresh() {
     repaint();
   }
 
-  /**
-   * Returns a list of Shape objects.
-   *
-   * @return a list of Shape objects
-   */
+  @Override
   public ArrayList<Shapes> getShapes() {
     return this.shapes;
+  }
+
+  @Override
+  public ArrayList<Animations> getAnimations() {
+    throw new UnsupportedOperationException("Visual Animation View view does not include this " +
+        "functionality.");
+  }
+
+  @Override
+  public String getTextDescription() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Visual Animation View view does not include this " +
+        "functionality.");
+  }
+
+  @Override
+  public void write(String fileName) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Visual Animation View view does not include this " +
+        "functionality.");
+  }
+
+  @Override
+  public float getSpeed() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Visual Animation View view does not include this " +
+        "functionality.");
+  }
+
+  @Override
+  public void displayErrorMsg(String error) throws UnsupportedOperationException {
+    JOptionPane.showMessageDialog(this, error, "Error",
+        JOptionPane.ERROR_MESSAGE);
+  }
+
+  @Override
+  public void displayButton(ActionListener event) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Visual Animation View view does not include this " +
+        "functionality.");
   }
 }

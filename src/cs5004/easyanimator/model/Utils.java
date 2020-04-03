@@ -85,7 +85,7 @@ public class Utils {
    * @return the string representation of the position of the shape
    */
   public static String getPositionString(Coordinates pos) {
-    return "(" + pos.getX() + "," + pos.getY() + ")";
+    return "(" + pos.getX() + ", " + pos.getY() + ")";
   }
 
   /**

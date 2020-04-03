@@ -3,7 +3,7 @@ package cs5004.easyanimator.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.Color;
+import java.awt.*;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Oval;
@@ -53,9 +53,9 @@ public class UtilsTest {
    */
   @Test
   public void formatSizeStringTest() {
-    Shapes rectangle = new Rectangle("R", 2, 5, Color.BLUE, new Coordinates(25, 50));
+    Shapes rectangle = new Rectangle("R", 2, 5, 5, 8, Color.BLUE, new Coordinates(25, 50));
     Assert.assertEquals("Width: 2.0, Height: 5.0", Utils.formatSizeString(rectangle, 2.0, 5.0));
-    Shapes oval = new Oval("O", 7, 8, Color.GREEN, new Coordinates(0, 18.5));
+    Shapes oval = new Oval("O", 7, 8, 4, 8, Color.GREEN, new Coordinates(0, 18.5));
     Assert.assertEquals("X radius: 7.0, Y radius: 8.0", Utils.formatSizeString(oval, 7.0, 8.0));
 
   }

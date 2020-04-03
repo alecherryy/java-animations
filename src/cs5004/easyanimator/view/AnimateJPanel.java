@@ -13,6 +13,7 @@ public class AnimateJPanel extends JPanel {
   private ArrayList<Shapes> shapes;
 
   public AnimateJPanel() {
+    super();
     this.shapes = new ArrayList<Shapes>();
     this.setBackground(Color.WHITE);
   }
@@ -40,8 +41,8 @@ public class AnimateJPanel extends JPanel {
       int y = (int) pos.getY();
 
       // shape's width and height
-      int w = (int) s.getWidth();
-      int h = (int) s.getHeight();
+      int w = (int) s.getD1();
+      int h = (int) s.getD2();
 
       Color c = s.getColor();
 

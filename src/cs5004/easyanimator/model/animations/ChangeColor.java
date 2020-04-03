@@ -42,60 +42,35 @@ public class ChangeColor extends AbstractAnimations {
     this.newColor = newColor;
   }
 
-  /**
-   * Get the original color of the shape.
-   *
-   * @return the original color of the shape
-   */
+  @Override
   public Color getOriginalColor() {
-
     return this.originalColor;
   }
 
-  /**
-   * Get the new color of the shape.
-   *
-   * @return the new color of the shape
-   */
+  @Override
   public Color getNewColor() {
 
     return this.newColor;
   }
 
-  /**
-   * Returns the string "moves".
-   *
-   * @return the animation change as a string
-   */
+  @Override
   public String getChange() {
 
-    return "changes color ";
+    return "changes color";
   }
 
-  /**
-   * Get the starting state of the animation as a string.
-   *
-   * @return the starting state of the animation as a string
-   */
+  @Override
   public String getStartState() {
-
     return Utils.colorAsString(this.originalColor);
   }
 
-  /**
-   * Get the end state of the animation as a string.
-   *
-   * @return the end state of the animation as a string
-   */
+  @Override
+
   public String getEndState() {
     return Utils.colorAsString(this.newColor);
   }
 
-  /**
-   * Implements the ChangeColor animation on a shape.
-   *
-   * @param time the current time of the animation
-   */
+  @Override
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
     float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
@@ -129,14 +104,41 @@ public class ChangeColor extends AbstractAnimations {
     }
   }
 
-  /**
-   * Changes the appropriate fields of the shape to match the changes
-   * implemented on the shape.
-   *
-   * @param s a Shape object, whose field will be changed
-   */
+  @Override
   public void updateField(Shapes s) {
 
     s.changeColor(newColor);
+  }
+
+  @Override
+  public String toSVGTag(double speed) {
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    return "<animate attributeType=\"xml\" begin=\"" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"fill\" from=\"rgb"
+        + Utils.getRGBColorString(this.originalColor) + "\" to=\"rgb"
+        + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
+  }
+
+  @Override
+  public String toSVGTagWithLoop(double speed) {
+    String tag = "";
+    double begin = (this.getStartTime() / speed) * 1000;
+    double end = (this.getEndTime() / speed) * 1000;
+    double dur = end - begin;
+
+    tag += "<animate attributeType=\"xml\" begin=\"base.begin+" + begin + "ms\" dur=\""
+        + dur + "ms\" attributeName=\"fill\" from=\"rgb"
+        + Utils.getRGBColorString(this.originalColor) + "\" to=\"rgb"
+        + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
+
+    tag += "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\""
+        + " attributeName=\"fill\" from=\"rgb"
+        + Utils.getRGBColorString(this.newColor) + "\" to=\"rgb"
+        + Utils.getRGBColorString(this.originalColor) + "\" fill=\"freeze\" />\n";
+
+    return tag;
   }
 }

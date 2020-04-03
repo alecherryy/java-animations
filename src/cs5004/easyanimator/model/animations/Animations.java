@@ -151,4 +151,21 @@ public interface Animations {
    * @return the new height of the shape
    */
   double getNewHeight();
+
+  /**
+   * Returns the svg tag of the animation
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation
+   */
+  String toSVGTag(double speed);
+
+  /**
+   * Returns the svg tag of the animation
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation when there's a loop
+   */
+  String toSVGTagWithLoop(double speed);
+
 }

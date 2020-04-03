@@ -4,7 +4,7 @@
 The purpose of this project is to build an application that helps to create simple but effective 2D animations from shapes.
 
 ### Overview 
-Inside our `cs5004.easyanimator.model` directory, we first have our over-arching `AnimationModel` Interface,
+Inside our `cs5004.cs5004.easyanimator.model` directory, we first have our over-arching `AnimationModel` Interface,
 which represents an animation model with a series of methods implemented by the `AnimationModelImpl` Class. Such methods include: adding shapes and animations to the model, check whether there are shapes or
 animations in the model, removing shapes from the model, and get a summary of each item in the
 model.
