@@ -24,9 +24,7 @@ public class Rectangle extends AbstractShape {
    * @param color the color of the shape
    * @param pos the position of the shape
    */
-  public Rectangle(String name,
-                   int appearTime,
-                   int disappearTime,
+  public Rectangle(String name, int appearTime, int disappearTime,
                    double width,
                    double height,
                    Color color,

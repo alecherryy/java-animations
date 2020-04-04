@@ -15,90 +15,133 @@ import cs5004.easyanimator.model.shapes.Oval;
 import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shapes;
 import cs5004.easyanimator.util.TweenModelBuilder;
+
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This is a JUnit suite to test the AnimationModelBuilder class.
+ */
 public class AnimationModelBuilderTest {
-  AnimationModel model;
-  TweenModelBuilder<AnimationModel> builder;
+  private AnimationModel model;
+  private TweenModelBuilder<AnimationModel> builder;
   private Coordinates c1;
   private Coordinates c2;
+  private ChangeColor changeColor;
   private ChangeColor changeColor2;
+  private ChangeCoordinates changeCoordinates;
   private ChangeCoordinates changeCoordinates2;
-  private ChangeCoordinates changeCoordinates3;
+  private ChangeSize changeSize;
   private ChangeSize changeSize2;
-  private ChangeSize changeSize3;
-  private Shapes rectangle1;
-  private Shapes rectangle3;
-  private Shapes oval1;
-  private Shapes oval4;
+  private Shapes rectangle;
+  private Shapes square;
+  private Shapes oval;
+  private Shapes oval2;
 
-
+  /**
+   * Class set up.
+   */
   @Before
-  public void setup() {
+  public void setUp() {
     builder = new AnimationModelBuilder();
-
     this.model = new AnimationModelImpl();
 
     c1 = new Coordinates(0, 0);
-    c2 = new Coordinates(102.112, 50.5);
-    oval1 = new Oval("O", 0, 10, 10, 10,
-        Color.BLACK, c1);
-    oval4 = new Oval("O2", 10, 15, 20, 25.5,
-        Color.BLUE, c2);
-    rectangle1 = new Rectangle("R", 0,
-        10, 10, 10,
-        Color.BLACK, c1);
-    rectangle3 = new Rectangle("R2", 10,
-        15, 20, 25.5,
-        Color.BLUE, c2);
-    changeColor2 = new ChangeColor(oval1, 5, 10, Color.BLACK, Color.RED);
-    changeSize2 = new ChangeSize(oval4, 11, 12, 20, 25.5,
-        15.5, 15.5);
-    changeSize3 = new ChangeSize(rectangle3, 11, 12, 20.0, 25.5,
-        15.5, 15.5);
-    changeCoordinates2 = new ChangeCoordinates(rectangle1, 8, 10, c1, c2);
-    changeCoordinates3 = new ChangeCoordinates(oval1, 8, 10, c1, c2);
-  }
-  @Test
-  public void addOval() {
-    this.builder.addOval(oval1.getName(), 0, 0, 10, 10,
-        1, 1, 1, 0, 10);
-    assertEquals(new ArrayList<Shapes>(Arrays.asList(this.oval1)), builder.build().getShapes());
+    c2 = new Coordinates(115.5, 50.5);
+    rectangle = new Rectangle("R", 5, 10, 1, 2,
+            Color.BLUE, new Coordinates(25, 50));
+    square = new Rectangle("S", 2, 7, 10, 30,
+            Color.RED, new Coordinates(0, 0));
+    oval = new Oval("O", 10, 20, 5, 5, Color.GREEN,
+            new Coordinates(0, 18.5));
+    oval2 = new Oval("O2", 0, 10, 3, 4, Color.BLACK,
+            new Coordinates(0, 0));
+    changeColor = new ChangeColor(rectangle, 6, 9, Color.BLUE, Color.RED);
+    changeColor2 = new ChangeColor(oval, 10, 15, Color.GREEN, Color.RED);
+    changeCoordinates = new ChangeCoordinates(square, 3, 5, new Coordinates(0,
+            0), new Coordinates(20, 50));
+    changeCoordinates2 = new ChangeCoordinates(rectangle, 6, 9, c1, c2);
+    changeSize = new ChangeSize(oval, 11, 15, 35, 18,
+            40, 20);
+    changeSize2 = new ChangeSize(oval2, 2, 5, 3, 4,
+            15.5, 15.5);
   }
 
-  // Test for adding a rectangle to a model builder
+  /**
+   * Test for addOval() method.
+   */
   @Test
-  public void addRectangle() {
-    this.builder.addRectangle(rectangle1.getName(), 0, 0, 10, 10,
-        1, 1, 1, 0, 10);
-    assertEquals(new ArrayList<Shapes>(Arrays.asList(this.rectangle1)),
-        builder.build().getShapes());
+  public void testAddOval() {
+    builder.addOval(oval.getName(), 0, (float) 18.5, 5, 5, Color.GREEN,
+            10, 20);
+    assertEquals(new ArrayList<Shapes>(Arrays.asList(oval)), builder.build().getShapes());
   }
 
-  // Test for adding a change dimension animation to a model builder
+  /**
+   * Test for addRectangle() method.
+   */
   @Test
-  public void addChangeDimension() {
+  public void testAddRectangle() {
+    builder.addRectangle(rectangle.getName(), 25, 50, 5, 5, Color.BLUE,
+            5, 10);
+    assertEquals(new ArrayList<Shapes>(Arrays.asList(rectangle)), builder.build().getShapes());
+  }
+
+  /**
+   * Class set up.
+   */
+  @Before
+  public void exceptionSetUp() {
+    builder.build().addShape(rectangle);
+    builder.build().addShape(oval);
+  }
+
+  /**
+   * Test for animations and shape exceptions.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void addexceptionShapesAndAnimations() {
+    // shape does not exist
+    this.builder.addRectangle("R", 2, 7, 10, 30, Color.RED,
+            1, 100);
+    this.builder.addOval("R", 2, 7, 34, 34, Color.GREEN,
+            76, 77);
+    this.builder.addOval("L", 2, 7, 34, 34, Color.GREEN,
+            76, 31);
+    this.builder.addColorChange("O", Color.GREEN, Color.BLUE, 7, 20);
+    this.builder.addColorChange("R", Color.GREEN, Color.RED, 14, 20);
+    this.builder.addMove("O", 5, 5, 12, 12, 4, 15);
+    builder.build();
+  }
+
+  /**
+   * Test for addMove() method.
+   */
+  @Test
+  public void addMoveTest() {
     assertEquals(0, builder.build().getAnimations().size());
-    this.builder.addSizeChange("rectangle 2", (float) 20.0, (float) 25.5, (float) 15.5,
-        (float) 15.5, 11, 12);
+    this.builder.addMove("O", 5, 5, 12, 12, 11, 15);
     assertEquals(1, builder.build().getAnimations().size());
   }
 
-  // Test for adding a change color animation to a model builder
+  /**
+   * Test for addColorChange() method.
+   */
   @Test
-  public void addChangeColor() {
+  public void addColorChangeTest() {
     assertEquals(0, builder.build().getAnimations().size());
-    this.builder.addColorChange("oval 1", 1, 1, 1, 1, 0,
-        0, 5, 10);
+    this.builder.addColorChange("O", Color.GREEN, Color.RED, 10, 13);
     assertEquals(1, builder.build().getAnimations().size());
   }
 
-  // Test for adding a move animation to a model builder
+  /**
+   * Test for addSizeChange() method.
+   */
   @Test
-  public void addMove() {
+  public void addSizeChangeTest() {
+    rectangle = new Rectangle("R", 5, 10, 1, 2,
+            Color.BLUE, new Coordinates(25, 50));
     assertEquals(0, builder.build().getAnimations().size());
-    this.builder.addMove("oval 1", 0, 0, (float) 102.112,
-        (float) 50.5, 8, 10);
+    this.builder.addSizeChange("R", 1, 2, 5, 6, 6, 8);
     assertEquals(1, builder.build().getAnimations().size());
   }
 }

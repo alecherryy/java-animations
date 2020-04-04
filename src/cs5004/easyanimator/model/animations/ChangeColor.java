@@ -11,7 +11,7 @@ import cs5004.easyanimator.model.Utils;
  * colors in the default sRGB color space.
  */
 public class ChangeColor extends AbstractAnimations {
-  private Color originalColor;
+  private Color color;
   private Color newColor; // color to change to.
 
   /**
@@ -22,24 +22,30 @@ public class ChangeColor extends AbstractAnimations {
    * @param shape the shape will be animated, type Shape.
    * @param start the start time of the animation, an int.
    * @param end the end time of the animation, an int.
-   * @param originalColor the original color of the object, type Color.
+   * @param color the original color of the object, type Color.
    * @param newColor the color to which the object will be changed to, type Color.
    * @throws IllegalArgumentException if the originalColor or newColor are null, or if the
    *                                  originalColor or newColor are something other than red, green,
    *                                  and blue, or if the newColor is the same as the
    *                                  originalColor.
    */
-  public ChangeColor(Shapes shape, int start, int end, Color originalColor, Color newColor) {
+  public ChangeColor(Shapes shape, int start, int end, Color color, Color newColor) {
     super(AnimationType.CHANGECOLOR, shape, start, end);
-    if (originalColor == null || newColor == null) {
+    if (checkColors(shape, color, newColor)) {
       throw new IllegalArgumentException("Original color and new cannot be null.");
     }
-    if (originalColor == newColor) {
-      throw new IllegalArgumentException("New color must be different from original color.");
-    }
 
-    this.originalColor = originalColor;
+    this.color = color;
     this.newColor = newColor;
+  }
+
+  /**
+   * Private helper method to check for invalid color parameters.
+   *
+   * @return true if parameters are invalid, otherwise returns false
+   */
+  private boolean checkColors(Shapes s, Color color, Color newColor) {
+    return color == null || newColor == null || color == newColor || color != s.getColor();
   }
 
   /**
@@ -48,7 +54,7 @@ public class ChangeColor extends AbstractAnimations {
    * @return the original color of the shape
    */
   public Color getOriginalColor() {
-    return this.originalColor;
+    return this.color;
   }
 
   /**
@@ -77,7 +83,7 @@ public class ChangeColor extends AbstractAnimations {
    * @return the starting state of the animation as a string
    */
   public String getStartState() {
-    return Utils.colorAsString(this.originalColor);
+    return Utils.colorAsString(this.color);
   }
 
   /**
@@ -103,7 +109,7 @@ public class ChangeColor extends AbstractAnimations {
     return  "<animate attributeType=\"xml\" begin=\""
             + begin + "ms\" dur=\""
             + dur + "ms\" attributeName=\"fill\" "
-            + "from=\"rgb" + Utils.getRGBColorString(this.originalColor)
+            + "from=\"rgb" + Utils.getRGBColorString(this.color)
             + "\" to=\"rgb" + Utils.getRGBColorString(this.newColor)
             + "\" fill=\"freeze\" />\n";
   }
@@ -116,11 +122,11 @@ public class ChangeColor extends AbstractAnimations {
    */
   public void implementAnimation(double time) {
     // getRed() returns the red component in the range 0-255 in the default sRGB space.
-    float originalRed = Utils.rgbToFloat(this.originalColor.getRed());
+    float originalRed = Utils.rgbToFloat(this.color.getRed());
     // getGreen() returns the green component in the range 0-255 in the default sRGB space.
-    float originalGreen = Utils.rgbToFloat(this.originalColor.getGreen());
+    float originalGreen = Utils.rgbToFloat(this.color.getGreen());
     // getBlue() returns the blue component in the range 0-255 in the default sRGB space.
-    float originalBlue = Utils.rgbToFloat(this.originalColor.getBlue());
+    float originalBlue = Utils.rgbToFloat(this.color.getBlue());
 
     float newRed = Utils.rgbToFloat(this.newColor.getRed());
     float newGreen = Utils.rgbToFloat(this.newColor.getGreen());
@@ -133,7 +139,7 @@ public class ChangeColor extends AbstractAnimations {
     float changeInTime = (float) (time - this.getStartTime())
             / (float) (this.getEndTime() - this.getStartTime());
 
-    if ((time > this.getEndTime()) || (time < this.getStartTime())) {
+    if (time > this.getEndTime() || time < this.getStartTime()) {
       // do nothing.
       return;
     }
@@ -169,14 +175,14 @@ public class ChangeColor extends AbstractAnimations {
     double dur = end - begin;
 
     tag += "<animate attributeType=\"xml\" begin=\"base.begin+" + begin + "ms\" dur=\""
-        + dur + "ms\" attributeName=\"fill\" from=\"rgb"
-        + Utils.getRGBColorString(this.originalColor) + "\" to=\"rgb"
-        + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
+            + dur + "ms\" attributeName=\"fill\" from=\"rgb"
+            + Utils.getRGBColorString(this.color) + "\" to=\"rgb"
+            + Utils.getRGBColorString(this.newColor) + "\" fill=\"freeze\" />\n";
 
     tag += "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\""
-        + " attributeName=\"fill\" from=\"rgb"
-        + Utils.getRGBColorString(this.newColor) + "\" to=\"rgb"
-        + Utils.getRGBColorString(this.originalColor) + "\" fill=\"freeze\" />\n";
+            + " attributeName=\"fill\" from=\"rgb"
+            + Utils.getRGBColorString(this.newColor) + "\" to=\"rgb"
+            + Utils.getRGBColorString(this.color) + "\" fill=\"freeze\" />\n";
 
     return tag;
   }
