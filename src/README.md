@@ -51,3 +51,35 @@ a `Shape` class would include two additional parameters in its constructor befor
 
 After much discussion, we have decided to leave this portion of the implementation for the next round of this assignment, during which we will
 be giving more thought to how exactly animations and shapes exist and behave within the larger `AnimatioModel`. 
+
+### View Package
+To implement this portion of the project, we made some modifications to our existing packages. 
+
+In our util package, we decided to create a TweenModelBuilder interface. The purpose of this 
+interface is to read in a file containing the animation and build a model accordingly. We implement
+the interface inside a static class we declare in our AnimationModelImpl class, which adds shapes 
+and animations to our model, and contains a method that returns a new AnimationModelImpl object with
+the updated changes.
+
+We also made some modifications to our shapes package. We added methods in our Shapes interface 
+that return the representation of the shape in SVG tags, and defined their specific implementations
+in our Oval and Rectangle classes. We also created a visitor design pattern through our
+ShapesVisitor interface so we could add new operations to existing shape object structures without
+modifying the structures themselves directly (and instead making copies of them). So, in our static
+builder class inside our AnimationModelImpl class, we can create new shapes that follow the same
+pattern as the original shapes but have the  appropriate changes made to them (such as a new
+color, new size, or new position, depending on what animation we are adding). We do this to 
+ensure that our model follows the second SOLID principle -- our classes should be open for extension
+but closed for modification.
+
+Finally, in our view package, we have a View interface, which contains methods that are common to 
+all views, and is implemented by our SVGView, TextualView, and VisualAnimationView classes. Our
+AnimateJPanel class extends JPanel and creates the animation ‘window’ that will display our model.
+The TextualView sub-class creates a TextualView object with its given speed, array list of shapes,
+and array list of animations parameters. It outputs the description of the model to a file whose
+name the user can specify. Our SVGView class extends TextualView and calls its super-constructor to
+produce an SVGView object with the before-mentioned fields. It also outputs to a file. In addition
+to implementing the View interface, our VisualAnimationView class extends JFrame in order to
+produce the visual representation of our model. It creates a VisualAnimationView object with a
+model's list of shapes and the speed at which the animation happens, and creates an animation
+panel by creating an AnimateJPanel object.

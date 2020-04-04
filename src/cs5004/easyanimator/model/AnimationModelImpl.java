@@ -168,11 +168,11 @@ public class AnimationModelImpl implements AnimationModel {
      * @return the builder object
      */
     public TweenModelBuilder<AnimationModel> addOval(
-        String name,
-        float x, float y,
-        float xRadius, float yRadius,
-        Color color,
-        int appear, int disappear) {
+            String name,
+            float x, float y,
+            float xRadius, float yRadius,
+            Color color,
+            int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Shapes shape = new Oval(name, appear, disappear, xRadius, yRadius, color, pos);
       shapesList.add(shape);
@@ -193,11 +193,11 @@ public class AnimationModelImpl implements AnimationModel {
      * @return the builder object
      */
     public TweenModelBuilder<AnimationModel> addRectangle(
-        String name,
-        float x, float y,
-        float width, float height,
-        Color color,
-        int appear, int disappear) {
+            String name,
+            float x, float y,
+            float width, float height,
+            Color color,
+            int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Shapes shape = new Rectangle(name, appear, disappear, width, height, color, pos);
       shapesList.add(shape);
@@ -215,7 +215,7 @@ public class AnimationModelImpl implements AnimationModel {
           if (invalidAnimation(a, obj)) {
             throw new IllegalArgumentException(
                     "Incompatible move for the same shape "
-                    + "during overlapping time intervals");
+                            + "during overlapping time intervals");
           }
         }
       }
@@ -329,8 +329,8 @@ public class AnimationModelImpl implements AnimationModel {
       for (Shapes obj : this.shapesList) {
         if (obj.getName().equals(name)) {
           s = obj.visitShape(new ShapesVisitorImpl());
-          s.changeWidth(w);
-          s.changeHeight(h);
+          s.changeD1(w);
+          s.changeD2(h);
         }
       }
 

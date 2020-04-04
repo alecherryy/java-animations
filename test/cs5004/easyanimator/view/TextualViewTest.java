@@ -18,6 +18,7 @@ import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Oval;
 import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shapes;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -36,20 +37,19 @@ public class TextualViewTest {
   Animations changeCoordinates3;
   Animations changeColor1;
   Animations changeSize1;
-  View view;
+  View textualView;
   ArrayList<Shapes> shapesList;
 
   @Before
   public void setup() {
     model = new AnimationModelImpl();
-    c1 = new Coordinates(200, 200);
-    c2 = new Coordinates(300, 300);
-    c3 = new Coordinates(500, 100);
-    c4 = new Coordinates(500, 400);
-
+    c1 = new Coordinates(250, 270);
+    c2 = new Coordinates(390, 390);
+    c3 = new Coordinates(510, 115);
+    c4 = new Coordinates(5, 40);
     rectangle = new Rectangle("R", 1, 100, 50, 100,
         Color.RED, c1);
-    oval = new Oval("O",6, 100, 60, 30, Color.BLUE,
+    oval = new Oval("O", 6, 100, 60, 30, Color.BLUE,
         c3);
     changeCoordinates1 = new ChangeCoordinates(rectangle, 10, 50, c1, c2);
     changeCoordinates2 = new ChangeCoordinates(oval, 20, 70, c3, c4);
@@ -64,36 +64,78 @@ public class TextualViewTest {
     model.addAnimation(changeColor1);
     model.addAnimation(changeCoordinates3);
     model.addAnimation(changeSize1);
-
-    view = new TextualView(10, model.getShapes(), model.getAnimations());
-    shapesList = view.getShapes();
+    textualView = new TextualView(20, model.getShapes(), model.getAnimations());
+    shapesList = textualView.getShapes();
   }
 
   /**
-   * Test for getDescription() method.
+   * Test that display() throws an exception.
+   */
+  @Test(expected = UnsupportedOperationException.class)
+  public void testDisplay() {
+    textualView.display();
+  }
+
+  /**
+   * Test for setShapes() method.
    */
   @Test
-  public void testGetDescription() {
+  public void testSetShapes() {
+    assertEquals(shapesList, textualView.getShapes());
+    textualView.setShapes(new ArrayList<Shapes>());
+    assertEquals(new ArrayList<Shapes>(), textualView.getShapes());
+  }
+
+  /**
+   * Test that refresh() throws an exception.
+   */
+  @Test(expected = UnsupportedOperationException.class)
+  public void testRefresh() {
+    textualView.refresh();
+  }
+
+  /**
+   * Test for getShapes() method.
+   */
+  @Test
+  public void testGetShapes() {
+    assertEquals(shapesList, textualView.getShapes());
+  }
+
+  /**
+   * Test for getAnimations() method.
+   */
+  @Test
+  public void testGetAnimations() {
+    assertEquals(model.getAnimations(), textualView.getAnimations());
+  }
+
+  /**
+   * Test for getTextDescription() method.
+   */
+  @Test
+  public void testGetTextDescription() {
     assertEquals("Shapes:\n"
             + "Name: R\n"
             + "Type: rectangle\n"
-            + "Min corner: (200.0, 200.0), Width: 50.0, Height: 100.0, "
-            + "Color: (1.0,0.0,0.0)\n" + "Appears at t=0.1s\n"
-            + "Disappears at t=10.0s\n"
+            + "Min corner: (250.0, 270.0), Width: 50.0, Height: 100.0, "
+            + "Color: (1.0,0.0,0.0)\n"
+            + "Appears at t=0.05s\n"
+            + "Disappears at t=5.0s\n"
             + "\n"
             + "Name: O\n" + "Type: oval\n"
-            + "Center: (500.0, 100.0), X radius: 60.0, Y radius: 30.0, "
+            + "Center: (510.0, 115.0), X radius: 60.0, Y radius: 30.0, "
             + "Color: (0.0,0.0,1.0)\n"
-            + "Appears at t=0.6s\n" + "Disappears at t=10.0s\n"
+            + "Appears at t=0.3s\n"
+            + "Disappears at t=5.0s\n"
             + "\n"
-            + "Shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s\n"
-            + "Shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s\n"
-            + "Shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) "
-            + "from t=5.0s to t=8.0s\n"
-            + "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 "
-            + "from t=5.1s to t=7.0s\n"
-            + "Shape R moves from (300.0, 300.0) to (200.0, 200.0) from t=7.0s to t=10.0s\n",
-        this.view.getTextDescription());
+            + "Shape R moves from (250.0, 270.0) to (390.0, 390.0) from t=0.5s to t=2.5s\n"
+            + "Shape O moves from (510.0, 115.0) to (5.0, 40.0) from t=1.0s to t=3.5s\n"
+            + "Shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) from t=2.5s to t=4.0s\n"
+            + "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 from "
+            + "t=2.55s to t=3.5s\n"
+            + "Shape R moves from (390.0, 390.0) to (250.0, 270.0) from t=3.5s to t=5.0s\n",
+        this.textualView.getTextDescription());
 
     TextualView empty = new TextualView(10, new ArrayList<Shapes>(),
         new ArrayList<Animations>());
@@ -106,7 +148,7 @@ public class TextualViewTest {
    */
   @Test
   public void testWrite() {
-    this.view.write("test/output.txt");
+    this.textualView.write("test/output.txt");
 
     BufferedReader br;
     try {
@@ -120,24 +162,70 @@ public class TextualViewTest {
         line = br.readLine();
       }
       assertEquals("Shapes:\n"
-          + "Name: R\n"
-          + "Type: rectangle\n"
-          + "Min corner: (200.0, 200.0), Width: 50.0, Height: 100.0, "
-          + "Color: (1.0,0.0,0.0)\n"
-          + "Appears at t=0.1s\n" + "Disappears at t=10.0s\n" + "\n"
-          + "Name: O\n" + "Type: oval\n"
-          + "Center: (500.0, 100.0), X radius: 60.0, Y radius: 30.0, Color: (0.0,0.0,1.0)\n"
-          + "Appears at t=0.6s\n" + "Disappears at t=10.0s\n" + "\n"
-          + "Shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=1.0s to t=5.0s\n"
-          + "Shape O moves from (500.0, 100.0) to (500.0, 400.0) from t=2.0s to t=7.0s\n"
-          + "Shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) from t=5.0s to t=8.0s\n"
-          + "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 "
-          + "from t=5.1s to t=7.0s\n"
-          + "Shape R moves from (300.0, 300.0) to (200.0, 200.0) from t=7.0s to t=10.0s\n",
-              sb.toString());
+              + "Name: R\n"
+              + "Type: rectangle\n"
+              + "Min corner: (250.0, 270.0), Width: 50.0, Height: 100.0, "
+              + "Color: (1.0,0.0,0.0)\n"
+              + "Appears at t=0.05s\n" + "Disappears at t=5.0s\n" + "\n"
+              + "Name: O\n" + "Type: oval\n"
+              + "Center: (510.0, 115.0), X radius: 60.0, Y radius: 30.0, Color: (0.0,0.0,1.0)\n"
+              + "Appears at t=0.3s\n" + "Disappears at t=5.0s\n" + "\n"
+              + "Shape R moves from (250.0, 270.0) to (390.0, 390.0) from t=0.5s to t=2.5s\n"
+              + "Shape O moves from (510.0, 115.0) to (5.0, 40.0) from t=1.0s to t=3.5s\n"
+              + "Shape O changes color from (0.0,0.0,1.0) to (0.0,1.0,0.0) from t=2.5s to t=4.0s\n"
+              + "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 from "
+              + "t=2.55s to t=3.5s\n"
+              + "Shape R moves from (390.0, 390.0) to (250.0, 270.0) from t=3.5s to t=5.0s\n",
+          sb.toString());
       br.close();
     } catch (Exception e) {
       // do nothing
     }
   }
+
+  /**
+   * Test for write() method that doesn't output anything.
+   */
+  @Test
+  public void testWriteEmptyView() {
+    TextualView emptyView = new TextualView(10, new ArrayList<Shapes>(),
+        new ArrayList<Animations>());
+
+    emptyView.write("test/emptyOutput.txt");
+
+    BufferedReader br = null;
+    try {
+      br = new BufferedReader(new FileReader("test/emptyOutput.txt"));
+      StringBuilder sb = new StringBuilder();
+      String line = br.readLine();
+
+      while (line != null) {
+        sb.append(line);
+        sb.append("\n");
+        line = br.readLine();
+      }
+      assertEquals("", sb.toString());
+      br.close();
+    } catch (Exception e) {
+      // do nothing
+    }
+  }
+
+
+  /**
+   * Test for getSpeed() method.
+   */
+  @Test
+  public void testGetSpeed() {
+    assertEquals(20, textualView.getSpeed(), 0.1);
+  }
+
+  /**
+   * Test that displayErrorMsg() throws an exception.
+   */
+  @Test(expected = UnsupportedOperationException.class)
+  public void testDisplayErrorMsg() {
+    textualView.displayErrorMsg("Error.");
+  }
+
 }

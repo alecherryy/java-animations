@@ -39,7 +39,7 @@ public interface TweenModelBuilder<T> {
    * @return the builder object
    */
   TweenModelBuilder<T> addRectangle(String name, float x, float y, float width, float height,
-      Color color, int appear, int disappear);
+                                    Color color, int appear, int disappear);
 
   /**
    * Move the shape that is passed in to the given position that is passed in
@@ -54,7 +54,7 @@ public interface TweenModelBuilder<T> {
    * @param end the time when the move ends
    */
   TweenModelBuilder<T> addMove(String name, float fromX, float fromY, float toX, float toY,
-      int start, int end);
+                               int start, int end);
 
   /**
    * Change the color of the shape that is passed in to the given position
@@ -68,7 +68,7 @@ public interface TweenModelBuilder<T> {
    * @return the animation builder model
    */
   TweenModelBuilder<T> addColorChange(String name, Color color,
-      Color newColor, int start, int end);
+                                      Color newColor, int start, int end);
 
   /**
    * Change the width and height of the shape that is passed in to
@@ -84,7 +84,7 @@ public interface TweenModelBuilder<T> {
    * @return the animation builder model
    */
   TweenModelBuilder<T> addSizeChange(String name, float w, float h,
-      float newW, float newH, int start, int end);
+                                     float newW, float newH, int start, int end);
 
   /**
    * Return the built model.

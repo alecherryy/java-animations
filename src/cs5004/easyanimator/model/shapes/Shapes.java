@@ -88,20 +88,20 @@ public interface Shapes {
   void changeColor(Color c);
 
   /**
-   * Changes the width of this shape to a new width.
+   * Changes the first dimension of this shape to a d1.
    *
-   * @param w the width to which we are changing this shape's width
-   * @throws IllegalArgumentException if new width is negative
+   * @param newD1 the new D1 to which we are changing this shape's D1
+   * @throws IllegalArgumentException if new D1 is negative
    */
-  void changeWidth(double w) throws IllegalArgumentException;
+  void changeD1(double newD1) throws IllegalArgumentException;
 
   /**
-   * Changes the height of this shape to a new height.
+   * Changes the D2 of this shape to a new D2.
    *
-   * @param h the height to which we are changing this shape's height
+   * @param newD2 the D2 to which we are changing this shape's D2
    * @throws IllegalArgumentException if new height is negative
    */
-  void changeHeight(double h) throws IllegalArgumentException;
+  void changeD2(double newD2) throws IllegalArgumentException;
 
   /**
    * Changes the position of this shape to a new position.
