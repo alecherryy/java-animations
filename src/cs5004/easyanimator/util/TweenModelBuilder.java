@@ -1,5 +1,7 @@
 package cs5004.easyanimator.util;
 
+import java.awt.*;
+
 /**
  * This interface reads in a  a file that contains
  * the animation, and builds a model according to the specifications.
@@ -14,15 +16,13 @@ public interface TweenModelBuilder<T> {
    * @param y the y-coordinate of the center of the oval
    * @param xRadius the x-radius of the oval
    * @param yRadius the y-radius of the oval
-   * @param red the red component of the color of the oval
-   * @param green the green component of the color of the oval
-   * @param blue the blue component of the color of the oval
+   * @param color the color of the oval
    * @param appear the appear time of the oval
    * @param disappear the disappear time of the oval.
    * @return the builder object
    */
   TweenModelBuilder<T> addOval(String name, double x, double y, double xRadius, double yRadius,
-                               float red, float green, float blue, int appear, int disappear);
+                               Color color, int appear, int disappear);
 
   /**
    * Add a new rectangle to the model.
@@ -32,15 +32,13 @@ public interface TweenModelBuilder<T> {
    * @param y the y-coordinate of the lower left corner of the rectangle
    * @param width the width of the rectangle
    * @param height the height of the rectangle
-   * @param red the red component of the color of the rectangle
-   * @param green the green component of the color of the rectangle
-   * @param blue the blue component of the color of the rectangle
+   * @param color the color of the rectangle
    * @param appear the appear time of the rectangle
    * @param disappear the disappear time of the rectangle
    * @return the builder object
    */
   TweenModelBuilder<T> addRectangle(String name, double x, double y, double width, double height,
-                                    float red, float green, float blue, int appear, int disappear);
+                                    Color color, int appear, int disappear);
 
   /**
    * Move the shape that is passed in to the given position that is passed in

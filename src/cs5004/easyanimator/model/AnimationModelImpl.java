@@ -53,12 +53,11 @@ public class AnimationModelImpl implements AnimationModel {
   public void addShape(Shapes s) {
     String name = s.getName();
 
-    if (helperAddShape(name)) {
-      this.shapes.add(s);
+    if (!helperShapeExists(name)) {
       // exit method
-      return;
+      throw new IllegalArgumentException("A shape with this name already exists.");
     }
-    throw new IllegalArgumentException("A shape with this name already exists.");
+    this.shapes.add(s);
   }
 
   /**
@@ -67,7 +66,7 @@ public class AnimationModelImpl implements AnimationModel {
    * @param name of the shape
    * @throws IllegalArgumentException if the shape does not exist
    */
-  private boolean helperAddShape(String name) {
+  private boolean helperShapeExists(String name) {
     for (Shapes s : this.shapes) {
       if (s.getName().equalsIgnoreCase(name)) {
         return false;
@@ -163,9 +162,7 @@ public class AnimationModelImpl implements AnimationModel {
      * @param y the y-coordinate of the center of the oval
      * @param xRadius the x-radius of the oval
      * @param yRadius the y-radius of the oval
-     * @param red the red component of the color of the oval as a double
-     * @param green the green component of the color of the oval as a double
-     * @param blue the blue component of the color of the oval as a double
+     * @param color the color of the oval as a double
      * @param appear the appear time of the oval
      * @param disappear the disappear time of the oval.
      * @return the builder object
@@ -174,11 +171,10 @@ public class AnimationModelImpl implements AnimationModel {
             String name,
             double x, double y,
             double xRadius, double yRadius,
-            float red, float green, float blue,
+            Color color,
             int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
-      Color c = new Color(red, green, blue);
-      Shapes shape = new Oval(name, appear, disappear, xRadius, yRadius, c, pos);
+      Shapes shape = new Oval(name, appear, disappear, xRadius, yRadius, color, pos);
       shapesList.add(shape);
       return this;
     }
@@ -191,9 +187,7 @@ public class AnimationModelImpl implements AnimationModel {
      * @param y the y-coordinate of the lower left corner of the rectangle
      * @param width the width of the rectangle
      * @param height the height of the rectangle
-     * @param red the red component of the color of the rectangle
-     * @param green the green component of the color of the rectangle
-     * @param blue the blue component of the color of the rectangle
+     * @param color the color of the rectangle
      * @param appear the appear time of the rectangle
      * @param disappear the disappear time of the rectangle
      * @return the builder object
@@ -202,11 +196,10 @@ public class AnimationModelImpl implements AnimationModel {
             String name,
             double x, double y,
             double width, double height,
-            float red, float green, float blue,
+            Color color,
             int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
-      Color c = new Color(red, green, blue);
-      Shapes shape = new Rectangle(name, appear, disappear, width, height, c, pos);
+      Shapes shape = new Rectangle(name, appear, disappear, width, height, color, pos);
       shapesList.add(shape);
       return this;
     }
@@ -382,6 +375,7 @@ public class AnimationModelImpl implements AnimationModel {
 
     @Override
     public AnimationModel build() {
+      System.out.println(this.shapesList.size());
       return new AnimationModelImpl(this);
     }
   }

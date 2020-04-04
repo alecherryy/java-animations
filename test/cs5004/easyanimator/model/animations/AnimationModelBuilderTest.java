@@ -69,10 +69,9 @@ public class AnimationModelBuilderTest {
   /**
    * Test for addOval() method.
    */
-
   @Test
   public void addOvalTest() {
-    builder.addOval(oval.getName(), 0, 18.5, 5, 5, 0, 1, 0,
+    builder.addOval(oval.getName(), 0, 18.5, 5, 5, Color.GREEN,
             10, 20);
     assertEquals(new ArrayList<Shapes>(Arrays.asList(oval)), builder.build().getShapes());
   }
@@ -80,13 +79,10 @@ public class AnimationModelBuilderTest {
   /**
    * Test for addRectangle() method.
    */
-
   @Test
   public void addRectangleTest() {
-    builder.addRectangle(rectangle.getName(), 25, 50, 5, 5, 0, 0,
-            1, 5, 10);
+    builder.addRectangle(rectangle.getName(), 25, 50, 5, 5, Color.BLUE, 5, 10);
     assertEquals(new ArrayList<Shapes>(Arrays.asList(rectangle)), builder.build().getShapes());
-
   }
 
   /**
