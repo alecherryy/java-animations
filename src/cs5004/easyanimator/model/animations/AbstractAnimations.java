@@ -28,17 +28,25 @@ public abstract class AbstractAnimations implements Animations {
    */
   public AbstractAnimations(AnimationType type, Shapes shape, int start, int end) {
     // check if end is smaller than start
-    if (end < start) {
-      throw new IllegalArgumentException("Animation end-time must be greater than start-time.");
+    if (checkConstructor(shape, start, end)) {
+      throw new IllegalArgumentException("Invalid animation parameters.");
     }
-    // check end and start are not negative
-    if (start < 0 || end < 0) {
-      throw new IllegalArgumentException("Start and end time must be positive.");
-    }
+
     this.type = type;
     this.shape = shape;
     this.startTime = start;
     this.endTime = end;
+  }
+
+  /**
+   * Private helper method to check for invalid class
+   * constructor parameters.
+   *
+   * @return true if parameters are invalid, otherwise returns false
+   */
+  private boolean checkConstructor(Shapes shape, int start, int end) {
+     return end < start ||  start < 0 || end < 0 || start < shape.getAppearTime()
+             || end > shape.getDisappearTime();
   }
 
   /**

@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.shapes.Coordinates;
@@ -13,10 +13,9 @@ import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
- * A JUnit test class for the classes that extend AbstractAnimations, which includes: ChangeColor,
- * ChangeCoordinates and ChangeSize.
+ * A JUnit test class for the classes that extend AbstractAnimations,
+ * which includes: ChangeColor, ChangeCoordinates and ChangeSize.
  */
-
 public class AnimationsTest {
   private Coordinates c1;
   private Coordinates c2;
@@ -37,14 +36,13 @@ public class AnimationsTest {
   private Shapes oval2;
   private Shapes oval3;
   private Shapes oval4;
-
   private Shapes circle;
 
   @Before
   public void setup() {
 
     c1 = new Coordinates(0, 0);
-    c2 = new Coordinates(102.112, 50.5);
+    c2 = new Coordinates(115.5, 50.5);
     oval4 = new Oval("O2", 10, 15, 20, 25.5,
         Color.BLUE, c2);
     rectangle = new Rectangle("R", 5, 10, 1, 2,
@@ -65,14 +63,14 @@ public class AnimationsTest {
         Color.BLUE, c2);
     circle = new Oval("C", 8, 13, 20, 30, Color.RED,
         new Coordinates(100, 200));
-    changeColor = new ChangeColor(rectangle, 10, 20, Color.BLUE, Color.RED);
+    changeColor = new ChangeColor(rectangle, 6, 9, Color.BLUE, Color.RED);
     changeColor2 = new ChangeColor(oval3, 5, 10, Color.BLACK, Color.RED);
     changeColor3 = new ChangeColor(rectangle2, 5, 10, Color.BLACK, Color.PINK);
-    changeCoordinates = new ChangeCoordinates(square, 0, 5, new Coordinates(25,
+    changeCoordinates = new ChangeCoordinates(square, 3, 7, new Coordinates(25,
         50), new Coordinates(20, 50));
     changeCoordinates2 = new ChangeCoordinates(rectangle2, 8, 10, c1, c2);
-    changeCoordinates3 = new ChangeCoordinates(oval, 8, 10, c1, c2);
-    changeSize = new ChangeSize(oval, 0, 10, 35, 18,
+    changeCoordinates3 = new ChangeCoordinates(oval, 11, 17, c1, c2);
+    changeSize = new ChangeSize(oval, 15, 20, 35, 18,
         40, 20);
     changeSize2 = new ChangeSize(oval4, 11, 12, 20, 25.5,
         15.5, 15.5);
@@ -87,8 +85,8 @@ public class AnimationsTest {
   @Test
   public void constructorTest1() {
     Assert.assertEquals(rectangle, changeColor.getShape());
-    Assert.assertEquals(10, changeColor.getStartTime());
-    Assert.assertEquals(20, changeColor.getEndTime());
+    Assert.assertEquals(6, changeColor.getStartTime());
+    Assert.assertEquals(9, changeColor.getEndTime());
     Assert.assertEquals(Color.BLUE, changeColor.getOriginalColor());
     Assert.assertEquals(Color.RED, changeColor.getNewColor());
   }
@@ -99,8 +97,10 @@ public class AnimationsTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorExceptionTest1() {
+    System.out.println("circle" + circle.getAppearTime());
     // end-time is less than start time.
     new ChangeColor(circle, 20, 10, Color.RED, Color.GREEN);
+    new ChangeColor(circle, 7, 10, Color.RED, Color.GREEN);
     // start time is negative.
     new ChangeColor(rectangle, -1, 5, Color.RED, Color.GREEN);
     // end time is negative.
@@ -122,10 +122,10 @@ public class AnimationsTest {
   @Test
   public void constructorTest2() {
     Assert.assertEquals(square, changeCoordinates.getShape());
-    Assert.assertEquals(0, changeCoordinates.getStartTime());
-    Assert.assertEquals(5, changeCoordinates.getEndTime());
-    Assert.assertEquals("(25.0,50.0)", changeCoordinates.getOriginalCoordinates().toString());
-    Assert.assertEquals("(20.0,50.0)", changeCoordinates.getNewCoordinates().toString());
+    Assert.assertEquals(3, changeCoordinates.getStartTime());
+    Assert.assertEquals(7, changeCoordinates.getEndTime());
+    Assert.assertEquals("(25.0, 50.0)", changeCoordinates.getOriginalCoordinates().toString());
+    Assert.assertEquals("(20.0, 50.0)", changeCoordinates.getNewCoordinates().toString());
     Assert.assertEquals(AnimationType.CHANGECOORDINATES, changeCoordinates.getAnimationType());
   }
 
@@ -201,7 +201,7 @@ public class AnimationsTest {
   @Test
   public void getStartStateTest() {
     Assert.assertEquals("(0.0,0.0,1.0)", changeColor.getStartState());
-    Assert.assertEquals("(25.0,50.0)", changeCoordinates.getStartState());
+    Assert.assertEquals("(25.0, 50.0)", changeCoordinates.getStartState());
     Assert.assertEquals("X radius: 35.0, Y radius: 18.0", changeSize.getStartState());
   }
 
@@ -211,7 +211,7 @@ public class AnimationsTest {
   @Test
   public void getEndStateTest() {
     Assert.assertEquals("(1.0,0.0,0.0)", changeColor.getEndState());
-    Assert.assertEquals("(20.0,50.0)", changeCoordinates.getEndState());
+    Assert.assertEquals("(20.0, 50.0)", changeCoordinates.getEndState());
     Assert.assertEquals("X radius: 40.0, Y radius: 20.0", changeSize.getEndState());
   }
 
@@ -224,7 +224,7 @@ public class AnimationsTest {
         + "Shape R changes color from (0.0,0.0,1.0) to (1.0,0.0,0.0) from t=10 to "
         + "t=20", changeColor.getDescription());
     Assert.assertEquals(""
-            + "Shape R moves from (25.0,50.0) to (20.0,50.0) from t=0 to t=5",
+            + "Shape R moves from (25.0, 50.0) to (20.0, 50.0) from t=0 to t=5",
         changeCoordinates.getDescription());
     Assert.assertEquals(""
         + "Shape O scales from X radius: 35.0, Y radius: 18.0 to X radius: "
@@ -280,32 +280,32 @@ public class AnimationsTest {
    */
   @Test
   public void implementAnimationTest2() {
-    Assert.assertEquals("(0.0,0.0)",
+    Assert.assertEquals("(0.0, 0.0)",
         Utils.getPositionString(changeCoordinates.getShape().getPosition()));
     changeCoordinates.implementAnimation(10);
-    Assert.assertEquals("(0.0,0.0)",
+    Assert.assertEquals("(0.0, 0.0)",
         Utils.getPositionString(changeCoordinates.getShape().getPosition()));
 
     Animations change2 = new ChangeCoordinates(oval2, 8, 10,
         new Coordinates(0.0, 0.0), new Coordinates(100, 50));
-    Assert.assertEquals("(0.0,0.0)",
+    Assert.assertEquals("(0.0, 0.0)",
         Utils.getPositionString(change2.getShape().getPosition()));
     change2.implementAnimation(7);
-    Assert.assertEquals("(0.0,0.0)",
+    Assert.assertEquals("(0.0, 0.0)",
         Utils.getPositionString(change2.getShape().getPosition()));
     change2.implementAnimation(9);
-    Assert.assertEquals("(50.0,25.0)",
+    Assert.assertEquals("(50.0, 25.0)",
         Utils.getPositionString(change2.getShape().getPosition()));
     change2.implementAnimation(10);
-    Assert.assertEquals("(100.0,50.0)",
+    Assert.assertEquals("(100.0, 50.0)",
         Utils.getPositionString(change2.getShape().getPosition()));
 
     Animations change3 = new ChangeCoordinates(rectangle, 0, 3,
         new Coordinates(25.0, 50.0), new Coordinates(60.0, 50.0));
-    Assert.assertEquals("(25.0,50.0)",
+    Assert.assertEquals("(25.0, 50.0)",
         Utils.getPositionString(change3.getShape().getPosition()));
     change3.implementAnimation(3);
-    Assert.assertEquals("(60.0,50.0)",
+    Assert.assertEquals("(60.0, 50.0)",
         Utils.getPositionString(change3.getShape().getPosition()));
   }
 
@@ -362,12 +362,12 @@ public class AnimationsTest {
     Assert.assertEquals(Color.RED, rectangle.getColor());
 
     Assert.assertEquals(""
-        + "(25.0,50.0)", changeCoordinates.getOriginalCoordinates().toString());
+        + "(25.0, 50.0)", changeCoordinates.getOriginalCoordinates().toString());
     Assert.assertEquals(""
-        + "(20.0,50.0)", changeCoordinates.getNewCoordinates().toString());
+        + "(20.0, 50.0)", changeCoordinates.getNewCoordinates().toString());
     changeCoordinates.updateField(square);
     Assert.assertEquals(""
-        + "(20.0,50.0)", square.getPosition().toString());
+        + "(20.0, 50.0)", square.getPosition().toString());
 
     Assert.assertEquals(35, changeSize.getOriginalWidth(), 0.1);
     Assert.assertEquals(18, changeSize.getOriginalHeight(), 0.1);
@@ -396,7 +396,10 @@ public class AnimationsTest {
     Assert.assertEquals(oval2, changeSize.getShape());
   }
 
-  // Test for returning the correct svg tags
+  /**
+   * Test for returning the correct svg tags.
+   */
+
   @Test
   public void testToSVGTag() {
     // test for changing color
@@ -428,18 +431,20 @@ public class AnimationsTest {
 
     // test for moving
     Assert.assertEquals("<animate attributeType=\"xml\" begin=\"800.0ms\" dur=\"200.0ms\" "
-            + "attributeName=\"x\" from=\"0.0\" to=\"102.112\" fill=\"freeze\" />\n"
+            + "attributeName=\"x\" from=\"0.0\" to=\"115.5\" fill=\"freeze\" />\n"
             + "<animate attributeType=\"xml\" begin=\"800.0ms\" dur=\"200.0ms\" "
             + "attributeName=\"y\" from=\"0.0\" to=\"50.5\" fill=\"freeze\" />\n",
         changeCoordinates2.toSVGTag(10));
     Assert.assertEquals("<animate attributeType=\"xml\" begin=\"800.0ms\" dur=\"200.0ms\" "
-            + "attributeName=\"cx\" from=\"0.0\" to=\"102.112\" fill=\"freeze\" />\n"
+            + "attributeName=\"cx\" from=\"0.0\" to=\"115.5\" fill=\"freeze\" />\n"
             + "<animate attributeType=\"xml\" begin=\"800.0ms\" dur=\"200.0ms\" "
             + "attributeName=\"cy\" from=\"0.0\" to=\"50.5\" fill=\"freeze\" />\n",
         changeCoordinates3.toSVGTag(10));
   }
 
-  // test for svg tag with looping
+  /**
+   * Test for returning the correct svg tags with looping.
+   */
   @Test
   public void testToSVGTagWithLoop() {
 
@@ -498,23 +503,23 @@ public class AnimationsTest {
     // test for moving
     Assert.assertEquals("<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" "
             + "dur=\"200.0ms\" "
-            + "attributeName=\"x\" from=\"0.0\" to=\"102.112\" fill=\"freeze\" />\n"
+            + "attributeName=\"x\" from=\"0.0\" to=\"115.5\" fill=\"freeze\" />\n"
             + "<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" dur=\"200.0ms\" "
             + "attributeName=\"y\" from=\"0.0\" to=\"50.5\" fill=\"freeze\" />\n"
 
             + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
-            + "attributeName=\"x\" from=\"102.112\" to=\"0.0\" fill=\"freeze\" />\n"
+            + "attributeName=\"x\" from=\"115.5\" to=\"0.0\" fill=\"freeze\" />\n"
             + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
             + "attributeName=\"y\" from=\"50.5\" to=\"0.0\" fill=\"freeze\" />\n",
         this.changeCoordinates2.toSVGTagWithLoop(10));
     Assert.assertEquals("<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" "
             + "dur=\"200.0ms\" "
-            + "attributeName=\"cx\" from=\"0.0\" to=\"102.112\" fill=\"freeze\" />\n"
+            + "attributeName=\"cx\" from=\"0.0\" to=\"115.5\" fill=\"freeze\" />\n"
             + "<animate attributeType=\"xml\" begin=\"base.begin+800.0ms\" dur=\"200.0ms\" "
             + "attributeName=\"cy\" from=\"0.0\" to=\"50.5\" fill=\"freeze\" />\n"
 
             + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
-            + "attributeName=\"cx\" from=\"102.112\" to=\"0.0\" fill=\"freeze\" />\n"
+            + "attributeName=\"cx\" from=\"115.5\" to=\"0.0\" fill=\"freeze\" />\n"
             + "<animate attributeType=\"xml\" begin=\"base.end\" dur=\"1ms\" "
             + "attributeName=\"cy\" from=\"50.5\" to=\"0.0\" fill=\"freeze\" />\n",
         this.changeCoordinates3.toSVGTagWithLoop(10));

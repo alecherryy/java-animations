@@ -163,19 +163,19 @@ public class AnimationModelImpl implements AnimationModel {
      * @param y the y-coordinate of the center of the oval
      * @param xRadius the x-radius of the oval
      * @param yRadius the y-radius of the oval
-     * @param red the red component of the color of the oval as a float
-     * @param green the green component of the color of the oval as a float
-     * @param blue the blue component of the color of the oval as a float
+     * @param red the red component of the color of the oval as a double
+     * @param green the green component of the color of the oval as a double
+     * @param blue the blue component of the color of the oval as a double
      * @param appear the appear time of the oval
      * @param disappear the disappear time of the oval.
      * @return the builder object
      */
     public TweenModelBuilder<AnimationModel> addOval(
-        String name,
-        float x, float y,
-        float xRadius, float yRadius,
-        float red, float green, float blue,
-        int appear, int disappear) {
+            String name,
+            double x, double y,
+            double xRadius, double yRadius,
+            float red, float green, float blue,
+            int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Color c = new Color(red, green, blue);
       Shapes shape = new Oval(name, appear, disappear, xRadius, yRadius, c, pos);
@@ -199,11 +199,11 @@ public class AnimationModelImpl implements AnimationModel {
      * @return the builder object
      */
     public TweenModelBuilder<AnimationModel> addRectangle(
-        String name,
-        float x, float y,
-        float width, float height,
-        float red, float green, float blue,
-        int appear, int disappear) {
+            String name,
+            double x, double y,
+            double width, double height,
+            float red, float green, float blue,
+            int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Color c = new Color(red, green, blue);
       Shapes shape = new Rectangle(name, appear, disappear, width, height, c, pos);
@@ -223,7 +223,7 @@ public class AnimationModelImpl implements AnimationModel {
           if (invalidAnimation(a, obj)) {
             throw new IllegalArgumentException(
                     "Incompatible move for the same shape "
-                    + "during overlapping time intervals");
+                            + "during overlapping time intervals");
           }
         }
       }
@@ -264,10 +264,10 @@ public class AnimationModelImpl implements AnimationModel {
      */
     public TweenModelBuilder<AnimationModel> addMove(
             String name,
-            float fromX,
-            float fromY,
-            float toX,
-            float toY,
+            double fromX,
+            double fromY,
+            double toX,
+            double toY,
             int start,
             int end) {
       Shapes s = null;
@@ -354,10 +354,10 @@ public class AnimationModelImpl implements AnimationModel {
      */
     public TweenModelBuilder<AnimationModel> addSizeChange(
             String name,
-            float oldW,
-            float oldH,
-            float newW,
-            float newH,
+            double oldW,
+            double oldH,
+            double newW,
+            double newH,
             int start,
             int end) {
 
@@ -366,8 +366,8 @@ public class AnimationModelImpl implements AnimationModel {
       for (Shapes obj : this.shapesList) {
         if (obj.getName().equals(name)) {
           s = obj.visitShape(new ShapesVisitorImpl());
-          s.changeWidth(oldW);
-          s.changeHeight(oldH);
+          s.changeD1(oldW);
+          s.changeD2(oldH);
         }
       }
 

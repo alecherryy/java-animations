@@ -50,8 +50,7 @@ public class Rectangle extends AbstractShape {
    * visited.
    *
    * @param visitor the visitor, type ShapesVisitor, that the function visit() will be called on,
-   *                passing an instance
-   *                of the current class.
+   *                passing an instance of the current class. It will 'visit' this rectangle object.
    * @return the shape, type Shapes, with the changes made to it.
    */
   public Shapes visitShape(ShapesVisitor visitor) {

@@ -69,7 +69,6 @@ public class VisualAnimationView extends JFrame implements View {
   /**
    * Repaints the view.
    *
-   * @throws UnsupportedOperationException if the view does not support this method
    */
   public void refresh() {
     repaint();
@@ -88,6 +87,7 @@ public class VisualAnimationView extends JFrame implements View {
    * Returns a list of Animations objects.
    *
    * @return a list of Animation objects
+   * @throws UnsupportedOperationException if the view does not support this operation.
    */
   public ArrayList<Animations> getAnimations() {
     throw new UnsupportedOperationException(""
@@ -142,4 +142,5 @@ public class VisualAnimationView extends JFrame implements View {
     JOptionPane.showMessageDialog(this, error, "Error",
         JOptionPane.ERROR_MESSAGE);
   }
+
 }

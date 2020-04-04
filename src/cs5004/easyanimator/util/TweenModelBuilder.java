@@ -1,8 +1,7 @@
 package cs5004.easyanimator.util;
 
 /**
- * This interface contains all the methods inside the
- * AnimationFileReader interface. It will read a file that contains
+ * This interface reads in a  a file that contains
  * the animation, and builds a model according to the specifications.
  */
 public interface TweenModelBuilder<T> {
@@ -15,15 +14,15 @@ public interface TweenModelBuilder<T> {
    * @param y the y-coordinate of the center of the oval
    * @param xRadius the x-radius of the oval
    * @param yRadius the y-radius of the oval
-   * @param red the red component of the color of the oval as a float
-   * @param green the green component of the color of the oval as a float
-   * @param blue the blue component of the color of the oval as a float
+   * @param red the red component of the color of the oval
+   * @param green the green component of the color of the oval
+   * @param blue the blue component of the color of the oval
    * @param appear the appear time of the oval
    * @param disappear the disappear time of the oval.
    * @return the builder object
    */
-  TweenModelBuilder<T> addOval(String name, float x, float y, float xRadius, float yRadius,
-      float red, float green, float blue, int appear, int disappear);
+  TweenModelBuilder<T> addOval(String name, double x, double y, double xRadius, double yRadius,
+                               float red, float green, float blue, int appear, int disappear);
 
   /**
    * Add a new rectangle to the model.
@@ -40,8 +39,8 @@ public interface TweenModelBuilder<T> {
    * @param disappear the disappear time of the rectangle
    * @return the builder object
    */
-  TweenModelBuilder<T> addRectangle(String name, float x, float y, float width, float height,
-      float red, float green, float blue, int appear, int disappear);
+  TweenModelBuilder<T> addRectangle(String name, double x, double y, double width, double height,
+                                    float red, float green, float blue, int appear, int disappear);
 
   /**
    * Move the shape that is passed in to the given position that is passed in
@@ -55,8 +54,8 @@ public interface TweenModelBuilder<T> {
    * @param start the time when the move starts
    * @param end the time when the move ends
    */
-  TweenModelBuilder<T> addMove(String name, float fromX, float fromY, float toX, float toY,
-      int start, int end);
+  TweenModelBuilder<T> addMove(String name, double fromX, double fromY, double toX, double toY,
+                               int start, int end);
 
   /**
    * Change the color of the shape that is passed in to the given position
@@ -74,11 +73,12 @@ public interface TweenModelBuilder<T> {
    * @return the animation builder model
    */
   TweenModelBuilder<T> addColorChange(String name, float oldR, float oldG, float oldB,
-      float newR, float newG, float newB, int start, int end);
+                                      float newR, float newG, float newB, int start, int end);
 
   /**
    * Change the width and height of the shape that is passed in to
    * the width and height that are passed in during the time interval that is passed in.
+   * Note that width and height correspond to x-radius and y-radius (respectively) in an Oval shape.
    *
    * @param name the name of the shape whose size will be changed
    * @param oldW the original width of the shape
@@ -89,8 +89,8 @@ public interface TweenModelBuilder<T> {
    * @param end the time when the scale change ends
    * @return the animation builder model
    */
-  TweenModelBuilder<T> addSizeChange(String name, float oldW, float oldH,
-      float newW, float newH, int start, int end);
+  TweenModelBuilder<T> addSizeChange(String name, double oldW, double oldH,
+                                     double newW, double newH, int start, int end);
 
   /**
    * Return the built model.

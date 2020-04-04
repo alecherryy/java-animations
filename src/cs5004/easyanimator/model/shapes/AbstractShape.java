@@ -163,29 +163,29 @@ public abstract class AbstractShape implements Shapes {
   /**
    * Changes the width of this shape to a new width.
    *
-   * @param w the width to which we are changing this shape's width
+   * @param newD1 the width to which we are changing this shape's width
    * @throws IllegalArgumentException if new width is negative
    */
-  public void changeWidth(double w) throws IllegalArgumentException {
+  public void changeD1(double newD1) throws IllegalArgumentException {
     // check for bad input
-    if (Utils.isNegative(w)) {
+    if (Utils.isNegative(newD1)) {
       throw new IllegalArgumentException("New d1 cannot be negative.");
     }
-    this.d1 = w;
+    this.d1 = newD1;
   }
 
   /**
    * Changes the height of this shape to a new height.
    *
-   * @param h the height to which we are changing this shape's height
+   * @param newD2 the height to which we are changing this shape's height
    * @throws IllegalArgumentException if new height is negative
    */
-  public void changeHeight(double h) throws IllegalArgumentException {
+  public void changeD2(double newD2) throws IllegalArgumentException {
     // check for bad input
-    if (Utils.isNegative(h)) {
+    if (Utils.isNegative(newD2)) {
       throw new IllegalArgumentException("New d2 cannot be negative.");
     }
-    this.d2 = h;
+    this.d2 = newD2;
   }
 
   /**
@@ -216,8 +216,8 @@ public abstract class AbstractShape implements Shapes {
    * Changes the disappear time of this shape to a new disappear time.
    *
    * @param disappear the disappear time to which we are changing this shape's disappear time to
-   * @throws IllegalArgumentException if disappear is negative or if the new disappear time is less
-   *                                  than the appear time
+   * @throws IllegalArgumentException if disappear time is negative or if the new disappear time is
+   *                                  less than the appear time
    */
   public void changeDisappearTime(int disappear) {
     if (disappear < this.appearTime) {

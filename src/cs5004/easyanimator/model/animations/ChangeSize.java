@@ -195,8 +195,8 @@ public class ChangeSize extends AbstractAnimations {
     } else {
       double finalWidth = this.originalWidth + (changeInTime * changeWidth);
       double finalHeight = this.originalHeight + (changeInTime * changeHeight);
-      this.getShape().changeWidth(finalWidth);
-      this.getShape().changeHeight(finalHeight);
+      this.getShape().changeD1(finalWidth);
+      this.getShape().changeD2(finalHeight);
     }
   }
 
@@ -206,7 +206,7 @@ public class ChangeSize extends AbstractAnimations {
    * @param s a Shape object, whose field will be changed
    */
   public void updateField(Shapes s) {
-    s.changeWidth(newWidth);
-    s.changeHeight(newHeight);
+    s.changeD1(newWidth);
+    s.changeD2(newHeight);
   }
 }
