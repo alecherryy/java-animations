@@ -1,0 +1,5 @@
+canvas 145 50 410 220
+shape C ellipse
+shape R rectangle
+motion R 50 300 300 50 100 255 0 0  51 0 0 50 100 255 0  0
+motion C 20 440 70 120 60 0 0 255  50 440 250 120 60 0 0 255
