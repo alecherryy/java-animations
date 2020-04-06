@@ -35,6 +35,7 @@ public class VisualAnimationViewTest {
   Animations changeSize1;
   View view;
   ArrayList<Shapes> shapesList;
+  ArrayList<Integer> settings;
 
   @Before
   public void setup() {
@@ -63,8 +64,14 @@ public class VisualAnimationViewTest {
     model.addAnimation(changeSize1);
 
     shapesList = model.getShapes();
+    settings = new ArrayList<>();
+    settings.add(145);
+    settings.add(50);
+    settings.add(410);
+    settings.add(220);
 
-    view = new VisualAnimationView(10, model.getShapes());
+
+    view = new VisualAnimationView(10, settings, shapesList);
 
   }
 

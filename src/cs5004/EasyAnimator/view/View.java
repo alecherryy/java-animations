@@ -78,4 +78,12 @@ public interface View {
    * @throws UnsupportedOperationException if the view does not support this method
    **/
   void displayErrorMsg(String error) throws UnsupportedOperationException;
+
+  /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  ArrayList<Integer> getSettings() throws UnsupportedOperationException;
 }

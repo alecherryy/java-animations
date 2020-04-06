@@ -25,6 +25,16 @@ public class SVGView extends TextualView {
     this.settings = settings;
   }
 
+
+  /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   */
+  public ArrayList<Integer> getSettings() {
+    return this.settings;
+  }
+
   /**
    * Returns the description of the view in a string.
    *

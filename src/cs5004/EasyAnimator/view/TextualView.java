@@ -158,5 +158,17 @@ public class TextualView implements View {
     throw new UnsupportedOperationException(""
             + "Textual view does not include this functionality.");
   }
+
+  /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   * @throws UnsupportedOperationException because TextualView does not support this functionality
+   */
+
+  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException(""
+        + "Textual view does not include this functionality.");
+  }
 }
 
