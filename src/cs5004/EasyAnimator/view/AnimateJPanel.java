@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import cs5004.EasyAnimator.model.animations.Animations;
 import cs5004.EasyAnimator.model.shapes.Coordinates;
 import cs5004.EasyAnimator.model.shapes.Shapes;
 
@@ -17,6 +18,7 @@ import cs5004.EasyAnimator.model.shapes.Shapes;
  * extends the Java JPanel built-in class.
  */
 public class AnimateJPanel extends JPanel {
+  private final ArrayList<Animations> animations;
   private ArrayList<Shapes> shapes;
 
   /**
@@ -25,6 +27,7 @@ public class AnimateJPanel extends JPanel {
   public AnimateJPanel() {
     super();
     this.shapes = new ArrayList<Shapes>();
+    this.animations = new ArrayList<Animations>();
     this.setBackground(Color.WHITE);
 
     // add scroll bars
@@ -83,6 +86,7 @@ public class AnimateJPanel extends JPanel {
           break;
       }
     }
+//    this.
     g2d.setTransform(originalTransform);
   }
 

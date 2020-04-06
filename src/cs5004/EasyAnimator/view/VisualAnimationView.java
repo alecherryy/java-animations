@@ -1,6 +1,7 @@
 package cs5004.EasyAnimator.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -42,7 +43,7 @@ public class VisualAnimationView extends JFrame implements View {
     JScrollPane scrollPane = new JScrollPane(animationPanel);
     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    scrollPane.setBounds(50, 30, 300, 50);
+    scrollPane.setBounds(this.settings.get(0), this.settings.get(1), this.settings.get(2), this.settings.get(3));
 
     this.add(scrollPane, BorderLayout.CENTER);
 

@@ -26,7 +26,7 @@ public class AnimationReader {
    * of the shape to move, and 16 integers giving the initial and final conditions of the motion:
    * eight numbers giving the time, the x and y coordinates, the width and height,
    * and the red, green and blue color values at the start of the motion; followed by 
-   * eight numbers for the end of the motion.  See {@link AnimationBuilder#addMotion}</li>
+   * eight numbers for the end of the motion.
    * </ul>
    * </p>
    *
