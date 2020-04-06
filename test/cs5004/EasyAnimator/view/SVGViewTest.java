@@ -37,25 +37,20 @@ public class SVGViewTest {
   Animations changeColor1;
   Animations changeSize1;
   View view;
+  ArrayList<Integer> settings;
 
   /**
    * Set up objects for testing.
    */
   @Before
   public void setUp() {
-    ArrayList<Integer> settings = new ArrayList<Integer>();
-    settings.add(200);
-    settings.add(300);
-    settings.add(400);
-    settings.add(400);
     clara = new AnimationModelImpl();
     c1 = new Coordinates(200, 200);
     c2 = new Coordinates(300, 300);
     c3 = new Coordinates(500, 100);
     c4 = new Coordinates(500, 400);
-
     rectangle = new Rectangle("R", 1, 100, 50, 100,
-        Color.RED, c1);
+            Color.RED, c1);
     oval = new Oval("O", 6, 100, 60, 30,
             Color.BLUE, c3);
     changeCoordinates1 = new ChangeCoordinates(rectangle, 10, 50, c1, c2);
@@ -63,20 +58,26 @@ public class SVGViewTest {
     changeCoordinates3 = new ChangeCoordinates(rectangle, 70, 100, c2, c1);
     changeColor1 = new ChangeColor(oval, 50, 80, Color.BLUE, Color.GREEN);
     changeSize1 = new ChangeSize(rectangle, 51, 70, 50, 100,
-        25, 100);
+            25, 100);
     clara.addShape(rectangle);
+    settings = new ArrayList<Integer>();
+    settings = new ArrayList<>();
+    settings.add(145);
+    settings.add(50);
+    settings.add(410);
+    settings.add(220);
 
     view = new SVGView(10, settings, clara.getShapes(), clara.getAnimations());
 
   }
 
   /**
-   * Test suit for getDescription() method.
+   * Test for getDescription() method.
    */
   @Test
   public void testGetDescription() {
     Assert.assertEquals(""
-            + "<svg width=\"400\" height=\"400\" version=\"1.1\" overflow=\"auto\" "
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -84,7 +85,7 @@ public class SVGViewTest {
             + "</svg>", view.getTextDescription());
     clara.addShape(oval);
     Assert.assertEquals(""
-            + "<svg width=\"400\" height=\"400\" version=\"1.1\" overflow=\"auto\" "
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -95,7 +96,7 @@ public class SVGViewTest {
             + "</svg>", view.getTextDescription());
     clara.addAnimation(changeCoordinates1);
     Assert.assertEquals(""
-            + "<svg width=\"400\" height=\"400\" version=\"1.1\" overflow=\"auto\" "
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -112,8 +113,8 @@ public class SVGViewTest {
     clara.addAnimation(changeColor1);
     clara.addAnimation(changeCoordinates3);
     clara.addAnimation(changeSize1);
-    Assert.assertEquals("" +
-            "<svg width=\"400\" height=\"400\" version=\"1.1\" overflow=\"auto\" "
+    Assert.assertEquals(""
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -167,7 +168,7 @@ public class SVGViewTest {
         line = br.readLine();
       }
       Assert.assertEquals(""
-              + "<svg width=\"400\" height=\"400\" version=\"1.1\" overflow=\"auto\" "
+              + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
               + "xmlns=\"http://www.w3.org/2000/svg\">\n"
               + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
               + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
