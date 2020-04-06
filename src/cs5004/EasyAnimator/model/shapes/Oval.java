@@ -42,19 +42,6 @@ public class Oval extends AbstractShape {
   }
 
   /**
-   * Returns the shape (either a rectangle or an oval) with the changes
-   * made to it after it has been visited.
-   *
-   * @param visitor the visitor, type ShapesVisitor, that the function visit()
-   *                will be called on, passing an instance of the current class.
-   *                It will 'visit' this oval object.
-   * @return the shape, type Shapes, with the changes made to it.
-   */
-  public Shapes visitShape(ShapesVisitor visitor) {
-    return visitor.visit(this);
-  }
-
-  /**
    * Get the svg tag of the shape.
    *
    * @return svg tag of the shape as a string

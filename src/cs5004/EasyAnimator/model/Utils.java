@@ -2,7 +2,6 @@ package cs5004.EasyAnimator.model;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import cs5004.EasyAnimator.model.animations.Animations;
 import cs5004.EasyAnimator.model.shapes.Coordinates;
@@ -110,22 +109,6 @@ public class Utils {
   public static void sortAnimations(ArrayList<Animations> animations) {
     animations.sort((Animations a, Animations b) ->
             Integer.compare(a.getStartTime(), b.getStartTime()));
-  }
-
-  public static void formatAnimationReader(Scanner s) {
-//    int[] endT = null;
-//    int[] vals = new int[4];
-
-    ArrayList endT = new ArrayList();
-    while (s.hasNext()) {
-      String word = s.next();
-
-      if (s.equals("motion")) {
-        endT.add(new int[0]);
-      }
-    }
-
-    System.out.println(endT);
   }
 }
 

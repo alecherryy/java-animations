@@ -1,6 +1,7 @@
 package cs5004.EasyAnimator.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  * This interface contains all the methods inside the
@@ -93,4 +94,7 @@ public interface TweenModelBuilder<T> {
    */
   T build();
 
+  void addShapeMap(String name, String type);
+
+  void addShapInfoeMap(String name, ArrayList<Integer> test);
 }

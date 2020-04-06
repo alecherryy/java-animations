@@ -57,16 +57,6 @@ public interface Shapes {
   Color getColor();
 
   /**
-   * Returns the shape (either a rectangle or an oval) with the changes
-   * made to it after it has been visited.
-   *
-   * @param visitor the visitor, type ShapesVisitor, that the function visit()
-   *                will be called on, passing an instance of the current class
-   * @return the shape, type Shapes, with the changes made to it
-   */
-  Shapes visitShape(ShapesVisitor visitor);
-
-  /**
    * Returns time when the shape appears.
    *
    * @return the appear time of the shape as an int

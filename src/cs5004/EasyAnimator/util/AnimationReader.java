@@ -1,6 +1,7 @@
 package cs5004.EasyAnimator.util;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -11,6 +12,7 @@ import cs5004.EasyAnimator.model.TweenModelBuilder;
  * A helper to read animation data and construct an animation from it.
  */
 public class AnimationReader {
+
   /**
    * A factory for producing new animations, given a source of shapes and a
    * builder for constructing animations.
@@ -39,7 +41,7 @@ public class AnimationReader {
     Objects.requireNonNull(builder, "Must provide a non-null AnimationBuilder");
     Scanner s = new Scanner(readable);
     // Split at whitespace, and ignore # comment lines
-    s.useDelimiter(Pattern.compile("(\\p{Space}+|#.*)+")); 
+    s.useDelimiter(Pattern.compile("(\\p{Space}+|#.*)+"));
     while (s.hasNext()) {
       String word = s.next();
       switch (word) {
@@ -82,20 +84,12 @@ public class AnimationReader {
       throw new IllegalStateException("Shape: Expected a type, but no more input available");
     }
 
-    int[] vals = new int[16];
-    float x = vals[0];
-    float y = vals[1];
-    float w = vals[2];
-    float h = vals[3];
-    Color color = new Color(vals[5], vals[6], vals[7]);
-    int appear = vals[4];
-//    int disappear = vals[5];
     switch (type) {
       case "rectangle":
-        builder.addRectangle(name, x, y, w, h, color, appear, 200);
+        builder.addRectangle(name, 180, 180, 200, 200, Color.RED, 1, 200);
         break;
       case "ellipse":
-        builder.addOval(name, x, y, w, h, color, appear, 200);
+        builder.addOval(name, 180, 180, 200, 200, Color.RED, 1, 200);
         break;
       default:
         throw new IllegalStateException("This shape is not supported");
@@ -103,7 +97,7 @@ public class AnimationReader {
   }
 
   private static <Doc> void readMotion(Scanner s, TweenModelBuilder<Doc> builder) {
-    String[] fieldNames = new String[]{
+    String[] fieldNames = new String[] {
       "initial time",
       "initial x-coordinate", "initial y-coordinate",
       "initial width", "initial height",
@@ -126,12 +120,13 @@ public class AnimationReader {
     int startT = vals[0];
     int endT = vals[8];
     int width = vals[3];
+    ArrayList<Integer> test = new ArrayList<Integer>();
     int height = vals[4];
     Color color = new Color(vals[5], vals[6], vals[7]);
     Color newColor = new Color(vals[13], vals[14], vals[15]);
 
     if (vals[1] != vals[9] || vals[2] != vals[10]) {
-      builder.addMove(name, vals[0], vals[2], vals[9], vals[10], startT, endT);
+      builder.addMove(name, vals[1], vals[2], vals[9], vals[10], startT, endT);
     }
     else if (color != newColor) {
       builder.addColorChange(name, color, newColor, startT, endT);
@@ -140,7 +135,7 @@ public class AnimationReader {
       builder.addSizeChange(name, width, height, vals[11], vals[12], startT, endT);
     }
   }
-  
+
   private static int getInt(Scanner s, String label, String fieldName) {
     if (s.hasNextInt()) {
       return s.nextInt();

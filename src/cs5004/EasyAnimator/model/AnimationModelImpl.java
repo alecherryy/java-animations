@@ -1,7 +1,9 @@
 package cs5004.EasyAnimator.model;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import cs5004.EasyAnimator.model.animations.Animations;
 import cs5004.EasyAnimator.model.animations.ChangeColor;
@@ -11,7 +13,6 @@ import cs5004.EasyAnimator.model.shapes.Coordinates;
 import cs5004.EasyAnimator.model.shapes.Oval;
 import cs5004.EasyAnimator.model.shapes.Rectangle;
 import cs5004.EasyAnimator.model.shapes.Shapes;
-import cs5004.EasyAnimator.model.shapes.ShapesVisitorImpl;
 
 /**
  * This is the AnimationModel class; it implements all methods available
@@ -144,6 +145,8 @@ public class AnimationModelImpl implements AnimationModel {
   public static final class AnimationModelBuilder implements TweenModelBuilder<AnimationModel> {
     private ArrayList<Animations> animationsList;
     private ArrayList<Shapes> shapesList;
+    private HashMap<String, String> shapesSource;
+    private HashMap<String, ArrayList<Integer>> shapesInfo;
 
     /**
      * Constructs a SimpleAnimationBuilder object.
@@ -151,6 +154,8 @@ public class AnimationModelImpl implements AnimationModel {
     public AnimationModelBuilder() {
       this.animationsList = new ArrayList<Animations>();
       this.shapesList = new ArrayList<Shapes>();
+      this.shapesSource = new HashMap<String, String>();
+      this.shapesInfo = new HashMap<String, ArrayList<Integer>>();
     }
 
     /**
@@ -262,15 +267,15 @@ public class AnimationModelImpl implements AnimationModel {
 
       for (Shapes obj : this.shapesList) {
         if (obj.getName().equals(name)) {
-          s = obj.visitShape(new ShapesVisitorImpl());
+          s = obj;
           s.changePosition(new Coordinates(fromX, fromY));
         }
       }
 
-      Animations animation = new ChangeCoordinates(s, start, end, new Coordinates(fromX, fromY),
+      Animations a = new ChangeCoordinates(s, start, end, new Coordinates(fromX, fromY),
               new Coordinates(toX, toY));
 
-      this.addAnimations(animation);
+      this.addAnimations(a);
       return this;
     }
 
@@ -293,13 +298,13 @@ public class AnimationModelImpl implements AnimationModel {
 
       for (Shapes obj : this.shapesList) {
         if (obj.getName().equals(name)) {
-          s = obj.visitShape(new ShapesVisitorImpl());
+          s = obj;
           s.changeColor(color);
         }
       }
 
-      Animations animation = new ChangeColor(s, start, end, color, newColor);
-      this.addAnimations(animation);
+      Animations a = new ChangeColor(s, start, end, color, newColor);
+      this.addAnimations(a);
 
       return this;
     }
@@ -327,15 +332,76 @@ public class AnimationModelImpl implements AnimationModel {
 
       for (Shapes obj : this.shapesList) {
         if (obj.getName().equals(name)) {
-          obj.changeD1(w);
-          obj.changeD2(h);
+          s = obj;
+          s.changeD1(w);
+          s.changeD2(h);
         }
       }
 
-      Animations animation = new ChangeSize(s, start, end, w, h, newW, newH);
-      this.addAnimations(animation);
+      Animations a = new ChangeSize(s, start, end, w, h, newW, newH);
+      this.addAnimations(a);
 
       return this;
+    }
+
+    /**
+     * Generate a dictionary of shapes.
+     */
+    public void addShapeMap(String name, String type) {
+      this.shapesSource.put(name, type);
+    }
+
+    /**
+     * Generate a dictionary of shapes.
+     */
+    public void addShapInfoeMap(String name, ArrayList<Integer> info) {
+
+      this.shapesInfo.put(name, info);
+    }
+
+    /**
+     * Generate a dictionary of shapes.
+     */
+    public void generateShapes() {
+      ArrayList<Animations> f;
+
+
+      String name;
+      float x;
+      float y;
+      float width;
+      float height;
+      Color color;
+      int appear;
+      int disappear;
+
+      for (HashMap.Entry<String, String> s : this.shapesSource.entrySet()) {
+        f = (ArrayList<Animations>) this.animationsList.stream().filter(
+                a -> a.getShape().getName().equals(s.getKey())).collect(Collectors.toList());
+        Utils.sortAnimations(f);
+
+        name = s.getKey();
+        x = (float) this.shapesInfo.get(s.getKey()).get(0);
+        y = (float) this.shapesInfo.get(s.getKey()).get(1);
+        width = (float) this.shapesInfo.get(s.getKey()).get(2);
+        height = (float) this.shapesInfo.get(s.getKey()).get(3);
+        color = new Color(
+                this.shapesInfo.get(s.getKey()).get(4),
+                this.shapesInfo.get(s.getKey()).get(5),
+                this.shapesInfo.get(s.getKey()).get(6));
+        appear = f.get(0).getStartTime();
+        f.sort((Animations a, Animations b) ->
+                Integer.compare(a.getEndTime(), b.getEndTime()));
+        disappear = f.get(0).getEndTime();
+
+        if (s.getValue().equals("rectangle")) {
+          addRectangle(s.getKey(), x, y, width, height, color, appear, disappear);
+        }
+        else {
+          addOval(s.getKey(), x, y, width, height, color, appear, disappear);
+        }
+
+      }
     }
 
     /**
