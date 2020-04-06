@@ -1,7 +1,6 @@
 package cs5004.EasyAnimator.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -43,7 +42,7 @@ public class VisualAnimationView extends JFrame implements View {
     JScrollPane scrollPane = new JScrollPane(animationPanel);
     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    scrollPane.setBounds(this.settings.get(0), this.settings.get(1), this.settings.get(2), this.settings.get(3));
+    scrollPane.setBounds(50, 30, 300, 50);
 
     this.add(scrollPane, BorderLayout.CENTER);
 
@@ -83,15 +82,6 @@ public class VisualAnimationView extends JFrame implements View {
    */
   public ArrayList<Shapes> getShapes() {
     return this.shapes;
-  }
-
-  /**
-   * Returns a list of integers that represent the settings.
-   *
-   * @return a list representing the settings.
-   */
-  public ArrayList<Integer> getSettings() {
-    return this.settings;
   }
 
   /**
@@ -152,5 +142,10 @@ public class VisualAnimationView extends JFrame implements View {
   public void displayErrorMsg(String error) throws UnsupportedOperationException {
     JOptionPane.showMessageDialog(this, error, "Error",
         JOptionPane.ERROR_MESSAGE);
+  }
+
+  @Override
+  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
+    return null;
   }
 }
