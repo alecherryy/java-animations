@@ -3,7 +3,6 @@ package cs5004.EasyAnimator.model;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import cs5004.EasyAnimator.model.animations.Animations;
@@ -166,15 +165,13 @@ public class AnimationModelImpl implements AnimationModel {
     public AnimationModelBuilder() {
       this.animationsList = new ArrayList<Animations>();
       this.shapesList = new ArrayList<Shapes>();
-      this.shapesSource = new HashMap<String, String>();
-      this.shapesInfo = new HashMap<String, ArrayList<ArrayList<Integer>>>();
       this.settings = new ArrayList<Integer>();
-//      this.infoArray = new ArrayList<ArrayList<Integer>>();
+      // create a hash map with {name: type}
+      this.shapesSource = new HashMap<String, String>();
+      // create a hash map with {name: [[shape values], [shape values]]}
+      this.shapesInfo = new HashMap<String, ArrayList<ArrayList<Integer>>>();
     }
 
-//    private void addToShapeInfo(String key, ArrayList<Integer> entry) {
-//      this.shapesInfo.put(key, )
-//    }
     /**
      * Add given animation in order in the list of animations if animation is valid.
      *
@@ -214,7 +211,11 @@ public class AnimationModelImpl implements AnimationModel {
             int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Shapes shape = new Oval(name, appear, disappear, xRadius, yRadius, color, pos);
-      shapesList.add(shape);
+
+      if (checkShapeDuplicate(name)) {
+        shapesList.add(shape);
+      }
+
       return this;
     }
 
@@ -239,8 +240,30 @@ public class AnimationModelImpl implements AnimationModel {
             int appear, int disappear) {
       Coordinates pos = new Coordinates(x, y);
       Shapes shape = new Rectangle(name, appear, disappear, width, height, color, pos);
-      shapesList.add(shape);
+
+      if (checkShapeDuplicate(name)) {
+        shapesList.add(shape);
+      }
+
       return this;
+    }
+
+    /**
+     * Private helper method to make sure the same shape is not added twice
+     * (i.e. no duplicates).
+     *
+     * @param name of the shape
+     * @return true if the shape is unique, otherwise returns false
+     */
+    private boolean checkShapeDuplicate(String name) {
+      if (!(shapesList.isEmpty())) {
+        for (Shapes s : this.shapesList) {
+          if (name.equals(s.getName())) {
+            return false;
+          }
+        }
+      }
+      return true;
     }
 
     /**
@@ -365,6 +388,12 @@ public class AnimationModelImpl implements AnimationModel {
 
       Shapes s = null;
 
+      this.shapesSource.forEach((k, v) -> {
+        if (name.equals(k)) {
+          createIndividualShapes(k, v);
+        }
+      });
+
       for (Shapes obj : this.shapesList) {
         if (obj.getName().equals(name)) {
           s = obj;
@@ -393,28 +422,24 @@ public class AnimationModelImpl implements AnimationModel {
      */
     public void addShapeInfoMap(String name, ArrayList<Integer> info) {
       this.shapesInfo.get(name).add(info);
-    }
 
-    /**
-     * Generate a dictionary of shapes.
-     */
-    public void generateShapes() {
-
-      for (Entry<String, String> s : this.shapesSource.entrySet()) {
-        createIndividualShapes(s.getKey(), s.getValue());
-      }
+      this.shapesSource.forEach((k, v) -> {
+        if (name.equals(k)) {
+          createIndividualShapes(k, v);
+        }
+      });
     }
 
     private void createIndividualShapes(String name, String type) {
       HashMap<String, ArrayList<ArrayList<Integer>>> f;
 
+      // filter hash map to show only objects matching the shape name
       f = (HashMap<String, ArrayList<ArrayList<Integer>>>) this.shapesInfo.entrySet()
               .stream()
               .filter(map -> name.equals(map.getKey()))
               .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
 
       ArrayList<ArrayList<Integer>> shape = f.get(name);
-//      String name;
       float x;
       float y;
       float width;
@@ -423,14 +448,7 @@ public class AnimationModelImpl implements AnimationModel {
       int appear;
       int disappear;
 
-
       int size = f.get(name).size();
-      System.out.println(size);
-//      System.out.println(f.get("R").size());
-//
-////        Utils.sortAnimations(f);
-//
-//      name = a.getKey();
 
       appear = shape.get(0).get(0);
       x = (float) shape.get(0).get(1);
@@ -442,19 +460,15 @@ public class AnimationModelImpl implements AnimationModel {
               shape.get(0).get(6),
               shape.get(0).get(7));
       disappear = shape.get(size - 1).get(8);
-      System.out.println(x + " " + y + " " + width + " " + height + " " + appear + " " + disappear);
-//        appear = f.get(0).getStartTime();
-//        f.sort((Animations a, Animations b) ->
-//                Integer.compare(a.getEndTime(), b.getEndTime()));
-//        disappear = f.get(0).getEndTime();
-//
-        if (type.equals("rectangle")) {
-          addRectangle(name, x, y, width, height, color, appear, disappear);
-        }
-        else {
-          addOval(name, x, y, width, height, color, appear, disappear);
-        }
+
+      if (type.equals("rectangle")) {
+        addRectangle(name, x, y, width, height, color, appear, disappear);
+      }
+      else {
+        addOval(name, x, y, width, height, color, appear, disappear);
+      }
     }
+
     /**
      * Return the built model.
      *

@@ -99,11 +99,6 @@ public interface TweenModelBuilder<T> {
                                      float newW, float newH, int start, int end);
 
   /**
-   * Generate a dictionary of shapes.
-   */
-  void generateShapes();
-
-  /**
    * Return the built model.
    *
    * @return the build model
