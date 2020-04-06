@@ -18,8 +18,9 @@ import cs5004.EasyAnimator.view.View;
 import cs5004.EasyAnimator.view.VisualAnimationView;
 
 /**
- * This is the main() method which acts as the entry point for our program. Our program takes in
- * inputs as command-line arguments and provides the appropriate view to the user.
+ * This is the main() method which acts as the entry point for our program.
+ * Our program takes in inputs as command-line arguments and provides
+ * the appropriate view to the user.
  */
 public final class EasyAnimator {
 
@@ -31,9 +32,9 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
 
-    String inFile = "";
-    String viewType = "";
-    String outFile = "";
+    String source = "";
+    String type = "";
+    String out = "";
     int speed = 1; //default value
     String token;
     Appendable output = null;
@@ -43,15 +44,16 @@ public final class EasyAnimator {
 
       token = args[i];
 
+      // parse the command line input
       switch (token) {
         case "-in":
-          inFile = args[i + 1];
+          source = args[i + 1];
           break;
         case "-view":
-          viewType = args[i + 1];
+          type = args[i + 1];
           break;
         case "-out":
-          outFile = args[i + 1];
+          out = args[i + 1];
           break;
         case "-speed":
           if (speed < 0) {
@@ -64,50 +66,48 @@ public final class EasyAnimator {
       }
     }
 
-    //Providing an input file (the -in pair) and a view (the -view pair) are mandatory
-    if (inFile.equals("") || viewType.equals("")) {
+    // throw exception if input file and view type are not specified
+    if (source.equals("") || type.equals("")) {
       System.out.println("Input file name or type of View, can not be empty.");
     }
 
-    //If the output set is not specified and the view needs it, the default should be System.out
-    if (outFile.equals("") || outFile.equals("out")) {
+    // if the output set is not specified and the view needs it, the default should be System.out
+    if (out.equals("") || out.equals("out")) {
       output = new OutputStreamWriter(System.out); //new PrintStream(System.out);
     } else {
       try {
-        output = new PrintStream(new File(outFile));
+        output = new PrintStream(new File(out));
       } catch (IOException ignore) {
         // ignore it
       }
     }
 
-    //create the objects from the file, using the parser and the builder
-    //throw an exception if file is not found
+    // create the objects from the file, using the parser and the builder
+    // throw an exception if file is not found
     try {
-      Readable in = new FileReader(inFile);
+      Readable in = new FileReader(source);
       AnimationModel model = AnimationReader.parseFile(in,
               new AnimationModelImpl.AnimationModelBuilder());
 
       View view = null;
 
-      switch (viewType) {
-      case "text":
-         view = new TextualView(10, model.getShapes(), model.getAnimations());
-        break;
-      case "visual":
-        View visual = new VisualAnimationView(speed, model.getShapes());
-        break;
-      case "svg":
-        view = new SVGView(100, model.getShapes(), model.getAnimations());
-        view.write("src/cs5004/EasyAnimator/resources/test.svg");
-        break;
-    }
-      view.display();
+      switch (type) {
+        case "text":
+          view = new TextualView(speed, model.getShapes(), model.getAnimations());
+          view.write(out);
+          break;
+        case "visual":
+          view = new VisualAnimationView(speed, model.getSettings(), model.getShapes());
+          view.display();
+          break;
+        case "svg":
+          view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
+          view.write(out);
+          break;
+      }
 
     } catch (FileNotFoundException e) {
       System.out.println("File not found!");
     }
-
-    //System.setOut(output);
-
   }
 }

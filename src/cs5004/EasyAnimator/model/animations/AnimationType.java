@@ -7,7 +7,8 @@ package cs5004.EasyAnimator.model.animations;
 public enum AnimationType { CHANGECOLOR, CHANGECOORDINATES, CHANGESIZE;
 
   /**
-   * Returns the AnimattionType in a string and formats the string based on its value.
+   * Returns the AnimattionType in a string and formats
+   * the string based on its value.
    *
    * @return the type in a string
    * @throws IllegalArgumentException if the type is null or invalid.

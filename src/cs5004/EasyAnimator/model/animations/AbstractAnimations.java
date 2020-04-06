@@ -16,15 +16,15 @@ public abstract class AbstractAnimations implements Animations {
   private int endTime;
 
   /**
-   * This is the class constructor; it takes 4 parameters: a type, a shape, a start time and an end
-   * time.
+   * This is the class constructor; it takes 4 parameters: a type, a shape,
+   * a start time and an end time.
    *
    * @param type  of animation
    * @param shape to be animated
    * @param start of the animation
    * @param end   of the animation
-   * @throws IllegalArgumentException if end time is greater than start time or if they're both
-   *                                  negative
+   * @throws IllegalArgumentException if end time is greater than start time or
+   *                                  if they're both negative
    */
   public AbstractAnimations(AnimationType type, Shapes shape, int start, int end) {
     // check if end is smaller than start

@@ -45,6 +45,13 @@ public interface AnimationModel {
   ArrayList<Animations> getAnimations();
 
   /**
+   * Returns a list of settings.
+   *
+   * @return the model settings
+   */
+  ArrayList<Integer> getSettings();
+
+  /**
    * Return a summary of each item in the model. For each item,
    * the summary include a description of the shape and a description
    * of each animation associated with the given shape.

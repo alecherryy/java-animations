@@ -9,9 +9,16 @@ import javax.swing.*;
 import cs5004.EasyAnimator.model.shapes.Coordinates;
 import cs5004.EasyAnimator.model.shapes.Shapes;
 
+/**
+ * This class represents a JPanel used to implement the VisualAnimation View. It
+ * extends the Java JPanel built-in class.
+ */
 public class AnimateJPanel extends JPanel {
   private ArrayList<Shapes> shapes;
 
+  /**
+   * This is the class constructor.
+   */
   public AnimateJPanel() {
     super();
     this.shapes = new ArrayList<Shapes>();

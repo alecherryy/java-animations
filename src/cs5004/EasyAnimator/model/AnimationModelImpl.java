@@ -21,15 +21,16 @@ import cs5004.EasyAnimator.model.shapes.Shapes;
 public class AnimationModelImpl implements AnimationModel {
   private ArrayList<Shapes> shapes;
   private ArrayList<Animations> animations;
+  private ArrayList<Integer> settings;
 
   /**
    * This is the class constructor. It initializes a new empty list
    * of objects (i.e., AnimationModelItem).
    */
   public AnimationModelImpl() {
-
     this.shapes = new ArrayList<Shapes>();
     this.animations = new ArrayList<Animations>();
+    this.settings = new ArrayList<Integer>();
   }
 
   /**
@@ -42,6 +43,7 @@ public class AnimationModelImpl implements AnimationModel {
   private AnimationModelImpl(AnimationModelBuilder builder) {
     this.shapes = builder.shapesList;
     this.animations = builder.animationsList;
+    this.settings = builder.settings;
   }
 
   /**
@@ -105,6 +107,15 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
+   * Returns a list of settings.
+   *
+   * @return the model settings
+   */
+  public ArrayList<Integer> getSettings() {
+    return this.settings;
+  }
+
+  /**
    * Returns a description of all shapes and animations in a string.
    *
    * @return the model in a string
@@ -123,7 +134,6 @@ public class AnimationModelImpl implements AnimationModel {
         str.append(s.getDescription());
         str.append("\n");
       }
-
     }
 
     if (this.animations.size() != 0) {
@@ -147,6 +157,8 @@ public class AnimationModelImpl implements AnimationModel {
     private ArrayList<Shapes> shapesList;
     private HashMap<String, String> shapesSource;
     private HashMap<String, ArrayList<Integer>> shapesInfo;
+    private ArrayList<Integer> settings;
+
 
     /**
      * Constructs a SimpleAnimationBuilder object.
@@ -156,6 +168,24 @@ public class AnimationModelImpl implements AnimationModel {
       this.shapesList = new ArrayList<Shapes>();
       this.shapesSource = new HashMap<String, String>();
       this.shapesInfo = new HashMap<String, ArrayList<Integer>>();
+    }
+
+    /**
+     * Add given animation in order in the list of animations if animation is valid.
+     *
+     * @param x the x coordinates
+     * @param y the y coordinates
+     * @param width the width coordinates
+     * @param height the width coordinates
+     * @return the model builder
+     */
+    public TweenModelBuilder<AnimationModel> setBounds(int x, int y, int width, int height) {
+      this.settings.add(x);
+      this.settings.add(y);
+      this.settings.add(width);
+      this.settings.add(height);
+
+      return this;
     }
 
     /**
@@ -354,7 +384,7 @@ public class AnimationModelImpl implements AnimationModel {
     /**
      * Generate a dictionary of shapes.
      */
-    public void addShapInfoeMap(String name, ArrayList<Integer> info) {
+    public void addShapeInfoMap(String name, ArrayList<Integer> info) {
 
       this.shapesInfo.put(name, info);
     }
@@ -364,7 +394,6 @@ public class AnimationModelImpl implements AnimationModel {
      */
     public void generateShapes() {
       ArrayList<Animations> f;
-
 
       String name;
       float x;

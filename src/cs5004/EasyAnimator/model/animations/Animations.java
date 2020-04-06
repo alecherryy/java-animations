@@ -6,8 +6,9 @@ import cs5004.EasyAnimator.model.shapes.Coordinates;
 import cs5004.EasyAnimator.model.shapes.Shapes;
 
 /**
- * This interface represents the operations offered by the animation model. It supports all types of
- * animations. One Animation object represents one animation that will be implemented on a shape.
+ * This interface represents the operations offered by the animation model.
+ * It supports all types of animations. One Animation object represents
+ * one animation that will be implemented on a shape.
  */
 
 public interface Animations {
@@ -15,28 +16,28 @@ public interface Animations {
   /**
    * Get the shape that will be animated.
    *
-   * @return the shape that will receive the animation, a Shapes object.
+   * @return the shape that will receive the animation, a Shapes object
    */
   Shapes getShape();
 
   /**
    * Get the type of animation.
    *
-   * @return the type of the animation, an AnimationType obkect.
+   * @return the type of the animation, an AnimationType object
    */
   AnimationType getAnimationType();
 
   /**
    * Get the start time of the animation.
    *
-   * @return the start time of the animation, an int.
+   * @return the start time of the animation, an int
    */
   int getStartTime();
 
   /**
    * Get the end time of the animation.
    *
-   * @return the end time of the animation, an int.
+   * @return the end time of the animation, an int
    */
   int getEndTime();
 
@@ -73,8 +74,7 @@ public interface Animations {
   String getDescription();
 
   /**
-   * Overload toString() method to accept a single float
-   * parameter.
+   * Overload toString() method to accept a single float parameter.
    *
    * @param speed of animation
    * @return the animation represented as a string
@@ -162,7 +162,7 @@ public interface Animations {
   double getNewHeight();
 
   /**
-   * Returns the svg tag of the animation
+   * Returns the svg tag of the animation.
    *
    * @param speed the speed at which the animation occurs
    * @return svg tag string representation of the animation
@@ -170,7 +170,7 @@ public interface Animations {
   String toSVGTag(double speed);
 
   /**
-   * Returns the svg tag of the animation
+   * Returns the svg tag of the animation.
    *
    * @param speed the speed at which the animation occurs
    * @return svg tag string representation of the animation when there's a loop

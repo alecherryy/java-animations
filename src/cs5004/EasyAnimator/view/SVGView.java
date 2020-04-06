@@ -9,17 +9,20 @@ import cs5004.EasyAnimator.model.shapes.Shapes;
  * all methods available on the View interface.
  */
 public class SVGView extends TextualView {
-
+  private ArrayList<Integer> settings;
   /**
    * Class constructor for the SVGView object with its given speed,
    * shapes list and animations list.
    *
    * @param speed the speed of the animation
+   * @param settings the lists of the view boundaries
    * @param shapes the lists of the shapes in the  model
    * @param animations the list of the animations in model
    */
-  public SVGView(float speed, ArrayList<Shapes> shapes, ArrayList<Animations> animations) {
+  public SVGView(float speed, ArrayList<Integer> settings,
+                 ArrayList<Shapes> shapes, ArrayList<Animations> animations) {
     super(speed, shapes, animations);
+    this.settings = settings;
   }
 
   /**
@@ -32,7 +35,9 @@ public class SVGView extends TextualView {
     StringBuilder svg = new StringBuilder();
 
     // create svg mark up
-    svg.append("<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+    // set overflow to "auto" to enable scrolling
+    svg.append("<svg width=\"" + this.settings.get(2) + "\" height=\"" + this.settings.get(3)
+            + "\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n");
 
     for (Shapes s : this.getShapes()) {

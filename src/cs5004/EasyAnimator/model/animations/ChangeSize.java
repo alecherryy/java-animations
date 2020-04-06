@@ -4,8 +4,8 @@ import cs5004.EasyAnimator.model.Utils;
 import cs5004.EasyAnimator.model.shapes.Shapes;
 
 /**
- * This class represents the third animation type -- changing the size of a shape, using its width
- * and height. It extends AbstractAnimation.
+ * This class represents the third animation type -- changing the size of a shape,
+ * using its width and height. It extends AbstractAnimation.
  */
 public class ChangeSize extends AbstractAnimations {
   private double originalWidth;
@@ -81,7 +81,7 @@ public class ChangeSize extends AbstractAnimations {
   }
 
   /**
-   * Returns the svg tag of the animation
+   * Returns the svg tag of the animation.
    *
    * @param speed the speed at which the animation occurs
    * @return svg tag string representation of the animation
@@ -109,8 +109,12 @@ public class ChangeSize extends AbstractAnimations {
     return svg.toString();
   }
 
-
-  @Override
+  /**
+   * Returns the svg tag of the animation.
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation when there's a loop
+   */
   public String toSVGTagWithLoop(double speed) {
     double begin = (this.getStartTime() / speed) * 1000;
     double end = (this.getEndTime() / speed) * 1000;

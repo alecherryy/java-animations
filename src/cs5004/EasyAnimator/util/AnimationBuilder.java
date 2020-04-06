@@ -1,12 +1,15 @@
 package cs5004.EasyAnimator.util;
 
+/**
+ * This is the AnimationBuilder interface. It contains all methods
+ * necessary to create a new Animation Model.
+ */
 public interface AnimationBuilder<Doc> {
   /**
    * Constructs a final document.
    * @return the newly constructed document
    */
   Doc build();
-
 
   /**
    * Specify the bounding box to be used for the animation.

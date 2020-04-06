@@ -11,6 +11,17 @@ import java.util.ArrayList;
 public interface TweenModelBuilder<T> {
 
   /**
+   * Add given animation in order in the list of animations if animation is valid.
+   *
+   * @param x the x coordinates
+   * @param y the y coordinates
+   * @param width the width coordinates
+   * @param height the width coordinates
+   * @return the model builder
+   */
+  TweenModelBuilder<AnimationModel> setBounds(int x, int y, int width, int height);
+
+  /**
    * Add a new oval to the model.
    *
    * @param name the name of the oval
@@ -96,5 +107,5 @@ public interface TweenModelBuilder<T> {
 
   void addShapeMap(String name, String type);
 
-  void addShapInfoeMap(String name, ArrayList<Integer> test);
+  void addShapeInfoMap(String name, ArrayList<Integer> test);
 }

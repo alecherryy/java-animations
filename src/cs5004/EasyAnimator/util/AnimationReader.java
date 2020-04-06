@@ -67,7 +67,7 @@ public class AnimationReader {
     for (int i = 0; i < 4; i++) {
       vals[i] = getInt(s, "Canvas", fieldNames[i]);
     }
-//    builder.setBounds(vals[0], vals[1], vals[2], vals[3]);
+    builder.setBounds(vals[0], vals[1], vals[2], vals[3]);
   }
 
   private static <Doc> void readShape(Scanner s, TweenModelBuilder<Doc> builder) {
@@ -86,10 +86,12 @@ public class AnimationReader {
 
     switch (type) {
       case "rectangle":
-        builder.addRectangle(name, 180, 180, 200, 200, Color.RED, 1, 200);
+        builder.addRectangle(name, 180, 180, 200, 200, Color.RED,
+                1, 200);
         break;
       case "ellipse":
-        builder.addOval(name, 180, 180, 200, 200, Color.RED, 1, 200);
+        builder.addOval(name, 180, 180, 200, 200, Color.RED,
+                1, 200);
         break;
       default:
         throw new IllegalStateException("This shape is not supported");

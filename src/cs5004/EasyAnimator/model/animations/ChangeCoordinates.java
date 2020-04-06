@@ -49,7 +49,7 @@ public class ChangeCoordinates extends AbstractAnimations {
   }
 
   /**
-   * Returns the svg tag of the animation
+   * Returns the svg tag of the animation.
    *
    * @param speed the speed at which the animation occurs
    * @return svg tag string representation of the animation
@@ -73,7 +73,12 @@ public class ChangeCoordinates extends AbstractAnimations {
     return svg.toString();
   }
 
-  @Override
+  /**
+   * Returns the svg tag of the animation.
+   *
+   * @param speed the speed at which the animation occurs
+   * @return svg tag string representation of the animation when there's a loop
+   */
   public String toSVGTagWithLoop(double speed) {
     String svg = "";
     double begin = (this.getStartTime() / speed) * 1000;

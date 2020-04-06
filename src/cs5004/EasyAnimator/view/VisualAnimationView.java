@@ -16,6 +16,7 @@ import cs5004.EasyAnimator.model.shapes.Shapes;
 public class VisualAnimationView extends JFrame implements View {
   private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
+  private ArrayList<Integer> settings;
 
   /**
    * This is the class constructor. It takes two parameters: the speed
@@ -24,16 +25,17 @@ public class VisualAnimationView extends JFrame implements View {
    * @param speed the speed
    * @param shapes the list of shapes
    */
-  public VisualAnimationView(float speed, ArrayList<Shapes> shapes) {
+  public VisualAnimationView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes) {
     super();
 
     this.shapes = shapes;
+    this.settings = settings;
     this.setTitle("Simple Animation");
-    this.setSize(700, 700);
+    this.setSize(this.settings.get(0), this.settings.get(1));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     animationPanel = new AnimateJPanel();
-    animationPanel.setPreferredSize(new Dimension(700, 700));
+    animationPanel.setPreferredSize(new Dimension(this.settings.get(2), this.settings.get(3)));
 
     animationPanel.setShapes(shapes);
 
@@ -68,7 +70,6 @@ public class VisualAnimationView extends JFrame implements View {
 
   /**
    * Repaints the view.
-   *
    */
   public void refresh() {
     repaint();
@@ -142,5 +143,4 @@ public class VisualAnimationView extends JFrame implements View {
     JOptionPane.showMessageDialog(this, error, "Error",
         JOptionPane.ERROR_MESSAGE);
   }
-
 }

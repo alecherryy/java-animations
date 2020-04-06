@@ -88,7 +88,8 @@ public abstract class AbstractShape implements Shapes {
   }
 
   /**
-   * Returns the first dimension of the shape (width for rectangle, x-radius for Oval)
+   * Returns the first dimension of the shape
+   * (width for rectangle, x-radius for Oval).
    *
    * @return the width of the shape
    */
@@ -97,7 +98,8 @@ public abstract class AbstractShape implements Shapes {
   }
 
   /**
-   * Returns the second dimension of the shape (height for rectangle, y-radius for Oval).
+   * Returns the second dimension of the shape
+   * (height for rectangle, y-radius for Oval).
    *
    * @return the height of the shape
    */
@@ -201,8 +203,8 @@ public abstract class AbstractShape implements Shapes {
    * Changes the appear time of this shape to a new appear time.
    *
    * @param appear the appear time to which we are changing this shape's appear time to
-   * @throws IllegalArgumentException if appear is negative or if the new appear time is greater
-   *                                  than the disappear time
+   * @throws IllegalArgumentException if appear is negative or if the new appear time is
+   *                                  greater than the disappear time
    */
   public void changeAppearTime(int appear) {
 
@@ -216,8 +218,8 @@ public abstract class AbstractShape implements Shapes {
    * Changes the disappear time of this shape to a new disappear time.
    *
    * @param disappear the disappear time to which we are changing this shape's disappear time to
-   * @throws IllegalArgumentException if disappear time is negative or if the new disappear time is
-   *                                  less than the appear time
+   * @throws IllegalArgumentException if disappear time is negative or if the new
+   *                                  disappear time is less than the appear time
    */
   public void changeDisappearTime(int disappear) {
     if (disappear < this.appearTime) {
