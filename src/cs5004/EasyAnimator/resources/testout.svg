@@ -1,6 +1,0 @@
-<svg width="1000" height="1000" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<rect id="disk1" x="0.0" y="0.0" width="0.0" height="0.0" fill="rgb(0,0,0)" visibility="visible">
-<animate attributeType="xml" begin="100.0ms" dur="900.0ms" attributeName="x" from="1.0" to="0.0" fill="freeze" />
-<animate attributeType="xml" begin="100.0ms" dur="900.0ms" attributeName="y" from="180.0" to="90.0" fill="freeze" />
-</rect>
-</svg>

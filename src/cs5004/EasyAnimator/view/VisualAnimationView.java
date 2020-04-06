@@ -85,15 +85,6 @@ public class VisualAnimationView extends JFrame implements View {
   }
 
   /**
-   * Returns a list of integers that represent the settings.
-   *
-   * @return a list representing the settings.
-   */
-  public ArrayList<Integer> getSettings() {
-    return this.settings;
-  }
-
-  /**
    * Returns a list of Animations objects.
    *
    * @return a list of Animation objects
@@ -151,5 +142,10 @@ public class VisualAnimationView extends JFrame implements View {
   public void displayErrorMsg(String error) throws UnsupportedOperationException {
     JOptionPane.showMessageDialog(this, error, "Error",
         JOptionPane.ERROR_MESSAGE);
+  }
+
+  @Override
+  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
+    return null;
   }
 }

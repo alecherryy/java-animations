@@ -155,9 +155,9 @@ public class AnimationModelImpl implements AnimationModel {
   public static final class AnimationModelBuilder implements TweenModelBuilder<AnimationModel> {
     private ArrayList<Animations> animationsList;
     private ArrayList<Shapes> shapesList;
-    private HashMap<String, String> shapesSource;
-    private HashMap<String, ArrayList<ArrayList<Integer>>> shapesInfo;
     private ArrayList<Integer> settings;
+    private HashMap<String, String> source;
+    private HashMap<String, ArrayList<ArrayList<Integer>>> data;
 
     /**
      * Constructs a SimpleAnimationBuilder object.
@@ -167,9 +167,9 @@ public class AnimationModelImpl implements AnimationModel {
       this.shapesList = new ArrayList<Shapes>();
       this.settings = new ArrayList<Integer>();
       // create a hash map with {name: type}
-      this.shapesSource = new HashMap<String, String>();
+      this.source = new HashMap<String, String>();
       // create a hash map with {name: [[shape values], [shape values]]}
-      this.shapesInfo = new HashMap<String, ArrayList<ArrayList<Integer>>>();
+      this.data = new HashMap<String, ArrayList<ArrayList<Integer>>>();
     }
 
     /**
@@ -388,7 +388,7 @@ public class AnimationModelImpl implements AnimationModel {
 
       Shapes s = null;
 
-      this.shapesSource.forEach((k, v) -> {
+      this.source.forEach((k, v) -> {
         if (name.equals(k)) {
           createIndividualShapes(k, v);
         }
@@ -409,37 +409,42 @@ public class AnimationModelImpl implements AnimationModel {
     }
 
     /**
-     * Generate a dictionary of shapes.
+     * Collect shapes names and types and add them to a HashMap.
+     *
+     * @param name of the shape
+     * @param type of the shape
      */
-    public void addShapeMap(String name, String type) {
-      this.shapesSource.put(name, type);
+    public void addShapeToModel(String name, String type) {
+      this.source.put(name, type);
       ArrayList<ArrayList<Integer>> f = new ArrayList<ArrayList<Integer>>();
-      this.shapesInfo.put(name, f);
+      this.data.put(name, f);
     }
 
     /**
-     * Generate a dictionary of shapes.
+     * Collects all shape and animated related data and adds it to a
+     * master Hash Map.
+     *
+     * @param name of the shape
+     * @param data a ArrayList of integers (i.e. shape and animations parameters)
      */
-    public void addShapeInfoMap(String name, ArrayList<Integer> info) {
-      this.shapesInfo.get(name).add(info);
-
-      this.shapesSource.forEach((k, v) -> {
-        if (name.equals(k)) {
-          createIndividualShapes(k, v);
-        }
-      });
+    public void addDatatoModel(String name, ArrayList<Integer> data) {
+      this.data.get(name).add(data);
     }
 
     private void createIndividualShapes(String name, String type) {
       HashMap<String, ArrayList<ArrayList<Integer>>> f;
 
-      // filter hash map to show only objects matching the shape name
-      f = (HashMap<String, ArrayList<ArrayList<Integer>>>) this.shapesInfo.entrySet()
-              .stream()
-              .filter(map -> name.equals(map.getKey()))
-              .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+      // lamba expression to filter the data
+      // hash map and show only objects matching the shape name
+      f = (HashMap<String, ArrayList<ArrayList<Integer>>>) this.data.entrySet()
+          .stream()
+          .filter(map -> name.equals(map.getKey()))
+          .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
 
+      // variable for hash map key selector
       ArrayList<ArrayList<Integer>> shape = f.get(name);
+
+      // shape parameters
       float x;
       float y;
       float width;
@@ -447,8 +452,6 @@ public class AnimationModelImpl implements AnimationModel {
       Color color;
       int appear;
       int disappear;
-
-      int size = f.get(name).size();
 
       appear = shape.get(0).get(0);
       x = (float) shape.get(0).get(1);
@@ -459,14 +462,56 @@ public class AnimationModelImpl implements AnimationModel {
               shape.get(0).get(5),
               shape.get(0).get(6),
               shape.get(0).get(7));
+      int size = f.get(name).size();
       disappear = shape.get(size - 1).get(8);
 
+      // check shape type
       if (type.equals("rectangle")) {
         addRectangle(name, x, y, width, height, color, appear, disappear);
       }
-      else {
+      else if (type.equals("ellipse")) {
         addOval(name, x, y, width, height, color, appear, disappear);
       }
+    }
+
+    /**
+     * This is a private method used to generate and add shapes to our
+     * model after the input file has been parsed.
+     */
+    private void generateShapes() {
+      // create a Shape obj for each item in the hash map
+      this.source.forEach((k, v) -> {
+          createIndividualShapes(k, v);
+      });
+    }
+
+    /**
+     * This is a private method used to generate and add animations to our
+     * model after the input file has been parsed.
+     */
+    private void generateAnimations() {
+      // iterate through each item in the data hash map
+      this.data.forEach((k, v) -> {
+        // create animations for each item in the array of integers
+        for (ArrayList<Integer> el : v) {
+          int startT = el.get(0);
+          int endT = el.get(8);
+          int width = el.get(3);
+          int height = el.get(4);
+          Color color = new Color(el.get(5), el.get(6), el.get(7));
+          Color newColor = new Color(el.get(13), el.get(14), el.get(15));
+
+          if (el.get(1) != el.get(9) || el.get(2) != el.get(10)) {
+            addMove(k, el.get(1), el.get(2), el.get(9), el.get(10), startT, endT);
+          }
+          else if (color != newColor) {
+            addColorChange(k, color, newColor, startT, endT);
+          }
+          else if (width != el.get(11) || height != el.get(12)) {
+            addSizeChange(k, width, height, el.get(11), el.get(12), startT, endT);
+          }
+        }
+      });
     }
 
     /**
@@ -475,6 +520,12 @@ public class AnimationModelImpl implements AnimationModel {
      * @return the build model
      */
     public AnimationModel build() {
+      // add shapes
+      generateShapes();
+
+      // add animations
+      generateAnimations();
+
       return new AnimationModelImpl(this);
     }
   }
