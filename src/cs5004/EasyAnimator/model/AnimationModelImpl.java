@@ -3,6 +3,7 @@ package cs5004.EasyAnimator.model;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import cs5004.EasyAnimator.model.animations.Animations;
@@ -156,9 +157,8 @@ public class AnimationModelImpl implements AnimationModel {
     private ArrayList<Animations> animationsList;
     private ArrayList<Shapes> shapesList;
     private HashMap<String, String> shapesSource;
-    private HashMap<String, ArrayList<Integer>> shapesInfo;
+    private HashMap<String, ArrayList<ArrayList<Integer>>> shapesInfo;
     private ArrayList<Integer> settings;
-
 
     /**
      * Constructs a SimpleAnimationBuilder object.
@@ -167,9 +167,14 @@ public class AnimationModelImpl implements AnimationModel {
       this.animationsList = new ArrayList<Animations>();
       this.shapesList = new ArrayList<Shapes>();
       this.shapesSource = new HashMap<String, String>();
-      this.shapesInfo = new HashMap<String, ArrayList<Integer>>();
+      this.shapesInfo = new HashMap<String, ArrayList<ArrayList<Integer>>>();
+      this.settings = new ArrayList<Integer>();
+//      this.infoArray = new ArrayList<ArrayList<Integer>>();
     }
 
+//    private void addToShapeInfo(String key, ArrayList<Integer> entry) {
+//      this.shapesInfo.put(key, )
+//    }
     /**
      * Add given animation in order in the list of animations if animation is valid.
      *
@@ -379,23 +384,37 @@ public class AnimationModelImpl implements AnimationModel {
      */
     public void addShapeMap(String name, String type) {
       this.shapesSource.put(name, type);
+      ArrayList<ArrayList<Integer>> f = new ArrayList<ArrayList<Integer>>();
+      this.shapesInfo.put(name, f);
     }
 
     /**
      * Generate a dictionary of shapes.
      */
     public void addShapeInfoMap(String name, ArrayList<Integer> info) {
-
-      this.shapesInfo.put(name, info);
+      this.shapesInfo.get(name).add(info);
     }
 
     /**
      * Generate a dictionary of shapes.
      */
     public void generateShapes() {
-      ArrayList<Animations> f;
 
-      String name;
+      for (Entry<String, String> s : this.shapesSource.entrySet()) {
+        createIndividualShapes(s.getKey(), s.getValue());
+      }
+    }
+
+    private void createIndividualShapes(String name, String type) {
+      HashMap<String, ArrayList<ArrayList<Integer>>> f;
+
+      f = (HashMap<String, ArrayList<ArrayList<Integer>>>) this.shapesInfo.entrySet()
+              .stream()
+              .filter(map -> name.equals(map.getKey()))
+              .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+
+      ArrayList<ArrayList<Integer>> shape = f.get(name);
+//      String name;
       float x;
       float y;
       float width;
@@ -404,35 +423,38 @@ public class AnimationModelImpl implements AnimationModel {
       int appear;
       int disappear;
 
-      for (HashMap.Entry<String, String> s : this.shapesSource.entrySet()) {
-        f = (ArrayList<Animations>) this.animationsList.stream().filter(
-                a -> a.getShape().getName().equals(s.getKey())).collect(Collectors.toList());
-        Utils.sortAnimations(f);
 
-        name = s.getKey();
-        x = (float) this.shapesInfo.get(s.getKey()).get(0);
-        y = (float) this.shapesInfo.get(s.getKey()).get(1);
-        width = (float) this.shapesInfo.get(s.getKey()).get(2);
-        height = (float) this.shapesInfo.get(s.getKey()).get(3);
-        color = new Color(
-                this.shapesInfo.get(s.getKey()).get(4),
-                this.shapesInfo.get(s.getKey()).get(5),
-                this.shapesInfo.get(s.getKey()).get(6));
-        appear = f.get(0).getStartTime();
-        f.sort((Animations a, Animations b) ->
-                Integer.compare(a.getEndTime(), b.getEndTime()));
-        disappear = f.get(0).getEndTime();
+      int size = f.get(name).size();
+      System.out.println(size);
+//      System.out.println(f.get("R").size());
+//
+////        Utils.sortAnimations(f);
+//
+//      name = a.getKey();
 
-        if (s.getValue().equals("rectangle")) {
-          addRectangle(s.getKey(), x, y, width, height, color, appear, disappear);
+      appear = shape.get(0).get(0);
+      x = (float) shape.get(0).get(1);
+      y = (float) shape.get(0).get(2);
+      width = (float) shape.get(0).get(3);
+      height = (float) shape.get(0).get(4);
+      color = new Color(
+              shape.get(0).get(5),
+              shape.get(0).get(6),
+              shape.get(0).get(7));
+      disappear = shape.get(size - 1).get(8);
+      System.out.println(x + " " + y + " " + width + " " + height + " " + appear + " " + disappear);
+//        appear = f.get(0).getStartTime();
+//        f.sort((Animations a, Animations b) ->
+//                Integer.compare(a.getEndTime(), b.getEndTime()));
+//        disappear = f.get(0).getEndTime();
+//
+        if (type.equals("rectangle")) {
+          addRectangle(name, x, y, width, height, color, appear, disappear);
         }
         else {
-          addOval(s.getKey(), x, y, width, height, color, appear, disappear);
+          addOval(name, x, y, width, height, color, appear, disappear);
         }
-
-      }
     }
-
     /**
      * Return the built model.
      *

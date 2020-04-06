@@ -64,7 +64,7 @@ public class VisualAnimationViewTest {
 
     shapesList = model.getShapes();
 
-    view = new VisualAnimationView(10, model.getShapes());
+    view = new VisualAnimationView(10, model.getSettings(), model.getShapes());
 
   }
 

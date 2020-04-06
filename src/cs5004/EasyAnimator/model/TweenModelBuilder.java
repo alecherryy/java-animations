@@ -1,6 +1,6 @@
 package cs5004.EasyAnimator.model;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -97,6 +97,11 @@ public interface TweenModelBuilder<T> {
    */
   TweenModelBuilder<T> addSizeChange(String name, float w, float h,
                                      float newW, float newH, int start, int end);
+
+  /**
+   * Generate a dictionary of shapes.
+   */
+  void generateShapes();
 
   /**
    * Return the built model.

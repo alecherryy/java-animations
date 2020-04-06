@@ -32,10 +32,10 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
 
-    String source = "";
-    String type = "";
-    String out = "";
-    int speed = 1; //default value
+    String source = "src/cs5004/EasyAnimator/resources/smalldemo.txt";
+    String type = "svg";
+    String out = "src/cs5004/EasyAnimator/resources/smalldemo.svg";
+    int speed = 20; //default value
     String token;
     Appendable output = null;
 

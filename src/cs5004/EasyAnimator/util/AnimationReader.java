@@ -86,10 +86,12 @@ public class AnimationReader {
 
     switch (type) {
       case "rectangle":
+        builder.addShapeMap(name, type);
         builder.addRectangle(name, 180, 180, 200, 200, Color.RED,
                 1, 200);
         break;
       case "ellipse":
+        builder.addShapeMap(name, type);
         builder.addOval(name, 180, 180, 200, 200, Color.RED,
                 1, 200);
         break;
@@ -98,7 +100,37 @@ public class AnimationReader {
     }
   }
 
+  private static <Doc> void addShapesToInfoMap(Scanner s, TweenModelBuilder<Doc> builder) {
+    ArrayList<Integer> shapeInfo = new ArrayList<Integer>();
+    String[] fieldNames = new String[] {
+            "initial time",
+            "initial x-coordinate", "initial y-coordinate",
+            "initial width", "initial height",
+            "initial red value", "initial green value", "initial blue value",
+            "final time",
+            "final x-coordinate", "final y-coordinate",
+            "final width", "final height",
+            "final red value", "final green value", "final blue value",
+    };
+
+    int[] vals = new int[16];
+
+    String name;
+    if (s.hasNext()) {
+      name = s.next();
+    } else {
+      throw new IllegalStateException("Motion: Expected a shape name, but no more input available");
+    }
+    for (int i = 0; i < 16; i++) {
+      vals[i] = getInt(s, "Motion", fieldNames[i]);
+      shapeInfo.add(vals[i]);
+    }
+
+    builder.addShapeInfoMap(name, shapeInfo);
+  }
+
   private static <Doc> void readMotion(Scanner s, TweenModelBuilder<Doc> builder) {
+    ArrayList<Integer> shapeInfo = new ArrayList<Integer>();
     String[] fieldNames = new String[] {
       "initial time",
       "initial x-coordinate", "initial y-coordinate",
@@ -118,7 +150,11 @@ public class AnimationReader {
     }
     for (int i = 0; i < 16; i++) {
       vals[i] = getInt(s, "Motion", fieldNames[i]);
+      shapeInfo.add(vals[i]);
     }
+
+    builder.addShapeInfoMap(name, shapeInfo);
+
     int startT = vals[0];
     int endT = vals[8];
     int width = vals[3];
