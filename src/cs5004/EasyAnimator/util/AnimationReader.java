@@ -1,6 +1,5 @@
 package cs5004.EasyAnimator.util;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -85,7 +84,7 @@ public class AnimationReader {
       throw new IllegalStateException("Shape: Expected a type, but no more input available");
     }
 
-    builder.addShapeMap(name, type);
+    builder.addShapeToModel(name, type);
   }
 
   private static <Doc> void readModelInfo(Scanner s, TweenModelBuilder<Doc> builder) {
@@ -104,45 +103,7 @@ public class AnimationReader {
       shapeInfo.add(vals[i]);
     }
 
-    builder.addShapeInfoMap(name, shapeInfo);
-  }
-
-  private static <Doc> void readMotion(Scanner s, TweenModelBuilder<Doc> builder) {
-    String[] fieldNames = new String[] {
-      "initial time",
-      "initial x-coordinate", "initial y-coordinate",
-      "initial width", "initial height",
-      "initial red value", "initial green value", "initial blue value",
-      "final time",
-      "final x-coordinate", "final y-coordinate",
-      "final width", "final height",
-      "final red value", "final green value", "final blue value",
-    };
-    int[] vals = new int[16];
-    String name;
-    if (s.hasNext()) {
-      name = s.next();
-    } else {
-      throw new IllegalStateException("Motion: Expected a shape name, but no more input available");
-    }
-
-    int startT = vals[0];
-    int endT = vals[8];
-    int width = vals[3];
-    ArrayList<Integer> test = new ArrayList<Integer>();
-    int height = vals[4];
-    Color color = new Color(vals[5], vals[6], vals[7]);
-    Color newColor = new Color(vals[13], vals[14], vals[15]);
-
-    if (vals[1] != vals[9] || vals[2] != vals[10]) {
-      builder.addMove(name, vals[1], vals[2], vals[9], vals[10], startT, endT);
-    }
-    else if (color != newColor) {
-      builder.addColorChange(name, color, newColor, startT, endT);
-    }
-    else if (width != vals[11] || height != vals[12]) {
-      builder.addSizeChange(name, width, height, vals[11], vals[12], startT, endT);
-    }
+    builder.addDatatoModel(name, shapeInfo);
   }
 
   private static int getInt(Scanner s, String label, String fieldName) {

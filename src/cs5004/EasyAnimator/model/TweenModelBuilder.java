@@ -99,13 +99,27 @@ public interface TweenModelBuilder<T> {
                                      float newW, float newH, int start, int end);
 
   /**
+   * Collect shapes names and types and add them to a HashMap.
+   *
+   * @param name of the shape
+   * @param type of the shape
+   */
+  void addShapeToModel(String name, String type);
+
+  /**
+   * Collects all shape and animated related data and adds it to a
+   * master Hash Map.
+   *
+   * @param name of the shape
+   * @param data a ArrayList of integers (i.e. shape and animations parameters)
+   */
+  void addDatatoModel(String name, ArrayList<Integer> data);
+
+  /**
    * Return the built model.
    *
    * @return the build model
    */
   T build();
 
-  void addShapeMap(String name, String type);
-
-  void addShapeInfoMap(String name, ArrayList<Integer> test);
 }
