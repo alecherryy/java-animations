@@ -52,12 +52,13 @@ public class AnimationReader {
           readShape(s, builder);
           break;
         case "motion":
-          readMotion(s, builder);
+          readModelInfo(s, builder);
           break;
         default:
           throw new IllegalStateException("Unexpected keyword: " + word + s.nextLine());
       }
     }
+
     return builder.build();
   }
 
@@ -87,8 +88,26 @@ public class AnimationReader {
     builder.addShapeMap(name, type);
   }
 
-  private static <Doc> void readMotion(Scanner s, TweenModelBuilder<Doc> builder) {
+  private static <Doc> void readModelInfo(Scanner s, TweenModelBuilder<Doc> builder) {
     ArrayList<Integer> shapeInfo = new ArrayList<Integer>();
+
+    int[] vals = new int[16];
+    String name;
+    if (s.hasNext()) {
+      name = s.next();
+    } else {
+      throw new IllegalStateException("Motion: Expected a shape name, but no more input available");
+    }
+
+    for (int i = 0; i < 16; i++) {
+      vals[i] = getInt(s, "Motion", "");
+      shapeInfo.add(vals[i]);
+    }
+
+    builder.addShapeInfoMap(name, shapeInfo);
+  }
+
+  private static <Doc> void readMotion(Scanner s, TweenModelBuilder<Doc> builder) {
     String[] fieldNames = new String[] {
       "initial time",
       "initial x-coordinate", "initial y-coordinate",
@@ -106,13 +125,6 @@ public class AnimationReader {
     } else {
       throw new IllegalStateException("Motion: Expected a shape name, but no more input available");
     }
-    for (int i = 0; i < 16; i++) {
-      vals[i] = getInt(s, "Motion", fieldNames[i]);
-      shapeInfo.add(vals[i]);
-    }
-
-    builder.addShapeInfoMap(name, shapeInfo);
-//    builder.generateShapes();
 
     int startT = vals[0];
     int endT = vals[8];

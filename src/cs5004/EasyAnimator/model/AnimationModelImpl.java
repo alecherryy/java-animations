@@ -422,12 +422,6 @@ public class AnimationModelImpl implements AnimationModel {
      */
     public void addShapeInfoMap(String name, ArrayList<Integer> info) {
       this.shapesInfo.get(name).add(info);
-
-      this.shapesSource.forEach((k, v) -> {
-        if (name.equals(k)) {
-          createIndividualShapes(k, v);
-        }
-      });
     }
 
     private void createIndividualShapes(String name, String type) {
@@ -469,12 +463,46 @@ public class AnimationModelImpl implements AnimationModel {
       }
     }
 
+    private void generateShapes() {
+      this.shapesSource.forEach((k, v) -> {
+          createIndividualShapes(k, v);
+      });
+    }
+
+    private void generateAnimations() {
+
+      this.shapesInfo.forEach((k, v) -> {
+        for (ArrayList<Integer> el : v) {
+          int startT = el.get(0);
+          int endT = el.get(8);
+          int width = el.get(3);
+          int height = el.get(4);
+          Color color = new Color(el.get(5), el.get(6), el.get(7));
+          Color newColor = new Color(el.get(13), el.get(14), el.get(15));
+
+          if (el.get(1) != el.get(9) || el.get(2) != el.get(10)) {
+            addMove(k, el.get(1), el.get(2), el.get(9), el.get(10), startT, endT);
+          }
+          else if (color != newColor) {
+            addColorChange(k, color, newColor, startT, endT);
+          }
+          else if (width != el.get(11) || height != el.get(12)) {
+            addSizeChange(k, width, height, el.get(11), el.get(12), startT, endT);
+          }
+        }
+      });
+    }
+
     /**
      * Return the built model.
      *
      * @return the build model
      */
     public AnimationModel build() {
+      generateShapes();
+
+      generateAnimations();
+
       return new AnimationModelImpl(this);
     }
   }
