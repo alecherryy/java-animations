@@ -85,6 +85,15 @@ public class VisualAnimationView extends JFrame implements View {
   }
 
   /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   */
+  public ArrayList<Integer> getSettings() {
+    return this.settings;
+  }
+
+  /**
    * Returns a list of Animations objects.
    *
    * @return a list of Animation objects

@@ -168,6 +168,7 @@ public class AnimationModelImpl implements AnimationModel {
       this.shapesList = new ArrayList<Shapes>();
       this.shapesSource = new HashMap<String, String>();
       this.shapesInfo = new HashMap<String, ArrayList<Integer>>();
+      this.settings = new ArrayList<Integer>();
     }
 
     /**

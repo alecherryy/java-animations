@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import cs5004.EasyAnimator.model.AnimationModel;
 import cs5004.EasyAnimator.model.AnimationModelImpl;
@@ -36,6 +37,7 @@ public class SVGViewTest {
   Animations changeColor1;
   Animations changeSize1;
   View view;
+  ArrayList<Integer> settings;
 
   /**
    * Set up objects for testing.
@@ -47,7 +49,6 @@ public class SVGViewTest {
     c2 = new Coordinates(300, 300);
     c3 = new Coordinates(500, 100);
     c4 = new Coordinates(500, 400);
-
     rectangle = new Rectangle("R", 1, 100, 50, 100,
         Color.RED, c1);
     oval = new Oval("O", 6, 100, 60, 30,
@@ -59,18 +60,24 @@ public class SVGViewTest {
     changeSize1 = new ChangeSize(rectangle, 51, 70, 50, 100,
         25, 100);
     clara.addShape(rectangle);
+    settings = new ArrayList<Integer>();
+    settings = new ArrayList<>();
+    settings.add(145);
+    settings.add(50);
+    settings.add(410);
+    settings.add(220);
 
-    view = new SVGView(10, clara.getShapes(), clara.getAnimations());
+    view = new SVGView(10, settings, clara.getShapes(), clara.getAnimations());
 
   }
 
   /**
-   * Test suit for getDescription() method.
+   * Test for getDescription() method.
    */
   @Test
   public void testGetDescription() {
     Assert.assertEquals(""
-            + "<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -78,18 +85,18 @@ public class SVGViewTest {
             + "</svg>", view.getTextDescription());
     clara.addShape(oval);
     Assert.assertEquals(""
-            + "<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
             + "</rect>\n"
             + "<ellipse id=\"O\" cx=\"500.0\" cy=\"100.0\" rx=\"60.0\" ry=\"30.0\" "
             + "fill=\"rgb(0,0,255)\" visibility=\"visible\">\n"
-            + "</ellipse>"
+            + "</ellipse>\n"
             + "</svg>", view.getTextDescription());
     clara.addAnimation(changeCoordinates1);
     Assert.assertEquals(""
-            + "<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -100,14 +107,14 @@ public class SVGViewTest {
             + "</rect>\n"
             + "<ellipse id=\"O\" cx=\"500.0\" cy=\"100.0\" rx=\"60.0\" ry=\"30.0\" "
             + "fill=\"rgb(0,0,255)\" visibility=\"visible\">\n"
-            + "</ellipse>"
+            + "</ellipse>\n"
             + "</svg>", view.getTextDescription());
     clara.addAnimation(changeCoordinates2);
     clara.addAnimation(changeColor1);
     clara.addAnimation(changeCoordinates3);
     clara.addAnimation(changeSize1);
-    Assert.assertEquals("" +
-            "<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+    Assert.assertEquals(""
+            + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
             + "xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
             + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
@@ -133,7 +140,7 @@ public class SVGViewTest {
             + "<animate attributeType=\"xml\" begin=\"5000.0ms\" dur=\"3000.0ms\" "
             + "attributeName=\"fill\" from=\"rgb(0,0,255)\" to=\"rgb(0,255,0)\" "
             + "fill=\"freeze\" />\n"
-            + "</ellipse>"
+            + "</ellipse>\n"
             + "</svg>", view.getTextDescription());
   }
 
@@ -161,7 +168,7 @@ public class SVGViewTest {
         line = br.readLine();
       }
       Assert.assertEquals(""
-              + "<svg width=\"1000\" height=\"1000\" version=\"1.1\" "
+              + "<svg width=\"410\" height=\"220\" version=\"1.1\" overflow=\"auto\" "
               + "xmlns=\"http://www.w3.org/2000/svg\">\n"
               + "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" "
               + "fill=\"rgb(255,0,0)\" visibility=\"visible\">\n"
