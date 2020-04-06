@@ -84,21 +84,11 @@ public class AnimationReader {
       throw new IllegalStateException("Shape: Expected a type, but no more input available");
     }
 
-    switch (type) {
-      case "rectangle":
-        builder.addRectangle(name, 180, 180, 200, 200, Color.RED,
-                1, 200);
-        break;
-      case "ellipse":
-        builder.addOval(name, 180, 180, 200, 200, Color.RED,
-                1, 200);
-        break;
-      default:
-        throw new IllegalStateException("This shape is not supported");
-    }
+    builder.addShapeMap(name, type);
   }
 
   private static <Doc> void readMotion(Scanner s, TweenModelBuilder<Doc> builder) {
+    ArrayList<Integer> shapeInfo = new ArrayList<Integer>();
     String[] fieldNames = new String[] {
       "initial time",
       "initial x-coordinate", "initial y-coordinate",
@@ -118,7 +108,12 @@ public class AnimationReader {
     }
     for (int i = 0; i < 16; i++) {
       vals[i] = getInt(s, "Motion", fieldNames[i]);
+      shapeInfo.add(vals[i]);
     }
+
+    builder.addShapeInfoMap(name, shapeInfo);
+//    builder.generateShapes();
+
     int startT = vals[0];
     int endT = vals[8];
     int width = vals[3];

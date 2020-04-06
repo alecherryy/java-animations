@@ -1,0 +1,8 @@
+<svg width="360" height="360" version="1.1" overflow="auto" xmlns="http://www.w3.org/2000/svg">
+<rect id="R" x="200.0" y="200.0" width="50.0" height="100.0" fill="rgb(255,0,0)" visibility="visible">
+<animate attributeType="xml" begin="50.0ms" dur="4950.0ms" attributeName="fill" from="rgb(255,0,0)" to="rgb(255,0,0)" fill="freeze" />
+</rect>
+<ellipse id="C" cx="13.0" cy="45.0" rx="75.0" ry="75.0" fill="rgb(0,0,0)" visibility="visible">
+<animate attributeType="xml" begin="1000.0ms" dur="3000.0ms" attributeName="fill" from="rgb(0,0,0)" to="rgb(0,0,0)" fill="freeze" />
+</ellipse>
+</svg>

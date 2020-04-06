@@ -1,6 +1,6 @@
 package cs5004.EasyAnimator.model;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
