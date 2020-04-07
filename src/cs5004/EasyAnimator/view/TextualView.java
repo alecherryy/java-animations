@@ -1,4 +1,5 @@
 package cs5004.EasyAnimator.view;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

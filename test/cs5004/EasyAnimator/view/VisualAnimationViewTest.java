@@ -19,7 +19,9 @@ import cs5004.EasyAnimator.model.shapes.Shapes;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * This is a JUnit suite to test the VisualAnimationView.
+ */
 public class VisualAnimationViewTest {
   AnimationModel model;
   Shapes rectangle;
@@ -71,7 +73,7 @@ public class VisualAnimationViewTest {
     settings.add(220);
 
 
-    view = new VisualAnimationView(10, settings, shapesList);
+    view = new VisualAnimationView(10, settings, shapesList, model.getAnimations());
 
   }
 

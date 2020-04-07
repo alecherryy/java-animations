@@ -1,10 +1,13 @@
 package cs5004.EasyAnimator.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import cs5004.EasyAnimator.model.animations.Animations;
 import cs5004.EasyAnimator.model.shapes.Coordinates;

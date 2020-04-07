@@ -1,12 +1,11 @@
 package cs5004.EasyAnimator.model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import cs5004.EasyAnimator.model.animations.Animations;
 import cs5004.EasyAnimator.model.shapes.Coordinates;
 import cs5004.EasyAnimator.model.shapes.Shapes;
-
 
 /**
  * This class contains static methods that are common to a few classes.

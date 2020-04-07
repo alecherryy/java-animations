@@ -1,7 +1,5 @@
 package cs5004.EasyAnimator;
 
-// import cs5004.animator.controller.Controller;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -89,16 +87,15 @@ public final class EasyAnimator {
       AnimationModel model = AnimationReader.parseFile(in,
               new AnimationModelImpl.AnimationModelBuilder());
 
-      View view = null;
 
       switch (type) {
         case "text":
-          view = new TextualView(speed, model.getShapes(), model.getAnimations());
+          View view = new TextualView(speed, model.getShapes(), model.getAnimations());
           view.write(out);
           break;
         case "visual":
-          view = new VisualAnimationView(speed, model.getSettings(), model.getShapes());
-          view.display();
+          VisualAnimationView visView = new VisualAnimationView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
+          visView.start();
           break;
         case "svg":
           view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
