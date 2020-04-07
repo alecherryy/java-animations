@@ -1,9 +1,12 @@
 package cs5004.EasyAnimator.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
 
 import cs5004.EasyAnimator.model.animations.Animations;
 import cs5004.EasyAnimator.model.shapes.Shapes;
@@ -17,6 +20,8 @@ public class VisualAnimationView extends JFrame implements View {
   private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
   private ArrayList<Integer> settings;
+  private ArrayList<Animations> animations;
+  private float speed;
 
   /**
    * This is the class constructor. It takes two parameters: the speed
@@ -25,11 +30,12 @@ public class VisualAnimationView extends JFrame implements View {
    * @param speed the speed
    * @param shapes the list of shapes
    */
-  public VisualAnimationView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes) {
-    super();
+  public VisualAnimationView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes, ArrayList<Animations> animations) {
 
     this.shapes = shapes;
     this.settings = settings;
+    this.speed = speed;
+    this.animations = animations;
     this.setTitle("Simple Animation");
     this.setSize(this.settings.get(0), this.settings.get(1));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,9 +97,7 @@ public class VisualAnimationView extends JFrame implements View {
    * @throws UnsupportedOperationException if the view does not support this operation.
    */
   public ArrayList<Animations> getAnimations() {
-    throw new UnsupportedOperationException(""
-            + "Visual Animation View view does not include this "
-            + "functionality.");
+    return animations;
   }
 
   /**
@@ -144,8 +148,59 @@ public class VisualAnimationView extends JFrame implements View {
         JOptionPane.ERROR_MESSAGE);
   }
 
-  @Override
+  /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
-    return null;
+    return this.settings;
+  }
+
+  /**
+   * Initialize the view, add both shapes and animations and draws
+   * the shapes onto the JPanel.
+   */
+  public void start() {
+   boolean started = true;
+    long startTime = System.currentTimeMillis();
+
+    ArrayList<Animations> animations = this.getAnimations();
+    ArrayList<Shapes> shapes = this.getShapes();
+
+    ArrayList<Shapes> newShapesList = new ArrayList<Shapes>(shapes);
+
+    // display the view
+    this.display();
+
+    while (started) {
+      long timeElapsed = System.currentTimeMillis() - startTime;
+      double secondsElapsed = timeElapsed / 1000.0;
+      double unitsElapsed = secondsElapsed * speed;
+
+      for (int i = 0; i < animations.size(); i++) {
+        Animations currentAnimation = animations.get(i);
+        Shapes animationShape = currentAnimation.getShape();
+        for (int j = 0; j < newShapesList.size(); j++) {
+          Shapes currentShape = newShapesList.get(j);
+          if (currentShape.getName().equals(animationShape.getName())) {
+            currentAnimation.resetShape(currentShape);
+          }
+        }
+      }
+
+      for (int i = 0; i < animations.size(); i++) {
+        Animations current = animations.get(i);
+        int start = current.getStartTime();
+        int end = current.getEndTime();
+
+        if (start <= unitsElapsed && end >= unitsElapsed) {
+          current.implementAnimation(unitsElapsed);
+          this.setShapes(newShapesList);
+          this.refresh();
+        }
+      }
+    }
   }
 }

@@ -39,6 +39,7 @@ public class AnimationReader {
     Objects.requireNonNull(readable, "Must have non-null readable source");
     Objects.requireNonNull(builder, "Must provide a non-null AnimationBuilder");
     Scanner s = new Scanner(readable);
+
     // Split at whitespace, and ignore # comment lines
     s.useDelimiter(Pattern.compile("(\\p{Space}+|#.*)+"));
     while (s.hasNext()) {

@@ -3,7 +3,7 @@ package cs5004.EasyAnimator.model.animations;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
