@@ -1,26 +1,16 @@
 package cs5004.easyanimator.view;
 
-import java.awt.FlowLayout;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 
-import javax.swing.JScrollPane;
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JCheckBox;
-import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
@@ -138,7 +128,6 @@ public class InteractiveView extends JFrame implements View {
     this.add(checkboxScrollPane, BorderLayout.EAST);
 
     this.pack();
-
   }
 
   @Override

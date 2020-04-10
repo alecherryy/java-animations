@@ -64,10 +64,10 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
 
-    String source = "test";
-    String type = "";
+    String source = "src/cs5004/easyanimator/resources/toh-8.txt";
+    String type = "playback";
     String out = "";
-    int speed = 1; //default value
+    int speed = 100; //default value
     String token;
     Appendable output = null;
     AnimationModel model = null;
