@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import cs5004.easyanimator.controller.AnimationController;
 import cs5004.easyanimator.controller.InteractiveViewController;
@@ -59,7 +60,6 @@ public final class EasyAnimator {
       default:
         throw new IllegalArgumentException("This is not a valid view type.");
     }
-
     return view;
   }
 
@@ -70,7 +70,6 @@ public final class EasyAnimator {
    * @throws FileNotFoundException when a certain file that we are looking for is not found
    */
   public static void main(String[] args) throws FileNotFoundException {
-
     String source = "src/cs5004/easyanimator/resources/toh-8.txt";
     String type = "text";
     String out = "toh-20.txt";
@@ -134,12 +133,7 @@ public final class EasyAnimator {
       model = fileReader.parseFile(in, builder);
 
     } catch (Exception e) {
-      //System.out.println(e.getMessage());
-      JFrame frame = new JFrame();
-      frame.setSize(100, 100);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      JOptionPane.showMessageDialog(frame,
-          "Invalid file", "Error", JOptionPane.ERROR_MESSAGE);
+      showErrorMessage("AN ERROR OCCURRED: INVALID FILE.");
     }
 
     try {

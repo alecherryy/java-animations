@@ -108,10 +108,10 @@ public interface View {
   /**
    * Give the view an actionListener for the buttons in the view.
    *
-   * @param event The action event for the button
+   * @param e The action event for the button
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  void setButtonListener(ActionListener event);
+  void setButtonListener(ActionListener e);
 
   /**
    * Returns the file name command from the text box.

@@ -24,7 +24,7 @@ public class InteractiveView extends JFrame implements View {
   private AnimateJPanel animatePanel;
   private ArrayList<Shapes> shapes;
   private ArrayList<Animations> animations;
-  private boolean isLoop;
+  private boolean loop;
   private int endTime;
   private JButton play, pause, restart, increaseSpeed, decreaseSpeed,
       file, export;
@@ -46,7 +46,7 @@ public class InteractiveView extends JFrame implements View {
                          int endTime) {
     super();
 
-    this.isLoop = false;
+    this.loop = false;
     this.endTime = endTime;
 
     this.speed = speed;
@@ -109,14 +109,14 @@ public class InteractiveView extends JFrame implements View {
     checkboxPanel.add(checkboxPanelLabel);
 
     // check boxes
-    for (int i = 0; i < shapes.size(); i++) {
-      Shapes current = shapes.get(i);
-      JCheckBox currentBox = new JCheckBox(current.getName());
+    for (Shapes s : this.shapes) {
+      Shapes currentS = s;
+      JCheckBox box = new JCheckBox(currentS.getName());
 
-      currentBox.setSelected(true);
+      box.setSelected(true);
 
-      this.checkBoxList.add(currentBox);
-      checkboxPanel.add(currentBox);
+      this.checkBoxList.add(box);
+      checkboxPanel.add(box);
     }
 
     JScrollPane checkboxScrollPane = new JScrollPane(checkboxPanel);
@@ -130,54 +130,73 @@ public class InteractiveView extends JFrame implements View {
     this.pack();
   }
 
-  @Override
+  /**
+   * Returns the description of the view in a string.
+   *
+   * @return the view description in a string
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public String getTextDescription() {
 
-    String state = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
+    String markup = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
         + "xmlns=\"http://www.w3.org/2000/svg\">\n";
 
     double endTime = (this.endTime / speed) * 1000;
-    state += "<rect>\n"
+    markup += "<rect>\n"
         + "<animate id=\"base\" begin=\"0;base.end\" dur=\"" + endTime + "ms\" "
         + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
         + "</rect>\n";
 
-    for (int i = 0; i < shapes.size(); i++) {
-      Shapes currentShape = shapes.get(i);
-      if (currentShape.getDisplayValue()) {
-        state += currentShape.toSVGTag();
-        for (int j = 0; j < animations.size(); j++) {
-          Animations currentA = animations.get(j);
-          Shapes currentS = currentA.getShape();
-          if (currentShape.getName().equals(currentS.getName()) && !isLoop) {
-            state += currentA.toSVGTag(this.getSpeed());
-          } else if (currentShape.getName().equals(currentS.getName()) && isLoop) {
-            state += currentA.toSVGTagWithLoop(this.getSpeed());
-          }
-        }
-        state += currentShape.svgEndTag() + "\n";
-      }
-    }
-    state += "</svg>";
+    for (Shapes s : this.shapes) {
+      Shapes shape = s;
 
-    return state;
+      if (shape.getDisplayValue()) {
+        markup += shape.toSVGTag();
+      }
+
+      for (Animations a : this.animations) {
+        Animations currentA = a;
+        Shapes currentS = currentA.getShape();
+
+        if (shape.getName().equals((currentS.getName())) && !loop) {
+          markup += currentA.toSVGTag((this.getSpeed()));
+        }
+        else if (shape.getName().equals(currentS) && loop) {
+          markup += currentA.toSVGTagWithLoop(this.getSpeed());
+        }
+      }
+      markup += shape.svgEndTag() + "\n";
+    }
+    markup += "</svg>";
+
+    return markup;
   }
 
-  @Override
+  /**
+   * Sets the view's visibility to true (i.e. view is visible
+   * within the JFrame).
+   *
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public void display() {
     this.setVisible(true);
   }
 
-  @Override
-  public void setButtonListener(ActionListener actionEvent) {
-    play.addActionListener(actionEvent);
-    pause.addActionListener(actionEvent);
-    restart.addActionListener(actionEvent);
-    increaseSpeed.addActionListener(actionEvent);
-    decreaseSpeed.addActionListener(actionEvent);
-    file.addActionListener(actionEvent);
-    loopCheckbox.addActionListener(actionEvent);
-    export.addActionListener(actionEvent);
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param e the event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public void setButtonListener(ActionListener e) {
+    play.addActionListener(e);
+    pause.addActionListener(e);
+    restart.addActionListener(e);
+    increaseSpeed.addActionListener(e);
+    decreaseSpeed.addActionListener(e);
+    file.addActionListener(e);
+    loopCheckbox.addActionListener(e);
+    export.addActionListener(e);
   }
 
   /**
@@ -228,10 +247,11 @@ public class InteractiveView extends JFrame implements View {
 
 
   /**
-   * Writes out the text description of the animation to a file specified in the parameters.
+   * Writes out the text description of the animation to a file
+   * specified in the parameters.
    *
-   * @param fileName the file to which we are outputting the string representation of the
-   *                 animation.
+   * @param fileName the file to which we are outputting the string
+   *                 representation of the animation.
    */
   public void write(String fileName) {
     String description = this.getTextDescription();
@@ -287,24 +307,22 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Sets the boolean isLoop in the view.
+   * Sets the boolean loop in the view.
    *
-   * @param loop boolean to set isLoop to
+   * @param loop boolean to set loop to
    * @throws UnsupportedOperationException if the view does not need the functionality
    */
   public void setIsLoop(boolean loop) {
-    this.isLoop = loop;
+    this.loop = loop;
   }
 
   /**
    * Returns the is loop boolean in the view.
    *
-   * @return boolean for the isLoop field
+   * @return boolean for the loop field
    * @throws UnsupportedOperationException if the view does not support this  functionality
    */
   public boolean getIsLoop() {
-    return this.isLoop;
+    return this.loop;
   }
-
-
 }

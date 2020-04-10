@@ -43,6 +43,7 @@ public class AnimateJPanel extends JPanel {
 
         Color color = Color.RED;
         for (Shapes s : shapes) {
+          // check if event point is within shape area
           boolean x = e.getX() >= s.getPosition().getX() && e.getX() <= s.getPosition().getX() + s.getD1();
           boolean y = e.getY() >= s.getPosition().getY() && e.getY() <= s.getPosition().getY() + s.getD2();
           if (x && y) {
