@@ -1,7 +1,5 @@
 package cs5004.easyanimator.controller;
 
-import java.util.ArrayList;
-
 import javax.swing.*;
 
 import cs5004.easyanimator.model.AnimationModel;
@@ -37,30 +35,39 @@ public class TextualViewController implements AnimationController {
    * Starts the animation.
    */
   public void start() {
-    ArrayList<Animations> animations = model.getAnimations();
-    ArrayList<Shapes> shapes = model.getShapes();
 
-    for (int i = 0; i < animations.size(); i++) {
-      Animations currAnimation = animations.get(i);
-      Shapes currAnimationShape = currAnimation.getShape();
-      String currAnimationShapeName = currAnimationShape.getName();
+    for (Animations a : model.getAnimations()) {
+      Animations currentA = a;
+      String shapeN = a.getShape().getName();
 
-      for (int j = 0; j < shapes.size(); j++) {
-        Shapes shape = shapes.get(j);
-        if (currAnimationShapeName.equals(shape.getName())) {
-          currAnimation.updateField(shape);
+      for (Shapes s : model.getShapes()) {
+        Shapes currentS = s;
+
+        if (shapeN.equals(s.getName())) {
+          currentA.updateField(currentS);
         }
       }
     }
     this.view.write(filename);
   }
 
-  @Override
+  /**
+   * Get the log from this controller.
+   *
+   * @return The log of this controller
+   * @throws UnsupportedOperationException if the controller does not support the
+   *                                       functionality
+   */
   public Appendable getLog() {
     return null;
   }
 
-  @Override
+  /**
+   * Get the timer from this controller.
+   * @return The timer of this controller
+   * @throws UnsupportedOperationException if the controller does not support the
+   *                                       functionality
+   */
   public Timer getTimer() {
     return null;
   }

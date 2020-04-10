@@ -21,11 +21,12 @@ public class VisualAnimationViewController implements AnimationController{
   private boolean started;
 
   /**
-   * Constructs a VisualAnimationViewController object with its given model, view, and speed.
+   * Constructs a VisualAnimationViewController object with
+   * its given model, view, and speed.
    *
-   * @param model    The model that will be used by the controller
-   * @param view     The view that will be used by the controller
-   * @param speed    The speed at which the animation occurs
+   * @param model that will be used by the controller
+   * @param view that will be used by the controller
+   * @param speed at which the animation occurs
    */
   public VisualAnimationViewController(AnimationModel model, View view, double speed) {
     this.model = model;
@@ -45,13 +46,9 @@ public class VisualAnimationViewController implements AnimationController{
     double secondsElapsed = 0;
     double unitsElapsed = 0;
 
-    ArrayList<Animations> animations = model.getAnimations();
-    ArrayList<Shapes> shapes = model.getShapes();
-
-
     ArrayList<Shapes> newShapesList = new ArrayList<Shapes>();
 
-    for (Shapes s : shapes) {
+    for (Shapes s : model.getShapes()) {
       Shapes newS = s.visitShape(new ShapesVisitorImpl());
       newShapesList.add(newS);
     }
@@ -61,11 +58,11 @@ public class VisualAnimationViewController implements AnimationController{
       secondsElapsed = timeElapsed / 1000.0;
       unitsElapsed = secondsElapsed * speed;
 
-      for (Animations a : animations) {
+      for (Animations a : model.getAnimations()) {
         Animations currentA = a;
         String shapeName = currentA.getShape().getName();
 
-        for (Shapes s : shapes) {
+        for (Shapes s : model.getShapes()) {
           Shapes currentS = s;
 
           if (s.getName().equals(shapeName)) {
