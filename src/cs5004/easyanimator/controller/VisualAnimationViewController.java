@@ -11,15 +11,14 @@ import cs5004.easyanimator.model.shapes.ShapesVisitorImpl;
 import cs5004.easyanimator.view.View;
 
 /**
- * Represents the controller for the Visual Animation view. Implements AnimationController and its
- * associated methods.
+ * Represents the controller for the Visual Animation view.
+ * Implements AnimationController and its associated methods.
  */
-
 public class VisualAnimationViewController implements AnimationController{
   private AnimationModel model;
   private View view;
   private double speed;
-  private boolean isStarted;
+  private boolean started;
 
   /**
    * Constructs a VisualAnimationViewController object with its given model, view, and speed.
@@ -32,13 +31,14 @@ public class VisualAnimationViewController implements AnimationController{
     this.model = model;
     this.view = view;
     this.speed = speed;
-    this.isStarted = false;
+    this.started = false;
   }
+
   /**
    * Starts the animation.
    */
   public void start() {
-    this.isStarted = true;
+    this.started = true;
     long startTime = System.currentTimeMillis();
     long timeElapsed = 0;
 
@@ -48,39 +48,36 @@ public class VisualAnimationViewController implements AnimationController{
     ArrayList<Animations> animations = model.getAnimations();
     ArrayList<Shapes> shapes = model.getShapes();
 
+
     ArrayList<Shapes> newShapesList = new ArrayList<Shapes>();
 
-    // display the view
-    // view.display();
-
-    for (int i = 0; i < shapes.size(); i++) {
-      Shapes newShape = shapes.get(i).visitShape(new ShapesVisitorImpl());
-      newShapesList.add(newShape);
+    for (Shapes s : shapes) {
+      Shapes newS = s.visitShape(new ShapesVisitorImpl());
+      newShapesList.add(newS);
     }
 
-    while (this.isStarted) {
+    while (this.started) {
       timeElapsed = System.currentTimeMillis() - startTime;
       secondsElapsed = timeElapsed / 1000.0;
       unitsElapsed = secondsElapsed * speed;
 
-      for (int i = 0; i < animations.size(); i++) {
-        Animations currentAnimation = animations.get(i);
-        Shapes animationShape = currentAnimation.getShape();
-        for (int j = 0; j < newShapesList.size(); j++) {
-          Shapes currentShape = newShapesList.get(j);
-          if (currentShape.getName().equals(animationShape.getName())) {
-            currentAnimation.changeShape(currentShape);
+      for (Animations a : animations) {
+        Animations currentA = a;
+        String shapeName = currentA.getShape().getName();
+
+        for (Shapes s : shapes) {
+          Shapes currentS = s;
+
+          if (s.getName().equals(shapeName)) {
+            currentA.changeShape(currentS);
           }
         }
-      }
 
-      for (int i = 0; i < animations.size(); i++) {
-        Animations current = animations.get(i);
-        int start = current.getStartTime();
-        int end = current.getEndTime();
+        int start = currentA.getStartTime();
+        int end = currentA.getEndTime();
 
         if (start <= unitsElapsed && end >= unitsElapsed) {
-          current.implementAnimation(unitsElapsed);
+          currentA.implementAnimation(unitsElapsed);
           this.view.setShapes(newShapesList);
           this.view.refresh();
         }
