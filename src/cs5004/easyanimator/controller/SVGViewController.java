@@ -1,24 +1,22 @@
 package cs5004.easyanimator.controller;
 
-import javax.swing.*;
+import javax.swing.Timer;
 
 import cs5004.easyanimator.view.View;
 
 /**
- * Represents the controller for the SVG view. Implements AnimationController and its
- * associated methods.
+ * Represents the controller for the SVG view. Implements AnimationController
+ * and its associated methods.
  */
-
 public class SVGViewController implements AnimationController {
-
   private View view;
   private String filename;
 
   /**
    * Constructs an SVGViewController object with its given view and filename.
    *
-   * @param view     the view that the controller will be displaying on
-   * @param filename the output file the controller will write to
+   * @param view that will be displaying on
+   * @param filename of the output file
    */
   public SVGViewController(View view, String filename) {
     this.view = view;
@@ -30,7 +28,6 @@ public class SVGViewController implements AnimationController {
    */
   public void start() {
     this.view.write(filename);
-
   }
 
   /**

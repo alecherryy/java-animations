@@ -6,11 +6,12 @@ import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
- * This class represents an SVGView, it extends the TextualView class and includes
- * all methods available on the View interface.
+ * This class represents an SVGView, it extends the TextualView class
+ * and includes all methods available on the View interface.
  */
 public class SVGView extends TextualView {
   private ArrayList<Integer> settings;
+
   /**
    * Class constructor for the SVGView object with its given speed,
    * shapes list and animations list.
@@ -25,7 +26,6 @@ public class SVGView extends TextualView {
     super(speed, shapes, animations);
     this.settings = settings;
   }
-
 
   /**
    * Returns a list of integers that represent the settings.
