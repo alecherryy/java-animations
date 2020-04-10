@@ -6,10 +6,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.Timer;
-import javax.swing.JCheckBox;
+import javax.swing.*;
 
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.animations.Animations;
@@ -18,15 +16,14 @@ import cs5004.easyanimator.model.shapes.ShapesVisitorImpl;
 import cs5004.easyanimator.view.View;
 
 /**
- * Represents the controller for the Visual Animation view. Implements AnimationController and its
- * associated methods.
+ * Represents the controller for the Visual Animation view. Implements
+ * AnimationController and its associated methods.
  */
-
 public class InteractiveViewController implements AnimationController, ActionListener {
   private AnimationModel model;
   private View view;
   private double speed;
-  private boolean isLoop;
+  private boolean looped;
   private String filename;
   private Timer timer;
   private ArrayList<Shapes> newShapesList;
@@ -38,16 +35,16 @@ public class InteractiveViewController implements AnimationController, ActionLis
    * Create an InteractiveController object with its given model, view, speed, and the name of
    * the file that the controller will write out to.
    *
-   * @param model    The model that will be used by the controller
-   * @param view     The view that will be used by the controller
-   * @param speed    The speed at which the animation occurs
-   * @param filename The filename that the controller will write out to
+   * @param model used by the controller
+   * @param view used by the controller
+   * @param speed at which the animation occurs
+   * @param filename that the controller will write out to
    */
   public InteractiveViewController(AnimationModel model, View view, double speed, String filename) {
     this.model = model;
     this.view = view;
     this.speed = speed;
-    this.isLoop = false;
+    this.looped = false;
     this.filename = filename;
     this.elapsedTime = 0;
     this.endTime = model.getEnd();
@@ -58,38 +55,31 @@ public class InteractiveViewController implements AnimationController, ActionLis
    * Starts the animation.
    */
   public void start() {
-
     this.view.setButtonListener(this);
 
-    HandlerClass handler = new HandlerClass();
-
-    for (int i = 0; i < view.getCheckBoxList().size(); i++) {
-      JCheckBox current = view.getCheckBoxList().get(i);
-      current.addItemListener(handler);
+    for (JCheckBox j : view.getCheckBoxList()) {
+      j.addItemListener(new HandlerClass());
     }
 
+    // display the view
     this.view.display();
-
+    // set new shape list
     this.setNewShapesList();
-
+    // create new timer
     this.timer = new Timer(0, timerListener);
 
+    for (Animations a : model.getAnimations()) {
+      String sName = a.getShape().getName();
 
-    List<Animations> animations = model.getAnimations();
-
-    for (int i = 0; i < animations.size(); i++) {
-      Animations currentAnimation = animations.get(i);
-      Shapes animationShape = currentAnimation.getShape();
-      for (int j = 0; j < newShapesList.size(); j++) {
-        Shapes currentShape = newShapesList.get(j);
-        if (currentShape.getName().equals(animationShape.getName())) {
-          currentAnimation.resetShape(currentShape);
+      for (Shapes s : newShapesList) {
+        Shapes currentS = s;
+        if (currentS.getName().equals(sName)) {
+          a.resetShape(currentS);
         }
       }
     }
-
+    // output to file
     this.view.write(filename);
-
   }
 
   /**
@@ -114,50 +104,52 @@ public class InteractiveViewController implements AnimationController, ActionLis
    * be the model's original list of shapes.
    */
   private void setNewShapesList() {
-    List<Shapes> shapes = model.getShapes();
-
     newShapesList = new ArrayList<Shapes>();
 
-    for (int i = 0; i < shapes.size(); i++) {
-      Shapes newShape = shapes.get(i).visitShape(new ShapesVisitorImpl());
-      newShapesList.add(newShape);
+    // iterate through model's shapes and create a
+    // new list of shapes
+    for (Shapes s : model.getShapes()) {
+      Shapes newS = s;
+      newShapesList.add(newS);
     }
   }
 
+  // create new action listener
   ActionListener timerListener = new ActionListener() {
 
-    @Override
+    /**
+     * Overrides the ActionListener method.
+     *
+     * @param e the event
+     */
     public void actionPerformed(ActionEvent e) {
 
       elapsedTime += speed / 1000;
 
-      if (isLoop && (endTime - elapsedTime < 0.000001)) {
+      if (looped && (endTime - elapsedTime < 0.000001)) {
         elapsedTime = 0;
 
         timer.restart();
 
-        List<Shapes> shapes = model.getShapes();
-
         newShapesList = new ArrayList<Shapes>();
 
-        for (int i = 0; i < shapes.size(); i++) {
-          Shapes newShape = shapes.get(i).visitShape(new ShapesVisitorImpl());
-          newShapesList.add(newShape);
+        for (Shapes s : model.getShapes()) {
+          Shapes newS = s.visitShape(new ShapesVisitorImpl());
+          newShapesList.add(newS);
         }
-
-      } else if (endTime - elapsedTime < 0.000001) {
+      }
+      else if (endTime - elapsedTime < 0.000001) {
         timer.stop();
       }
 
-      List<Animations> animations = model.getAnimations();
+      for (Animations a : model.getAnimations()) {
+        Animations currentA = a;
 
-      for (int i = 0; i < animations.size(); i++) {
-        Animations current = animations.get(i);
-        int start = current.getStartTime();
-        int end = current.getEndTime();
+        int start = a.getStartTime();
+        int end = a.getEndTime();
 
         if (start <= elapsedTime && end >= elapsedTime) {
-          current.implementAnimation(elapsedTime);
+          a.implementAnimation(elapsedTime);
           view.setShapes(newShapesList);
           view.refresh();
         }
@@ -166,14 +158,19 @@ public class InteractiveViewController implements AnimationController, ActionLis
     }
   };
 
-  @Override
+  /**
+   * Overrides the ActionListener method.
+   *
+   * @param e the event
+   */
   public void actionPerformed(ActionEvent e) {
+    // evaluate event
     switch (e.getActionCommand()) {
       case "Play":
         this.appendToLog("You pressed the play button. \n");
         this.timer.start();
         this.displayCheckBoxes(false);
-        //Offer SVG functionality
+        // offer SVG functionality
         System.out.println(log.toString());
         break;
       case "Pause":
@@ -189,49 +186,49 @@ public class InteractiveViewController implements AnimationController, ActionLis
         elapsedTime = 0;
         break;
       case "Loop":
-        this.appendToLog("You pressed the loop button. \n");
-        isLoop = !isLoop;
-        view.setIsLoop(isLoop);
+        this.appendToLog("You pressed the loop button.\n");
+        looped = !looped;
+        view.setIsLoop(looped);
         this.displayCheckBoxes(true);
         break;
-      case "Increase speed":
-        this.appendToLog("You pressed the increase speed button. \n");
+      case "Increase Speed":
+        this.appendToLog("You pressed the increase speed button.\n");
         this.displayCheckBoxes(false);
-        speed += 5;
+        speed += 10;
         elapsedTime -= (speed) / 1000;
         break;
-      case "Decrease speed":
-        this.appendToLog("You pressed the decrease speed button. \n");
+      case "Decrease Speed":
+        this.appendToLog("You pressed the decrease speed button.\n");
         this.displayCheckBoxes(false);
         if (speed <= 0) {
           speed = 0;
-        } else {
-          speed -= 5;
+        }
+        else {
+          speed -= 10;
         }
         elapsedTime += (speed) / 1000;
         break;
       case "Set file":
-        this.appendToLog("You pressed the set file button. \n");
+        this.appendToLog("You pressed the set file button.\n");
         this.displayCheckBoxes(true);
         filename = view.getFilename();
         break;
       case "Export":
-        this.appendToLog("You pressed the export button. \n");
+        this.appendToLog("You pressed the export button.\n");
         setFilename(filename);
       default:
-        // do nothing
+        break;
     }
   }
 
   /**
-   * Either displays or does not display the checkboxes.
+   * Display or hide checkboxes.
    *
-   * @param enable boolean for if you want to display or not display the check boxes
+   * @param enable true to display checkboxes, false to hide them
    */
   private void displayCheckBoxes(boolean enable) {
-    for (int i = 0; i < view.getCheckBoxList().size(); i++) {
-      JCheckBox current = view.getCheckBoxList().get(i);
-      current.setEnabled(enable);
+    for (JCheckBox j : view.getCheckBoxList()) {
+      j.setEnabled(enable);
     }
   }
 
@@ -240,15 +237,18 @@ public class InteractiveViewController implements AnimationController, ActionLis
    */
   private class HandlerClass implements ItemListener {
 
-    @Override
+    /**
+     * Overrides the ItemListener method.
+     *
+     * @param e the item event
+     */
     public void itemStateChanged(ItemEvent e) {
-      for (int i = 0; i < view.getCheckBoxList().size(); i++) {
-        if (!view.getCheckBoxList().get(i).isSelected()) {
-          changeRenderValue(view.getCheckBoxList().get(i).getAccessibleContext().getAccessibleName()
-              , false);
-        } else {
-          changeRenderValue(view.getCheckBoxList().get(i).getAccessibleContext().getAccessibleName()
-              , true);
+      for (JCheckBox j : view.getCheckBoxList()) {
+        if (!j.isSelected()) {
+          changeRenderValue(j.getAccessibleContext().getAccessibleName(), false);
+        }
+        else {
+          changeRenderValue(j.getAccessibleContext().getAccessibleName(), true);
         }
       }
     }
@@ -256,16 +256,15 @@ public class InteractiveViewController implements AnimationController, ActionLis
     /**
      * Changes the shape's display value to false.
      *
-     * @param shapeName the name of the shape
-     * @param displayValue, the boolean that will be changed
+     * @param name of the shape
+     * @param display, the boolean that will be changed
      */
-    private void changeRenderValue(String shapeName, boolean displayValue) {
-
+    private void changeRenderValue(String name, boolean display) {
       for (int i = 0; i < model.getShapes().size(); i++) {
-        if (shapeName.equals(model.getShapes().get(i).getName())) {
-          view.getShapes().get(i).changeDisplayValue(displayValue);
-          model.getShapes().get(i).changeDisplayValue(displayValue);
-          newShapesList.get(i).changeDisplayValue(displayValue);
+        if (name.equals(model.getShapes().get(i).getName())) {
+          view.getShapes().get(i).changeDisplayValue(display);
+          model.getShapes().get(i).changeDisplayValue(display);
+          newShapesList.get(i).changeDisplayValue(display);
         }
       }
     }
@@ -279,6 +278,7 @@ public class InteractiveViewController implements AnimationController, ActionLis
   private void setFilename(String command) {
     try {
       this.view.write(command);
+
     } catch (Exception e) {
       view.displayErrorMsg("Invalid filename.");
     }
@@ -292,6 +292,7 @@ public class InteractiveViewController implements AnimationController, ActionLis
   private void appendToLog(String entry) {
     try {
       this.log.append(entry);
+
     } catch (IOException e) {
       //do nothing
     }

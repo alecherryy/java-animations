@@ -74,7 +74,7 @@ public final class EasyAnimator {
     String source = "src/cs5004/easyanimator/resources/toh-8.txt";
     String type = "playback";
     String out = "";
-    int speed = 50; // default value
+    int speed = 10; // default value
     String token;
     Appendable output = null;
     AnimationModel model = null;
