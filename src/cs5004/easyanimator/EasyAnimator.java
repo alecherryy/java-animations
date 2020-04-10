@@ -30,30 +30,37 @@ import cs5004.easyanimator.view.VisualAnimationView;
  */
 public final class EasyAnimator {
 
-
   /**
    * Returns the correct view according to the string taken in.
    *
-   * @param view  string representation of what type of view to output
+   * @param type  string representation of what type of view to output
    * @param model model for view to work on
    * @param speed speed to which we are setting the view
    * @return the view
    * @throws IllegalArgumentException if the String view is invalid
    */
-  public static View createView(String view, AnimationModel model, float speed)
-      throws IllegalArgumentException {
-    if (view.equals("text")) {
-      return new TextualView(speed, model.getShapes(), model.getAnimations());
-    } else if (view.equals("visual")) {
-      return new VisualAnimationView(speed, model.getSettings(), model.getShapes(),
-          model.getAnimations());
-    } else if (view.equals("svg")) {
-      return new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
-    } else if (view.equals("playback")) {
-      return new InteractiveView(speed, model.getShapes(), model.getAnimations(), model.getEnd());
-    } else {
-      throw new IllegalArgumentException("Invalid view type");
+  public static View createView(String type, AnimationModel model, float speed) {
+    View view = null;
+
+    switch (type) {
+      case "text":
+        view = new TextualView(speed, model.getShapes(), model.getAnimations());
+        break;
+      case "svg":
+        view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
+        break;
+      case "visual":
+        view = new VisualAnimationView(speed, model.getSettings(), model.getShapes(),
+                model.getAnimations());
+        break;
+      case "playback":
+        view = new InteractiveView(speed, model.getShapes(), model.getAnimations(), model.getEnd());
+        break;
+      default:
+        throw new IllegalArgumentException("This is not a valid view type.");
     }
+
+    return view;
   }
 
   /**
@@ -64,10 +71,10 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
 
-    String source = "src/cs5004/easyanimator/resources/toh-8.txt";
-    String type = "playback";
+    String source = "src/cs5004/easyanimator/resources/smalldemo.txt";
+    String type = "dynamic";
     String out = "";
-    int speed = 100; //default value
+    int speed = 10; //default value
     String token;
     Appendable output = null;
     AnimationModel model = null;
@@ -92,16 +99,12 @@ public final class EasyAnimator {
           break;
         case "-speed":
           if (speed < 0) {
-            throw new IllegalArgumentException("fps can not be negative");
+            throw new IllegalArgumentException("Animation speed cannot be negative.");
           }
           speed = Integer.parseInt(args[i + 1]);
           break;
         default:
-          JFrame frame = new JFrame();
-          frame.setSize(100, 100);
-          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          JOptionPane.showMessageDialog(frame, "Invalid input",
-              "Error", JOptionPane.ERROR_MESSAGE);
+          showErrorMessage("AN ERROR HAS OCCURRED: INVALID INPUT.");
       }
     }
 
@@ -127,7 +130,6 @@ public final class EasyAnimator {
     Readable in = new FileReader(source);
     TweenModelBuilder<AnimationModel> builder = new AnimationModelImpl.AnimationModelBuilder();
 
-
     try {
       model = fileReader.parseFile(in, builder);
 
@@ -143,11 +145,7 @@ public final class EasyAnimator {
     try {
       view = createView(type, model, speed);
     } catch (Exception e) {
-      JFrame frame = new JFrame();
-      frame.setSize(100, 100);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      JOptionPane.showMessageDialog(frame, "Invalid view type",
-          "Error", JOptionPane.ERROR_MESSAGE);
+      showErrorMessage("AN ERROR HAS OCCURRED.");
     }
 
     switch (type) {
@@ -164,22 +162,27 @@ public final class EasyAnimator {
         controller = new InteractiveViewController(model, view, speed, out);
         break;
       default:
-        JFrame frame = new JFrame();
-        frame.setSize(100, 100);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JOptionPane.showMessageDialog(frame, "Invalid view type",
-            "Error", JOptionPane.ERROR_MESSAGE);
+        showErrorMessage("AN ERROR HAS OCCURRED.");
+        break;
     }
 
     try {
       controller.start();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      JFrame frame = new JFrame();
-      frame.setSize(100, 100);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      JOptionPane.showMessageDialog(frame, "ERROR",
-          "Error", JOptionPane.ERROR_MESSAGE);
+      showErrorMessage("AN ERROR HAS OCCURRED.");
     }
+  }
+
+  /**
+   * Private helper method to generate a given error message.
+   *
+   * @param message
+   */
+  private static void showErrorMessage(String message) {
+    JFrame frame = new JFrame();
+    frame.setSize(100, 100);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    JOptionPane.showMessageDialog(frame, message,
+            "Error Message", JOptionPane.ERROR_MESSAGE);
   }
 }
