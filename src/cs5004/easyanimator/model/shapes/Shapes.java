@@ -211,4 +211,15 @@ public interface Shapes {
    * @return svg dimension 2 tag as a string
    */
   String svgD2Tag();
+
+  /**
+   * Returns the shape (either a rectangle or an oval) with the changes made to it after it has been
+   * visited.
+   *
+   * @param visitor the visitor, type ShapesVisitor, that the function visit() will be called on,
+   *                passing an instance
+   *                of the current class.
+   * @return the shape, type Shapes, with the changes made to it.
+   */
+  Shapes visitShape(ShapesVisitor visitor);
 }

@@ -7,20 +7,54 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
+import javax.swing.*;
+
+import cs5004.easyanimator.controller.AnimationController;
+import cs5004.easyanimator.controller.InteractiveViewController;
+import cs5004.easyanimator.controller.SVGViewController;
+import cs5004.easyanimator.controller.TextualViewController;
+import cs5004.easyanimator.controller.VisualAnimationViewController;
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.AnimationModelImpl;
+import cs5004.easyanimator.model.TweenModelBuilder;
 import cs5004.easyanimator.util.AnimationReader;
+import cs5004.easyanimator.view.InteractiveView;
 import cs5004.easyanimator.view.SVGView;
 import cs5004.easyanimator.view.TextualView;
 import cs5004.easyanimator.view.View;
 import cs5004.easyanimator.view.VisualAnimationView;
 
 /**
- * This is the main() method which acts as the entry point for our program.
- * Our program takes in inputs as command-line arguments and provides
- * the appropriate view to the user.
+ * This is the main() method which acts as the entry point for our program. Our program takes in
+ * inputs as command-line arguments and provides the appropriate view to the user.
  */
 public final class EasyAnimator {
+
+
+  /**
+   * Returns the correct view according to the string taken in.
+   *
+   * @param view  string representation of what type of view to output
+   * @param model model for view to work on
+   * @param speed speed to which we are setting the view
+   * @return the view
+   * @throws IllegalArgumentException if the String view is invalid
+   */
+  public static View createView(String view, AnimationModel model, float speed)
+      throws IllegalArgumentException {
+    if (view.equals("text")) {
+      return new TextualView(speed, model.getShapes(), model.getAnimations());
+    } else if (view.equals("visual")) {
+      return new VisualAnimationView(speed, model.getSettings(), model.getShapes(),
+          model.getAnimations());
+    } else if (view.equals("svg")) {
+      return new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
+    } else if (view.equals("playback")) {
+      return new InteractiveView(speed, model.getShapes(), model.getAnimations(), model.getEnd());
+    } else {
+      throw new IllegalArgumentException("Invalid view type");
+    }
+  }
 
   /**
    * This is the entry point of our program.
@@ -30,12 +64,15 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
 
-    String source = "";
+    String source = "test";
     String type = "";
     String out = "";
     int speed = 1; //default value
     String token;
     Appendable output = null;
+    AnimationModel model = null;
+    View view = null;
+    AnimationController controller = null;
 
     // even number of inputs should be provided
     for (int i = 0; i < args.length - 1; i += 2) {
@@ -60,7 +97,11 @@ public final class EasyAnimator {
           speed = Integer.parseInt(args[i + 1]);
           break;
         default:
-          System.out.println("Encountered error!");
+          JFrame frame = new JFrame();
+          frame.setSize(100, 100);
+          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          JOptionPane.showMessageDialog(frame, "Invalid input",
+              "Error", JOptionPane.ERROR_MESSAGE);
       }
     }
 
@@ -82,31 +123,63 @@ public final class EasyAnimator {
 
     // create the objects from the file, using the parser and the builder
     // throw an exception if file is not found
+    AnimationReader fileReader = new AnimationReader();
+    Readable in = new FileReader(source);
+    TweenModelBuilder<AnimationModel> builder = new AnimationModelImpl.AnimationModelBuilder();
+
+
     try {
-      Readable in = new FileReader(source);
-      AnimationModel model = AnimationReader.parseFile(in,
-              new AnimationModelImpl.AnimationModelBuilder());
+      model = fileReader.parseFile(in, builder);
 
-      switch (type) {
-        case "text":
-          View view = new TextualView(speed, model.getShapes(), model.getAnimations());
-          view.write(out);
-          break;
-        case "visual":
-          VisualAnimationView visView = new VisualAnimationView(speed, model.getSettings(),
-                  model.getShapes(), model.getAnimations());
-          visView.start();
-          break;
-        case "svg":
-          view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
-          view.write(out);
-          break;
-          default:
-            break;
-      }
+    } catch (Exception e) {
+      //System.out.println(e.getMessage());
+      JFrame frame = new JFrame();
+      frame.setSize(100, 100);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      JOptionPane.showMessageDialog(frame,
+          "Invalid file", "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
-    } catch (FileNotFoundException e) {
-      System.out.println("File not found!");
+    try {
+      view = createView(type, model, speed);
+    } catch (Exception e) {
+      JFrame frame = new JFrame();
+      frame.setSize(100, 100);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      JOptionPane.showMessageDialog(frame, "Invalid view type",
+          "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    switch (type) {
+      case "text":
+        controller = new TextualViewController(model, view, out);
+        break;
+      case "visual":
+        controller = new VisualAnimationViewController(model, view, speed);
+        break;
+      case "svg":
+        controller = new SVGViewController(view, out);
+        break;
+      case "playback":
+        controller = new InteractiveViewController(model, view, speed, out);
+        break;
+      default:
+        JFrame frame = new JFrame();
+        frame.setSize(100, 100);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JOptionPane.showMessageDialog(frame, "Invalid view type",
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    try {
+      controller.start();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      JFrame frame = new JFrame();
+      frame.setSize(100, 100);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      JOptionPane.showMessageDialog(frame, "ERROR",
+          "Error", JOptionPane.ERROR_MESSAGE);
     }
   }
 }

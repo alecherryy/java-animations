@@ -1,11 +1,15 @@
 package cs5004.easyanimator.view;
 
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
@@ -170,6 +174,49 @@ public class TextualView implements View {
   public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
     throw new UnsupportedOperationException(""
         + "Textual view does not include this functionality.");
+  }
+
+  /**
+   * Sets the boolean isLoop in the view.
+   * @param loop boolean to set isLoop to
+   * @throws UnsupportedOperationException if the view does not need the functionality
+   */
+  public void setIsLoop(boolean loop) {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Returns the is loop boolean in the view.
+   * @return boolean for the isLoop field
+   * @throws UnsupportedOperationException if the view does not need the functionality
+   */
+  public boolean getIsLoop() {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param event The action event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public void setButtonListener(ActionListener event) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Returns the file name command from the text box.
+   *
+   * @return file name from user
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public String getFilename() throws UnsupportedOperationException{
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  @Override
+  public List<JCheckBox> getCheckBoxList() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
   }
 }
 

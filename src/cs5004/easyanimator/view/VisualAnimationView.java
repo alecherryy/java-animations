@@ -2,11 +2,11 @@ package cs5004.easyanimator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
@@ -160,48 +160,51 @@ public class VisualAnimationView extends JFrame implements View {
   }
 
   /**
-   * Initialize the view, add both shapes and animations and draws
-   * the shapes onto the JPanel.
+   * Sets the boolean isLoop in the view.
+   * @param loop boolean to set isLoop to
+   * @throws UnsupportedOperationException if the view does not need the functionality
    */
-  public void start() {
-    boolean started = true;
-    long startTime = System.currentTimeMillis();
-
-    ArrayList<Animations> animations = this.getAnimations();
-    ArrayList<Shapes> shapes = this.getShapes();
-
-    ArrayList<Shapes> newShapesList = new ArrayList<Shapes>(shapes);
-
-    // display the view
-    this.display();
-
-    while (started) {
-      long timeElapsed = System.currentTimeMillis() - startTime;
-      double secondsElapsed = timeElapsed / 1000.0;
-      double unitsElapsed = secondsElapsed * speed;
-
-      for (int i = 0; i < animations.size(); i++) {
-        Animations currentAnimation = animations.get(i);
-        Shapes animationShape = currentAnimation.getShape();
-        for (int j = 0; j < newShapesList.size(); j++) {
-          Shapes currentShape = newShapesList.get(j);
-          if (currentShape.getName().equals(animationShape.getName())) {
-            currentAnimation.resetShape(currentShape);
-          }
-        }
-      }
-
-      for (int i = 0; i < animations.size(); i++) {
-        Animations current = animations.get(i);
-        int start = current.getStartTime();
-        int end = current.getEndTime();
-
-        if (start <= unitsElapsed && end >= unitsElapsed) {
-          current.implementAnimation(unitsElapsed);
-          this.setShapes(newShapesList);
-          this.refresh();
-        }
-      }
-    }
+  public void setIsLoop(boolean loop) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
   }
+
+  /**
+   * Returns the is loop boolean in the view.
+   * @return boolean for the isLoop field
+   * @throws UnsupportedOperationException if the view does not need the functionality
+   */
+  public boolean getIsLoop() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param event The action event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public void setButtonListener(ActionListener event) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Returns the file name command from the text box.
+   *
+   * @return file name from user
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public String getFilename() throws UnsupportedOperationException{
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Returns the checkbox list from this view.
+   *
+   * @return the view's checkbox list, a list of JCheckBox objects
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public List<JCheckBox> getCheckBoxList() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
 }

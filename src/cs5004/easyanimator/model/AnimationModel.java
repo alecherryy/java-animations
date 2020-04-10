@@ -59,4 +59,11 @@ public interface AnimationModel {
    * @return the model in a string
    */
   String getDescription();
+
+  /**
+   * Returns the end time from the list of animations.
+   *
+   * @return end time from the list of animations as an int.
+   */
+  int getEnd();
 }
