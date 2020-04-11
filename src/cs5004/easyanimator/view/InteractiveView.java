@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -30,9 +29,6 @@ public class InteractiveView extends JFrame implements View {
   private JCheckBox loopCheckbox;
   private JPanel buttonPanel;
   private JTextField fileInput;
-  private JLabel checkboxPanelLabel;
-  private JPanel checkboxPanel;
-  private List<JCheckBox> checkBoxList;
 
   /**
    * Constructs an InteractiveView object, with its given speed, list of shapes, list of animations,
@@ -49,7 +45,6 @@ public class InteractiveView extends JFrame implements View {
     this.endTime = endTime;
 
     this.speed = speed;
-    this.checkBoxList = new ArrayList<JCheckBox>();
 
     this.shapes = shapes;
     this.animations = animations;
@@ -100,32 +95,6 @@ public class InteractiveView extends JFrame implements View {
 
     export = new JButton("Export");
     buttonPanel.add(export);
-
-    // for the checkBox functionality
-    checkboxPanel = new JPanel();
-    checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
-    checkboxPanelLabel = new JLabel("Select Shapes When Paused");
-    checkboxPanel.add(checkboxPanelLabel);
-
-    // check boxes
-    for (Shapes s : this.shapes) {
-      Shapes currentS = s;
-      JCheckBox box = new JCheckBox(currentS.getName());
-
-      box.setSelected(true);
-
-      this.checkBoxList.add(box);
-      checkboxPanel.add(box);
-    }
-
-    // add scroll bars
-    JScrollPane checkboxScrollPane = new JScrollPane(checkboxPanel);
-    checkboxScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    checkboxScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    checkboxScrollPane.setBounds(50, 30, 50, 500);
-    checkboxScrollPane.setPreferredSize(new Dimension(200, 1000));
-
-    this.add(checkboxScrollPane, BorderLayout.EAST);
 
     this.pack();
   }
@@ -282,15 +251,6 @@ public class InteractiveView extends JFrame implements View {
    */
   public float getSpeed() {
     return this.speed;
-  }
-
-  /**
-   * Returns the checkbox list from this view.
-   *
-   * @return the view's checkbox list, a list of JCheckBox objects
-   */
-  public List<JCheckBox> getCheckBoxList() {
-    return this.checkBoxList;
   }
 
   /**

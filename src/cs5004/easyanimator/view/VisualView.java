@@ -27,10 +27,9 @@ public class VisualView extends JFrame implements View {
   private ArrayList<Integer> settings;
   private ArrayList<Animations> animations;
   private float speed;
-//  private JPanel cmdPanel;
-  private JTextField shapeName;
   private JButton btnAdd;
   private JButton btnRemove;
+  private JTextField shapeName;
   private JButton btnSave;
   private ArrayList<JRadioButton> format;
 
@@ -61,7 +60,7 @@ public class VisualView extends JFrame implements View {
     // create command panel
     JPanel panel = setUpCommandPanel();
     addCommandsToPanel(panel);
-    
+
     this.pack();
   }
 
@@ -151,12 +150,11 @@ public class VisualView extends JFrame implements View {
   public void setButtonListener(ActionListener e) {
     this.btnAdd.addActionListener(e);
     this.btnRemove.addActionListener(e);
-//    this.shapeName.addActionListener(e);
-//    this.btnSave.addActionListener(e);
+    this.btnSave.addActionListener(e);
 
-//    for (JRadioButton r : this.format) {
-//      r.addActionListener(e);
-//    }
+    for (JRadioButton r : this.format) {
+      r.addActionListener(e);
+    }
   }
 
   /**
