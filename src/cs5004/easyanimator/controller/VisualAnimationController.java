@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.Timer;
 
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.animations.Animations;
@@ -98,13 +98,16 @@ public class VisualAnimationController implements AnimationController, ActionLis
   public void actionPerformed(ActionEvent e) {
     // evaluate event
     switch (e.getActionCommand()) {
-      case "Remove Shape":
+      case "Remove":
         this.appendToLog("You pressed the Remove Shape button.\n");
         String name = view.getTextFieldValue();
         removeShape(name);
         break;
-      case "Export":
-        this.appendToLog("You pressed the export button.\n");
+      case "Add":
+        this.appendToLog("You pressed the Add Shape button.\n");
+      case "Save":
+        this.appendToLog("You pressed the Save button.\n");
+        this.view.write("test-save.svg");
       default:
         break;
     }
