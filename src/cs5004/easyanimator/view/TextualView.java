@@ -204,6 +204,11 @@ public class TextualView implements View {
     throw new UnsupportedOperationException("View does not support this method");
   }
 
+  @Override
+  public String getTextFieldValue() {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
   /**
    * Returns the file name command from the text box.
    *

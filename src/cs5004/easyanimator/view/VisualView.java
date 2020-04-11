@@ -1,7 +1,6 @@
 package cs5004.easyanimator.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +15,16 @@ import cs5004.easyanimator.model.shapes.Shapes;
  * extends the JFrame abstract class and implements all methods listed
  * in the iView interface.
  */
-public class VisualAnimationView extends JFrame implements View {
+public class VisualView extends JFrame implements View {
   private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
   private ArrayList<Integer> settings;
   private ArrayList<Animations> animations;
   private float speed;
+//  private JPanel cmdPanel;
+  private JTextField shapeName;
+  private JButton btnAdd;
+  private JButton btnRemove;
 
   /**
    * This is the class constructor. It takes two parameters: the speed
@@ -30,13 +33,13 @@ public class VisualAnimationView extends JFrame implements View {
    * @param speed the speed
    * @param shapes the list of shapes
    */
-  public VisualAnimationView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes,
-                             ArrayList<Animations> animations) {
+  public VisualView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes,
+                    ArrayList<Animations> animations) {
     this.shapes = shapes;
     this.settings = settings;
     this.speed = speed;
     this.animations = animations;
-    this.setTitle("Simple Animation");
+    this.setTitle("Java Easy Animator");
     this.setSize(this.settings.get(0), this.settings.get(1));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -52,7 +55,42 @@ public class VisualAnimationView extends JFrame implements View {
 
     this.add(scrollPane, BorderLayout.CENTER);
 
+    JPanel cmdPanel = new JPanel();
+    cmdPanel.setLayout(new FlowLayout());
+    cmdPanel.setPreferredSize(new Dimension(200, this.settings.get(3)));
+    this.add(cmdPanel, BorderLayout.EAST);
+
+    this.btnAdd = new JButton("Add Shape");
+    cmdPanel.add(btnAdd);
+
+    this.shapeName = new JTextField(5);
+    cmdPanel.add(shapeName);
+    this.btnRemove = new JButton("Remove Shape");
+    cmdPanel.add(this.btnRemove);
+
     this.pack();
+  }
+
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param e the event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public void setButtonListener(ActionListener e) {
+    this.btnAdd.addActionListener(e);
+    this.btnRemove.addActionListener(e);
+    this.shapeName.addActionListener(e);
+  }
+
+  /**
+   * Returns the file name command from the text box.
+   *
+   * @return file name from user
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public String getTextFieldValue() {
+    return this.shapeName.getText();
   }
 
   /**
@@ -177,26 +215,6 @@ public class VisualAnimationView extends JFrame implements View {
   }
 
   /**
-   * Give the view an actionListener for the buttons in the view.
-   *
-   * @param event The action event for the button
-   * @throws UnsupportedOperationException if the view does not support this functionality
-   */
-  public void setButtonListener(ActionListener event) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("View does not support this method");
-  }
-
-  /**
-   * Returns the file name command from the text box.
-   *
-   * @return file name from user
-   * @throws UnsupportedOperationException if the view does not support this functionality
-   */
-  public String getFilename() throws UnsupportedOperationException{
-    throw new UnsupportedOperationException("View does not support this method");
-  }
-
-  /**
    * Returns the checkbox list from this view.
    *
    * @return the view's checkbox list, a list of JCheckBox objects
@@ -205,5 +223,4 @@ public class VisualAnimationView extends JFrame implements View {
   public List<JCheckBox> getCheckBoxList() throws UnsupportedOperationException {
     throw new UnsupportedOperationException("View does not support this method");
   }
-
 }

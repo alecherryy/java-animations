@@ -54,7 +54,7 @@ public class InteractiveView extends JFrame implements View {
     this.shapes = shapes;
     this.animations = animations;
 
-    this.setTitle("Simple Animation");
+    this.setTitle("Java Easy Animator");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -198,6 +198,11 @@ public class InteractiveView extends JFrame implements View {
     file.addActionListener(e);
     loopCheckbox.addActionListener(e);
     export.addActionListener(e);
+  }
+
+  @Override
+  public String getTextFieldValue() {
+    return this.fileInput.getText();
   }
 
   /**

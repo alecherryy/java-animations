@@ -20,9 +20,9 @@ import cs5004.easyanimator.model.shapes.Shapes;
 import static org.junit.Assert.assertEquals;
 
 /**
- * This is a JUnit suite to test the VisualAnimationView.
+ * This is a JUnit suite to test the VisualView.
  */
-public class VisualAnimationViewTest {
+public class VisualViewTest {
   AnimationModel model;
   Shapes rectangle;
   Shapes oval;
@@ -73,7 +73,7 @@ public class VisualAnimationViewTest {
     settings.add(220);
 
 
-    view = new VisualAnimationView(10, settings, shapesList, model.getAnimations());
+    view = new VisualView(10, settings, shapesList, model.getAnimations());
 
   }
 
@@ -82,9 +82,9 @@ public class VisualAnimationViewTest {
    */
   @Test
   public void testMakeVisible() {
-    assertEquals(false, ((VisualAnimationView) this.view).isVisible());
+    assertEquals(false, ((VisualView) this.view).isVisible());
     this.view.display();
-    assertEquals(true, ((VisualAnimationView) this.view).isVisible());
+    assertEquals(true, ((VisualView) this.view).isVisible());
   }
 
   /**

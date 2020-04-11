@@ -66,4 +66,12 @@ public interface AnimationModel {
    * @return end time from the list of animations as an int.
    */
   int getEnd();
+
+  /**
+   * Given the name of a shape, remove it from the list
+   * and with it all its associated animations.
+   *
+   * @param name of the shape to be removed
+   */
+  void removeShape(String name);
 }

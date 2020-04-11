@@ -59,9 +59,9 @@ public class InteractiveAnimationController implements AnimationController, Acti
   public void start() {
     this.view.setButtonListener(this);
 
-    for (JCheckBox j : view.getCheckBoxList()) {
-      j.addItemListener(new HandlerClass());
-    }
+//    for (JCheckBox j : view.getCheckBoxList()) {
+//      j.addItemListener(new HandlerClass());
+//    }
 
     // display the view
     this.view.display();
@@ -216,7 +216,7 @@ public class InteractiveAnimationController implements AnimationController, Acti
       case "Set file":
         this.appendToLog("You pressed the set file button.\n");
         this.displayCheckBoxes(true);
-        filename = view.getFilename();
+        filename = view.getTextFieldValue();
         break;
       case "Export":
         this.appendToLog("You pressed the export button.\n");

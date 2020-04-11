@@ -1,5 +1,8 @@
 package cs5004.easyanimator.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -14,11 +17,12 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the Visual Animation view.
  * Implements AnimationController and its associated methods.
  */
-public class VisualAnimationController implements AnimationController{
+public class VisualAnimationController implements AnimationController, ActionListener {
   private AnimationModel model;
   private View view;
   private double speed;
   private boolean started;
+  private Appendable log;
 
   /**
    * Constructs a VisualAnimationViewController object with
@@ -33,6 +37,7 @@ public class VisualAnimationController implements AnimationController{
     this.view = view;
     this.speed = speed;
     this.started = false;
+    this.log = new StringBuffer();
   }
 
   /**
@@ -52,6 +57,8 @@ public class VisualAnimationController implements AnimationController{
       Shapes newS = s.visitShape(new ShapesVisitorImpl());
       newShapesList.add(newS);
     }
+
+    this.view.setButtonListener(this);
 
     while (this.started) {
       timeElapsed = System.currentTimeMillis() - startTime;
@@ -84,6 +91,27 @@ public class VisualAnimationController implements AnimationController{
   }
 
   /**
+   * Overrides the ActionListener method.
+   *
+   * @param e the event
+   */
+  public void actionPerformed(ActionEvent e) {
+    // evaluate event
+    switch (e.getActionCommand()) {
+      case "Remove Shape":
+        this.appendToLog("You pressed the Remove Shape button.\n");
+        String name = view.getTextFieldValue();
+        removeShape(name);
+        break;
+      case "Export":
+        this.appendToLog("You pressed the export button.\n");
+      default:
+        break;
+    }
+  }
+
+
+  /**
    * Get the log from this controller.
    *
    * @return The log of this controller
@@ -102,5 +130,30 @@ public class VisualAnimationController implements AnimationController{
    */
   public Timer getTimer() throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Controller does not support this functionality");
+  }
+
+  /**
+   * Given a shape name, remove it from the list and remove all animations
+   * associated with it.
+   *
+   * @param name The name of the shape
+   */
+  private void removeShape(String name) {
+    this.model.removeShape(name);
+    this.view.refresh();
+  }
+
+  /**
+   * Append an entry into the log.
+   *
+   * @param entry The string that will be appended to the log.
+   */
+  private void appendToLog(String entry) {
+    try {
+      this.log.append(entry);
+
+    } catch (IOException e) {
+      //do nothing
+    }
   }
 }

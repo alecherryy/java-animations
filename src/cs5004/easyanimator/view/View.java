@@ -119,7 +119,7 @@ public interface View {
    * @return file name from user
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  String getFilename();
+  String getTextFieldValue();
 
   /**
    * Returns the checkbox list from this view.
@@ -128,5 +128,4 @@ public interface View {
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
   List<JCheckBox> getCheckBoxList();
-
 }
