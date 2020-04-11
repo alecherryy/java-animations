@@ -32,7 +32,6 @@ public class VisualAnimationView extends JFrame implements View {
    */
   public VisualAnimationView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes,
                              ArrayList<Animations> animations) {
-
     this.shapes = shapes;
     this.settings = settings;
     this.speed = speed;

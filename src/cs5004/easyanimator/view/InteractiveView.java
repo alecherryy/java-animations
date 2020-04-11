@@ -19,7 +19,6 @@ import cs5004.easyanimator.model.shapes.Shapes;
  * A class that represents a view for an interactive view.
  */
 public class InteractiveView extends JFrame implements View {
-
   private float speed;
   private AnimateJPanel animatePanel;
   private ArrayList<Shapes> shapes;
@@ -70,9 +69,9 @@ public class InteractiveView extends JFrame implements View {
     animationScrollPane.setBounds(50, 30, 300, 500);
     animationScrollPane.setPreferredSize(new Dimension(1000, 1000));
 
-
     this.add(animationScrollPane);
 
+    // add buttons to JPanel
     buttonPanel = new JPanel();
     buttonPanel.setLayout(new FlowLayout());
     this.add(buttonPanel, BorderLayout.SOUTH);
@@ -105,7 +104,7 @@ public class InteractiveView extends JFrame implements View {
     // for the checkBox functionality
     checkboxPanel = new JPanel();
     checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
-    checkboxPanelLabel = new JLabel(" Select Shapes When Paused ");
+    checkboxPanelLabel = new JLabel("Select Shapes When Paused");
     checkboxPanel.add(checkboxPanelLabel);
 
     // check boxes
@@ -119,6 +118,7 @@ public class InteractiveView extends JFrame implements View {
       checkboxPanel.add(box);
     }
 
+    // add scroll bars
     JScrollPane checkboxScrollPane = new JScrollPane(checkboxPanel);
     checkboxScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     checkboxScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -158,6 +158,7 @@ public class InteractiveView extends JFrame implements View {
         Animations currentA = a;
         Shapes currentS = currentA.getShape();
 
+        // detect loop
         if (shape.getName().equals((currentS.getName())) && !loop) {
           markup += currentA.toSVGTag((this.getSpeed()));
         }
@@ -244,7 +245,6 @@ public class InteractiveView extends JFrame implements View {
     this.shapes = shapes;
     animatePanel.setShapes(shapes);
   }
-
 
   /**
    * Writes out the text description of the animation to a file

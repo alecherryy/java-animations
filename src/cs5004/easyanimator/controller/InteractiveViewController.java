@@ -1,5 +1,6 @@
 package cs5004.easyanimator.controller;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -167,19 +168,19 @@ public class InteractiveViewController implements AnimationController, ActionLis
     // evaluate event
     switch (e.getActionCommand()) {
       case "Play":
-        this.appendToLog("You pressed the play button. \n");
+        this.appendToLog("You pressed the play button.\n");
         this.timer.start();
         this.displayCheckBoxes(false);
         // offer SVG functionality
         System.out.println(log.toString());
         break;
       case "Pause":
-        this.appendToLog("You pressed the pause button. \n");
+        this.appendToLog("You pressed the pause button.\n");
         this.timer.stop();
         this.displayCheckBoxes(true);
         break;
       case "Restart":
-        this.appendToLog("You pressed the restart button. \n");
+        this.appendToLog("You pressed the restart button.\n");
         this.timer.restart();
         this.displayCheckBoxes(false);
         this.setNewShapesList();
@@ -194,12 +195,15 @@ public class InteractiveViewController implements AnimationController, ActionLis
       case "Increase Speed":
         this.appendToLog("You pressed the increase speed button.\n");
         this.displayCheckBoxes(false);
+        showMessagDialog("Speed increased by 10.");
         speed += 10;
         elapsedTime -= (speed) / 1000;
         break;
       case "Decrease Speed":
         this.appendToLog("You pressed the decrease speed button.\n");
+        showMessagDialog("Speed decreased by 10.");
         this.displayCheckBoxes(false);
+        // if speed is negative, set it to 0
         if (speed <= 0) {
           speed = 0;
         }
@@ -230,6 +234,16 @@ public class InteractiveViewController implements AnimationController, ActionLis
     for (JCheckBox j : view.getCheckBoxList()) {
       j.setEnabled(enable);
     }
+  }
+
+  /**
+   * Private helper method to display Message dialog when pressing
+   * a button.
+   *
+   * @param message of the dialog window
+   */
+  private void showMessagDialog(String message) {
+    JOptionPane.showMessageDialog((Component) this.view, message);
   }
 
   /**

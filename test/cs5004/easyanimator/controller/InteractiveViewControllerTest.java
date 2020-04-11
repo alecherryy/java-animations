@@ -4,17 +4,20 @@ import org.junit.Test;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
-import cs5004.easyanimator.controller.InteractiveViewController;
 import cs5004.easyanimator.model.AnimationModelImpl;
-import cs5004.easyanimator.view.View;
 import cs5004.easyanimator.view.InteractiveView;
+import cs5004.easyanimator.view.View;
+
 import static org.junit.Assert.assertEquals;
 
+/**
+ * This is JUnit test suite for the interactive view
+ * controller.
+ */
 public class InteractiveViewControllerTest {
-
   JButton playButton;
   JButton pauseButton;
   JButton restartButton;
@@ -47,19 +50,21 @@ public class InteractiveViewControllerTest {
         "interactive.svg");
   }
 
-  //Test to see that the start method starts the timer
+  /**
+   * Test for the start() method.
+   */
   @Test
   public void testStart() {
     this.controller.start();
     assertEquals(false, this.controller.getTimer().isRunning());
-
     ActionEvent e = new ActionEvent(playButton, 1, "Play");
     this.controller.actionPerformed(e);
     assertEquals(true, this.controller.getTimer().isRunning());
-
   }
 
-  //Test for action performed method
+  /**
+   * Test for the actionPerformed() method.
+   */
   @Test
   public void testActionPerformed() {
     ActionEvent e = new ActionEvent(playButton, 1, "Play");
@@ -74,7 +79,7 @@ public class InteractiveViewControllerTest {
     assertEquals("", this.controller.getLog().toString());
     this.controller.actionPerformed(e);
     assertEquals(true, this.controller.getTimer().isRunning());
-    assertEquals("You pressed the play button. \n", this.controller.getLog().toString());
+    assertEquals("You pressed the play button.\n", this.controller.getLog().toString());
 
     this.controller.actionPerformed(e1);
     assertEquals(false, this.controller.getTimer().isRunning());
@@ -86,13 +91,10 @@ public class InteractiveViewControllerTest {
     this.controller.actionPerformed(e4);
     this.controller.actionPerformed(e5);
     this.controller.actionPerformed(e6);
-    assertEquals("You pressed the play button. \n"
-        + "You pressed the pause button. \n"
-        + "You pressed the restart button. \n"
-        + "You pressed the increase speed button. \n"
-        + "You pressed the decrease speed button. \n"
-        + "You pressed the set file button. \n"
-        + "You pressed the loop button. \n", this.controller.getLog().toString());
+    assertEquals("You pressed the play button.\n"
+        + "You pressed the pause button.\n"
+        + "You pressed the restart button.\n"
+        + "You pressed the set file button.\n"
+        + "You pressed the loop button.\n", this.controller.getLog().toString());
   }
-
 }
