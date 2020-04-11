@@ -21,6 +21,13 @@ public interface Animations {
   Shapes getShape();
 
   /**
+   * Changes the shape of the animation to a new shape.
+   *
+   * @param s shape to change the field of the animation to
+   */
+  void changeShape(Shapes s);
+
+  /**
    * Get the type of animation.
    *
    * @return the type of the animation, an AnimationType object
@@ -176,5 +183,6 @@ public interface Animations {
    * @return svg tag string representation of the animation when there's a loop
    */
   String toSVGTagWithLoop(double speed);
+
 
 }

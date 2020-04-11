@@ -1,6 +1,10 @@
 package cs5004.easyanimator.view;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
@@ -86,4 +90,43 @@ public interface View {
    * @throws UnsupportedOperationException if the view does not support this method
    */
   ArrayList<Integer> getSettings() throws UnsupportedOperationException;
+
+  /**
+   * Sets the boolean isLoop in the view.
+   * @param loop boolean to set isLoop to
+   * @throws UnsupportedOperationException if the view does not need the functionality
+   */
+  void setIsLoop(boolean loop);
+
+  /**
+   * Returns the is loop boolean in the view.
+   * @return boolean for the isLoop field
+   * @throws UnsupportedOperationException if the view does not support this  functionality
+   */
+  boolean getIsLoop();
+
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param e The action event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  void setButtonListener(ActionListener e);
+
+  /**
+   * Returns the file name command from the text box.
+   *
+   * @return file name from user
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  String getFilename();
+
+  /**
+   * Returns the checkbox list from this view.
+   *
+   * @return the view's checkbox list, a list of JCheckBox objects
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  List<JCheckBox> getCheckBoxList();
+
 }

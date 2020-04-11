@@ -1,6 +1,8 @@
 package cs5004.easyanimator.view;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -33,6 +35,24 @@ public class AnimateJPanel extends JPanel {
 
     // add scroll pane
     this.add(scrollPane);
+
+    // TODO clean this up
+    addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+
+        Color color = Color.RED;
+        for (Shapes s : shapes) {
+          // check if event point is within shape area
+          boolean x = e.getX() >= s.getPosition().getX() && e.getX() <= s.getPosition().getX() + s.getD1();
+          boolean y = e.getY() >= s.getPosition().getY() && e.getY() <= s.getPosition().getY() + s.getD2();
+          if (x && y) {
+            s.changeColor(color);
+          }
+        }
+        repaint();
+      }
+    });
   }
 
   /**

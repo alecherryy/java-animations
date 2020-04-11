@@ -6,6 +6,7 @@ The purpose of this project is to build an application that helps to create simp
     - [Shapes and Animations](###shapes-and-animations)
     - [Animation Model](###animation-model)
 - [The View](##the-view)
+- [The Controller](##the-controllerl)
 
 ### Overview 
 Inside our `cs5004.cs5004.EasyAnimator.model` directory, we first have our over-arching `AnimationModel` Interface,
@@ -76,3 +77,100 @@ our `VisualAnimationView` class extends `JFrame` in order to produce the visual 
 of our model. It creates a VisualAnimationView object with a model's list of shapes and the speed 
 at which the animation happens, it then generates an animation panel by calling the `AnimateJPanel` 
 object.
+
+## The Controller
+
+### Cleaning up the view design
+We created a super interface `View` that offers all functions, and then our individual 
+views suppress some of them, by throwing UnsupportedOperationException. 
+
+We created an `InteractiveView` class that contains the existing visual view as a component
+within it, and adds the following abilities: Start, pause, resume, and restart the animation with 
+explicit user input, enable/disable looping, export the view, and increase or decrease the speed of
+the animation, as it is being played.
+
+In our `View` interface, we added a few methods to implement in our `InteractiveView` class. All
+other view sub-classes throw an UnsupportedOperationException in the body of this method. Our new
+methods include: setIsLoop, which takes in a boolean loop to set the isLoop to. We also added a 
+setButtonListener method, which takes in an action event of type ActionListener and gives 
+the view an actionListener for the buttons in the view. We also have getFilename() method, which
+gets the name of the file command from the user input. Finally, to include a checkbox
+functionality, we added a getCheckBoxList() method, which returns a list of JCheckBox objects
+from the view. A check box is an item that can be selected or deselected, and which displays its
+state to the user. 
+
+In our `Interactive View`, we create buttons for Start, Pause, Resume, Restart, and Export. There
+is a checkbox for 'Loop,' which can be enabled or disabled, and a text box for Filename, so the
+user can choose the name of the file to export to.
+
+### EasyAnimator
+We added an extra option to the -view command-line option: "playback". Specifying this option
+opens the InteractiveView. We also created a static method createView that creates the view
+according to the string that is passed in. At the end of the file, we added a try catch where the
+controller starts the animation.
+
+### AnimationController
+We created an `AnimationController` interface, whose primary purpose is sto start the animation. It
+also contains methods to get the log from the controller and the timer from the controller. It
+is implemented by the following sub-classes: `InteractiveViewController`, `SVGViewController`, 
+`TextualViewController`, and `VisualAnimationViewController` (so there is one controller sub-class for
+each type of view). The controller takes inputs from the user and tells the model what to do and
+the view what to show.
+
+#### InteractiveViewController
+The constructor of the `InteractiveViewController` takes in its associated model, view, the speed
+of the animation, and the filename that the controller will write out to. The start method tells
+the Interactive View to display the 
+
+Our InteractiveViewController implements ActionListener. The setButtonListener will take anything
+that implements this interface. The action listener will implement the action performed method, which
+is called whenever something happens in the view that needs to be handled. We also created an
+ActionListener inner class that is an explicit listener only for the timer.
+
+#### SVGViewController
+The constructor of the `SVGViewController` takes in a view of type View that the controller will
+use to display, and the name of the file that the controller will write out to. The start method
+in this controller tells the specified view to write out to the specified file. The getLog and
+getTimer methods throw UnsupportedOperationExceptions.
+
+#### TextualViewController
+The constructor of the `TextualViewController` takes in a model of type AnimationModel that the
+controller will be using, the view of type View that the controller will be using to display, and
+the name of the file that the controller will write out to. The start() method goes through the
+array lists of animations and shapes associated with the model. The first for loop iterates
+through the array list of animations, and gets the animation at each index, recording its
+associated shape and shape name. The second for loop then iterates through the array list of
+shapes, and if the name of the shape at the current index matches the name of the shape
+associated with the animation we found in the first for loop, we update the animation field of
+that shape. This way we ensure that, if a shape is animated, its updated version post-animation
+is recorded and its fields match the animation. Then, we tell the view to write out to a file with
+whatever name is specified. The getLog and getTimer methods throw UnsupportedOperationExceptions.
+
+#### VisualAnimationViewController
+The constructor of the `VisualAnimationViewController` takes in a model of type AnimationModel that
+the controller will be using, the view of type View that the controller will be using to display,
+the speed at which the animation occurs, and a boolean 'isStarted,' which indicates whether or
+not the animation has started. The default value of this parameter is set to false. The start
+method of this controller was originally in our VisualAnimationView class, so we moved it. It sets
+the value of isStarted to true, indicating the animation has begun. It goes through an array list
+of shapes associated with the model and creates a shape visitor that corresponds to each shape
+(that way we don't alter the shape itself), adding these shape visitors to a new list of shapes. Then,
+we have a while loop that operates while the animation is still occurring. The first outer for
+loop goes through the array list of animations associated with this model, saving the animation
+at each index and its associated shape. The inner for loop then iterates through the array list of
+shapes, and if the name of the shape at the current index matches the name of the shape
+associated with the animation we found in the first for loop, we update the animation field of
+that shape. The second for loop inside the while loop goes through the array list of animations
+and records each animation's start and end times. If the start time of the animation is less
+than or equal the elapsed units so far in this view, or its end time is greater than or equal to the
+elapsed units, we implement the current animation at the time specified by the elapsed units. We
+then change the shapes in the view to our new shapes list, and refresh the view. Once we break
+out of the if condition and finish iterating through the array list of animations, we display the
+view. The getLog and getTimer methods throw UnsupportedOperationExceptions. 
+
+#### Keyboard Handler
+
+
+
+
+

@@ -7,20 +7,61 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import cs5004.easyanimator.controller.AnimationController;
+import cs5004.easyanimator.controller.InteractiveAnimationController;
+import cs5004.easyanimator.controller.SVGAnimationController;
+import cs5004.easyanimator.controller.TextualAnimationController;
+import cs5004.easyanimator.controller.VisualAnimationController;
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.AnimationModelImpl;
+import cs5004.easyanimator.model.TweenModelBuilder;
 import cs5004.easyanimator.util.AnimationReader;
+import cs5004.easyanimator.view.InteractiveView;
 import cs5004.easyanimator.view.SVGView;
 import cs5004.easyanimator.view.TextualView;
 import cs5004.easyanimator.view.View;
 import cs5004.easyanimator.view.VisualAnimationView;
 
 /**
- * This is the main() method which acts as the entry point for our program.
- * Our program takes in inputs as command-line arguments and provides
- * the appropriate view to the user.
+ * This is the main() method which acts as the entry point for our program. Our program takes in
+ * inputs as command-line arguments and provides the appropriate view to the user.
  */
 public final class EasyAnimator {
+
+  /**
+   * Returns the correct view according to the string taken in.
+   *
+   * @param speed speed to which we are setting the view
+   * @param type  string representation of what type of view to output
+   * @param model model for view to work on
+   * @return the view
+   * @throws IllegalArgumentException if the String view is invalid
+   */
+  public static View createView(float speed, String type, AnimationModel model) {
+    View view = null;
+
+    switch (type) {
+      case "text":
+        view = new TextualView(speed, model.getShapes(), model.getAnimations());
+        break;
+      case "svg":
+        view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
+        break;
+      case "visual":
+        view = new VisualAnimationView(speed, model.getSettings(), model.getShapes(),
+                model.getAnimations());
+        break;
+      case "playback":
+        view = new InteractiveView(speed, model.getShapes(), model.getAnimations(), model.getEnd());
+        break;
+      default:
+        throw new IllegalArgumentException("This is not a valid view type.");
+    }
+    return view;
+  }
 
   /**
    * This is the entry point of our program.
@@ -29,13 +70,15 @@ public final class EasyAnimator {
    * @throws FileNotFoundException when a certain file that we are looking for is not found
    */
   public static void main(String[] args) throws FileNotFoundException {
-
-    String source = "";
-    String type = "";
-    String out = "";
-    int speed = 1; //default value
+    String source = "src/cs5004/easyanimator/resources/toh-8.txt";
+    String type = "text";
+    String out = "toh-20.txt";
+    int speed = 10; // default value
     String token;
     Appendable output = null;
+    AnimationModel model = null;
+    View view = null;
+    AnimationController controller = null;
 
     // even number of inputs should be provided
     for (int i = 0; i < args.length - 1; i += 2) {
@@ -55,12 +98,12 @@ public final class EasyAnimator {
           break;
         case "-speed":
           if (speed < 0) {
-            throw new IllegalArgumentException("fps can not be negative");
+            throw new IllegalArgumentException("Animation speed cannot be negative.");
           }
           speed = Integer.parseInt(args[i + 1]);
           break;
         default:
-          System.out.println("Encountered error!");
+          showErrorMessage("AN ERROR HAS OCCURRED: INVALID INPUT.");
       }
     }
 
@@ -82,31 +125,58 @@ public final class EasyAnimator {
 
     // create the objects from the file, using the parser and the builder
     // throw an exception if file is not found
+    AnimationReader fileReader = new AnimationReader();
+    Readable in = new FileReader(source);
+    TweenModelBuilder<AnimationModel> builder = new AnimationModelImpl.AnimationModelBuilder();
+
     try {
-      Readable in = new FileReader(source);
-      AnimationModel model = AnimationReader.parseFile(in,
-              new AnimationModelImpl.AnimationModelBuilder());
+      model = fileReader.parseFile(in, builder);
 
-      switch (type) {
-        case "text":
-          View view = new TextualView(speed, model.getShapes(), model.getAnimations());
-          view.write(out);
-          break;
-        case "visual":
-          VisualAnimationView visView = new VisualAnimationView(speed, model.getSettings(),
-                  model.getShapes(), model.getAnimations());
-          visView.start();
-          break;
-        case "svg":
-          view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
-          view.write(out);
-          break;
-          default:
-            break;
-      }
-
-    } catch (FileNotFoundException e) {
-      System.out.println("File not found!");
+    } catch (Exception e) {
+      showErrorMessage("AN ERROR OCCURRED: INVALID FILE.");
     }
+
+    try {
+      view = createView(speed, type, model);
+    } catch (Exception e) {
+      showErrorMessage("AN ERROR HAS OCCURRED.");
+    }
+
+    switch (type) {
+      case "text":
+        controller = new TextualAnimationController(view, model, out);
+        break;
+      case "visual":
+        controller = new VisualAnimationController(model, view, speed);
+        break;
+      case "svg":
+        controller = new SVGAnimationController(view, out);
+        break;
+      case "playback":
+        controller = new InteractiveAnimationController(view, model, speed, out);
+        break;
+      default:
+        showErrorMessage("AN ERROR HAS OCCURRED.");
+        break;
+    }
+
+    try {
+      controller.start();
+    } catch (Exception e) {
+      showErrorMessage("AN ERROR HAS OCCURRED.");
+    }
+  }
+
+  /**
+   * Private helper method to generate a given error message.
+   *
+   * @param message
+   */
+  private static void showErrorMessage(String message) {
+    JFrame frame = new JFrame();
+    frame.setSize(100, 100);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    JOptionPane.showMessageDialog(frame, message,
+            "Error Message", JOptionPane.ERROR_MESSAGE);
   }
 }

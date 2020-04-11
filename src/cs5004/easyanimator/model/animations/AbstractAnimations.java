@@ -202,4 +202,13 @@ public abstract class AbstractAnimations implements Animations {
   public double getNewHeight() {
     return -1;
   }
+
+  /**
+   * Changes the shape of the animation to a new shape.
+   *
+   * @param s shape to change the field of the animation to
+   */
+  public void changeShape(Shapes s) {
+    this.shape = s;
+  }
 }

@@ -147,6 +147,24 @@ public class AnimationModelImpl implements AnimationModel {
 
     return str.toString();
   }
+  
+  /**
+   * Returns the end time from the list of animations.
+   *
+   * @return end time from the list of animations as an int.
+   */
+  public int getEnd() {
+    int last = -1;
+    for (int i = 0; i < animations.size(); i++) {
+      Animations current = animations.get(i);
+      int currentEnd = current.getEndTime();
+
+      if (currentEnd > last) {
+        last = currentEnd;
+      }
+    }
+    return last;
+  }
 
   /**
    * This is a static class that implements our Tween Model Builder, and will
@@ -296,7 +314,8 @@ public class AnimationModelImpl implements AnimationModel {
       // since shape names are unique, check those first
       if (a.getShape().getName().equals(b.getShape().getName())) {
         if (a.getAnimationType() == b.getAnimationType()) {
-          if (a.getStartTime() >= b.getStartTime() && a.getEndTime() <= b.getEndTime()) {
+          if (a.getStartTime() >= b.getStartTime() && a.getEndTime() <=
+              b.getEndTime()) {
             return true;
           }
         }

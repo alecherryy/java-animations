@@ -1,0 +1,6 @@
+<svg width="1000" height="1000" version="1.1"
+xmlns="http://www.w3.org/2000/svg">
+<rect>
+<animate id="base" begin="0;base.end" dur="200.0ms" attributeName="visibility" from="hide" to="hide"/>
+</rect>
+</svg>
