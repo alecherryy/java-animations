@@ -11,8 +11,7 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the Textual View. Implements AnimationController and its
  * associated methods.
  */
-
-public class TextualViewController implements AnimationController {
+public class TextualAnimationController implements AnimationController {
   private AnimationModel model;
   private View view;
   private String filename;
@@ -24,7 +23,7 @@ public class TextualViewController implements AnimationController {
    * @param view     the view that the controller will be displaying on
    * @param filename the output file the controller will write to
    */
-  public TextualViewController(AnimationModel model, View view, String filename) {
+  public TextualAnimationController(View view, AnimationModel model, String filename) {
     this.model = model;
     this.view = view;
     this.filename = filename;

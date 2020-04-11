@@ -20,7 +20,7 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the Visual Animation view. Implements
  * AnimationController and its associated methods.
  */
-public class InteractiveViewController implements AnimationController, ActionListener {
+public class InteractiveAnimationController implements AnimationController, ActionListener {
   private AnimationModel model;
   private View view;
   private double speed;
@@ -41,7 +41,8 @@ public class InteractiveViewController implements AnimationController, ActionLis
    * @param speed at which the animation occurs
    * @param filename that the controller will write out to
    */
-  public InteractiveViewController(AnimationModel model, View view, double speed, String filename) {
+  public InteractiveAnimationController(View view, AnimationModel model, double speed,
+                                        String filename) {
     this.model = model;
     this.view = view;
     this.speed = speed;

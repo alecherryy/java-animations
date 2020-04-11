@@ -8,7 +8,7 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the SVG view. Implements AnimationController
  * and its associated methods.
  */
-public class SVGViewController implements AnimationController {
+public class SVGAnimationController implements AnimationController {
   private View view;
   private String filename;
 
@@ -18,7 +18,7 @@ public class SVGViewController implements AnimationController {
    * @param view that will be displaying on
    * @param filename of the output file
    */
-  public SVGViewController(View view, String filename) {
+  public SVGAnimationController(View view, String filename) {
     this.view = view;
     this.filename = filename;
   }

@@ -14,7 +14,7 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the Visual Animation view.
  * Implements AnimationController and its associated methods.
  */
-public class VisualAnimationViewController implements AnimationController{
+public class VisualAnimationController implements AnimationController{
   private AnimationModel model;
   private View view;
   private double speed;
@@ -28,7 +28,7 @@ public class VisualAnimationViewController implements AnimationController{
    * @param view that will be used by the controller
    * @param speed at which the animation occurs
    */
-  public VisualAnimationViewController(AnimationModel model, View view, double speed) {
+  public VisualAnimationController(AnimationModel model, View view, double speed) {
     this.model = model;
     this.view = view;
     this.speed = speed;

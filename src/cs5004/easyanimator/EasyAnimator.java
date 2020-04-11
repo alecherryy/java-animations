@@ -11,10 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import cs5004.easyanimator.controller.AnimationController;
-import cs5004.easyanimator.controller.InteractiveViewController;
-import cs5004.easyanimator.controller.SVGViewController;
-import cs5004.easyanimator.controller.TextualViewController;
-import cs5004.easyanimator.controller.VisualAnimationViewController;
+import cs5004.easyanimator.controller.InteractiveAnimationController;
+import cs5004.easyanimator.controller.SVGAnimationController;
+import cs5004.easyanimator.controller.TextualAnimationController;
+import cs5004.easyanimator.controller.VisualAnimationController;
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.AnimationModelImpl;
 import cs5004.easyanimator.model.TweenModelBuilder;
@@ -34,13 +34,13 @@ public final class EasyAnimator {
   /**
    * Returns the correct view according to the string taken in.
    *
+   * @param speed speed to which we are setting the view
    * @param type  string representation of what type of view to output
    * @param model model for view to work on
-   * @param speed speed to which we are setting the view
    * @return the view
    * @throws IllegalArgumentException if the String view is invalid
    */
-  public static View createView(String type, AnimationModel model, float speed) {
+  public static View createView(float speed, String type, AnimationModel model) {
     View view = null;
 
     switch (type) {
@@ -137,23 +137,23 @@ public final class EasyAnimator {
     }
 
     try {
-      view = createView(type, model, speed);
+      view = createView(speed, type, model);
     } catch (Exception e) {
       showErrorMessage("AN ERROR HAS OCCURRED.");
     }
 
     switch (type) {
       case "text":
-        controller = new TextualViewController(model, view, out);
+        controller = new TextualAnimationController(view, model, out);
         break;
       case "visual":
-        controller = new VisualAnimationViewController(model, view, speed);
+        controller = new VisualAnimationController(model, view, speed);
         break;
       case "svg":
-        controller = new SVGViewController(view, out);
+        controller = new SVGAnimationController(view, out);
         break;
       case "playback":
-        controller = new InteractiveViewController(model, view, speed, out);
+        controller = new InteractiveAnimationController(view, model, speed, out);
         break;
       default:
         showErrorMessage("AN ERROR HAS OCCURRED.");

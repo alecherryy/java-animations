@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * This is JUnit test suite for the interactive view
  * controller.
  */
-public class InteractiveViewControllerTest {
+public class InteractiveAnimationControllerTest {
   JButton playButton;
   JButton pauseButton;
   JButton restartButton;
@@ -26,7 +26,7 @@ public class InteractiveViewControllerTest {
   JButton fileButton;
   JCheckBox loopCheckbox;
 
-  InteractiveViewController controller;
+  InteractiveAnimationController controller;
   AnimationModelImpl model;
   View view;
 
@@ -46,7 +46,7 @@ public class InteractiveViewControllerTest {
     this.model = new AnimationModelImpl();
     this.view = new InteractiveView(50, model.getShapes(), model.getAnimations(),
         10);
-    this.controller = new InteractiveViewController(this.model, this.view, 50,
+    this.controller = new InteractiveAnimationController(this.view, this.model, 50,
         "interactive.svg");
   }
 
