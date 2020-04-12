@@ -23,7 +23,7 @@ import cs5004.easyanimator.view.InteractiveView;
 import cs5004.easyanimator.view.SVGView;
 import cs5004.easyanimator.view.TextualView;
 import cs5004.easyanimator.view.View;
-import cs5004.easyanimator.view.VisualAnimationView;
+import cs5004.easyanimator.view.VisualView;
 
 /**
  * This is the main() method which acts as the entry point for our program. Our program takes in
@@ -51,7 +51,7 @@ public final class EasyAnimator {
         view = new SVGView(speed, model.getSettings(), model.getShapes(), model.getAnimations());
         break;
       case "visual":
-        view = new VisualAnimationView(speed, model.getSettings(), model.getShapes(),
+        view = new VisualView(speed, model.getSettings(), model.getShapes(),
                 model.getAnimations());
         break;
       case "playback":
@@ -71,8 +71,8 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
     String source = "src/cs5004/easyanimator/resources/toh-8.txt";
-    String type = "text";
-    String out = "toh-20.txt";
+    String type = "playback";
+    String out = "";
     int speed = 10; // default value
     String token;
     Appendable output = null;
@@ -139,7 +139,7 @@ public final class EasyAnimator {
     try {
       view = createView(speed, type, model);
     } catch (Exception e) {
-      showErrorMessage("AN ERROR HAS OCCURRED.");
+      showErrorMessage("AN ERROR HAS OCCURRED: VIEW COULD NOT BE CREATED.");
     }
 
     switch (type) {
@@ -156,14 +156,14 @@ public final class EasyAnimator {
         controller = new InteractiveAnimationController(view, model, speed, out);
         break;
       default:
-        showErrorMessage("AN ERROR HAS OCCURRED.");
+        showErrorMessage("AN ERROR HAS OCCURRED: INVALID VIEW TYPE.");
         break;
     }
 
     try {
       controller.start();
     } catch (Exception e) {
-      showErrorMessage("AN ERROR HAS OCCURRED.");
+      showErrorMessage("AN ERROR HAS OCCURRED: COULD NOT START APPLICATION.");
     }
   }
 

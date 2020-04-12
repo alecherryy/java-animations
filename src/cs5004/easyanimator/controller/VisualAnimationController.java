@@ -14,7 +14,7 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the Visual Animation view.
  * Implements AnimationController and its associated methods.
  */
-public class VisualAnimationController implements AnimationController{
+public class VisualAnimationController implements AnimationController {
   private AnimationModel model;
   private View view;
   private double speed;
@@ -60,25 +60,24 @@ public class VisualAnimationController implements AnimationController{
 
       for (Animations a : model.getAnimations()) {
         Animations currentA = a;
-        String shapeName = currentA.getShape().getName();
-
-        for (Shapes s : model.getShapes()) {
+        Shapes animationS = currentA.getShape();
+        for (Shapes s : newShapesList) {
           Shapes currentS = s;
-
-          if (s.getName().equals(shapeName)) {
+          if (currentS.getName().equals(animationS.getName())) {
             currentA.changeShape(currentS);
           }
         }
 
-        int start = currentA.getStartTime();
-        int end = currentA.getEndTime();
+        int start = a.getStartTime();
+        int end = a.getEndTime();
 
         if (start <= unitsElapsed && end >= unitsElapsed) {
-          currentA.implementAnimation(unitsElapsed);
+          a.implementAnimation(unitsElapsed);
           this.view.setShapes(newShapesList);
           this.view.refresh();
         }
       }
+
       this.view.display();
     }
   }
@@ -102,5 +101,16 @@ public class VisualAnimationController implements AnimationController{
    */
   public Timer getTimer() throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Controller does not support this functionality");
+  }
+
+  /**
+   * Given a shape name, remove it from the list and remove all animations
+   * associated with it.
+   *
+   * @param name The name of the shape
+   */
+  private void removeShape(String name) {
+    this.model.removeShape(name);
+    this.view.refresh();
   }
 }

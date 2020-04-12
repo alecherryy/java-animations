@@ -2,9 +2,6 @@ package cs5004.easyanimator.view;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.*;
 
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
@@ -119,14 +116,5 @@ public interface View {
    * @return file name from user
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  String getFilename();
-
-  /**
-   * Returns the checkbox list from this view.
-   *
-   * @return the view's checkbox list, a list of JCheckBox objects
-   * @throws UnsupportedOperationException if the view does not support this functionality
-   */
-  List<JCheckBox> getCheckBoxList();
-
+  String getTextFieldValue();
 }

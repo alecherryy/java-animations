@@ -79,6 +79,26 @@ public class AnimationModelImpl implements AnimationModel {
   }
 
   /**
+   * Add a new shape to the list.
+   *
+   * @param name of the shape to remove
+   */
+  public AnimationModel removeShape(String name) {
+    for (Shapes s : this.shapes) {
+      if (s.getName().equals(name)) {
+        // remove all animations associated with the shape
+        for (Animations a : this.animations) {
+          if (a.getShape().getName().equals(s.getName())) {
+            this.animations.remove(a);
+          }
+        }
+        this.shapes.remove(s);
+      }
+    }
+    return this;
+  }
+
+  /**
    * Add a new animation to a specific shape, using the shape name as an identifier.
    *
    * @param a the animation to add

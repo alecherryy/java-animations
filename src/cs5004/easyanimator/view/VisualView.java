@@ -1,7 +1,6 @@
 package cs5004.easyanimator.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import cs5004.easyanimator.model.shapes.Shapes;
  * extends the JFrame abstract class and implements all methods listed
  * in the iView interface.
  */
-public class VisualAnimationView extends JFrame implements View {
+public class VisualView extends JFrame implements View {
   private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
   private ArrayList<Integer> settings;
@@ -30,13 +29,13 @@ public class VisualAnimationView extends JFrame implements View {
    * @param speed the speed
    * @param shapes the list of shapes
    */
-  public VisualAnimationView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes,
-                             ArrayList<Animations> animations) {
+  public VisualView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes,
+                    ArrayList<Animations> animations) {
     this.shapes = shapes;
     this.settings = settings;
     this.speed = speed;
     this.animations = animations;
-    this.setTitle("Simple Animation");
+    this.setTitle("Java Easy Animator");
     this.setSize(this.settings.get(0), this.settings.get(1));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -112,13 +111,7 @@ public class VisualAnimationView extends JFrame implements View {
             + "functionality.");
   }
 
-  /**
-   * Writes out the text description of the animation to a file specified in the parameters.
-   *
-   * @param fileName the file to which we are outputting the string representation of the
-   *                 animation.
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
+  @Override
   public void write(String fileName) throws UnsupportedOperationException {
     throw new UnsupportedOperationException(""
             + "Visual Animation View view does not include this "
@@ -179,10 +172,10 @@ public class VisualAnimationView extends JFrame implements View {
   /**
    * Give the view an actionListener for the buttons in the view.
    *
-   * @param event The action event for the button
+   * @param e The action event for the button
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  public void setButtonListener(ActionListener event) throws UnsupportedOperationException {
+  public void setButtonListener(ActionListener e) {
     throw new UnsupportedOperationException("View does not support this method");
   }
 
@@ -192,8 +185,8 @@ public class VisualAnimationView extends JFrame implements View {
    * @return file name from user
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  public String getFilename() throws UnsupportedOperationException{
-    throw new UnsupportedOperationException("View does not support this method");
+  public String getTextFieldValue() {
+    return null;
   }
 
   /**
@@ -205,5 +198,4 @@ public class VisualAnimationView extends JFrame implements View {
   public List<JCheckBox> getCheckBoxList() throws UnsupportedOperationException {
     throw new UnsupportedOperationException("View does not support this method");
   }
-
 }

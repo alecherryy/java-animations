@@ -7,9 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.*;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
@@ -210,12 +207,7 @@ public class TextualView implements View {
    * @return file name from user
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  public String getFilename() throws UnsupportedOperationException{
-    throw new UnsupportedOperationException("View does not support this method");
-  }
-
-  @Override
-  public List<JCheckBox> getCheckBoxList() throws UnsupportedOperationException {
+  public String getTextFieldValue() {
     throw new UnsupportedOperationException("View does not support this method");
   }
 }
