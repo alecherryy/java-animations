@@ -28,7 +28,6 @@ public class InteractiveView extends JFrame implements View {
   private int endTime;
   private JButton play;
   private JButton pause;
-  private JButton resume;
   private JButton restart;
   private JButton increaseSpeed;
   private  JButton decreaseSpeed;
@@ -71,20 +70,14 @@ public class InteractiveView extends JFrame implements View {
     this.animationPanel.setShapes(shapes);
 
     // add scroll bars
-    this.add(setUpScrollBars(this.animationPanel));
+    this.add(setScrollBars(this.animationPanel));
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-    // add command panel
-    this.add(setUpCommandPanel(), BorderLayout.EAST);
+    // add edit panel
+    this.add(setControlPanel(), BorderLayout.SOUTH);
 
->>>>>>> Stashed changes
-=======
-    // add command panel
-    this.add(setUpCommandPanel(), BorderLayout.EAST);
-    
->>>>>>> d7d6778d92012ab3daf54d60bab7677c04edb9b5
+    // add edit panel
+    this.add(setEditPanel(), BorderLayout.EAST);
+
     this.pack();
   }
 
@@ -93,7 +86,7 @@ public class InteractiveView extends JFrame implements View {
    *
    * @param panel to add scroll bars to
    */
-  private JScrollPane setUpScrollBars(JPanel panel) {
+  private JScrollPane setScrollBars(JPanel panel) {
     JScrollPane scroll = new JScrollPane(panel);
     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -106,7 +99,7 @@ public class InteractiveView extends JFrame implements View {
   /**
    * Private method to set up the command panel.
    */
-  private JPanel setUpCommandPanel() {
+  private JPanel setEditPanel() {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setPreferredSize(new Dimension(350, 800));
@@ -119,6 +112,36 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
+   * Private method to set up the command panel.
+   */
+  private JPanel setControlPanel() {
+    JPanel control = new JPanel();
+    control.setLayout(new FlowLayout());
+    control.setPreferredSize(new Dimension(300, 50));
+    control.setBackground(Color.WHITE);
+
+    // play, pause or restart animation
+    this.play = new JButton("Play");
+    this.pause = new JButton("Pause");
+    this.restart = new JButton("Restart");
+    control.add(this.play);
+    control.add(this.pause);
+    control.add(this.restart);
+
+    // increase or decrease animation speed
+    this.increaseSpeed = new JButton("Increase");
+    this.decreaseSpeed = new JButton("Decrease");
+    control.add(this.increaseSpeed);
+    control.add(this.decreaseSpeed);
+
+    // loop animation
+    this.loopCheck = new JCheckBox("Loop");
+    control.add(this.loopCheck);
+
+    return control;
+  }
+
+  /**
    * Add commands to the command panel.
    *
    * @param panel to add content to
@@ -126,52 +149,12 @@ public class InteractiveView extends JFrame implements View {
   private void addCommandsToPanel(JPanel panel) {
     // panel title
     Box titleBox = Box.createVerticalBox();
-    JLabel title = new JLabel("<html><h2>Control Panel</h2></html>");
+    JLabel title = new JLabel("<html><h2>Edit</h2></html>");
     titleBox.add(title);
     panel.add(titleBox);
 
-    // play, pause or restart animation
-    Box toggleBox = Box.createVerticalBox();
-    JLabel btnToggleLabel = new JLabel(""
-            + "<html><h4>"
-            + "Play, Pause, Resume or Restart Animation"
-            + "</h4></></html>", SwingConstants.LEFT);
-    toggleBox.add(btnToggleLabel);
-    this.play = new JButton("Play");
-    this.pause = new JButton("Pause");
-    this.resume = new JButton("Resume");
-    this.restart = new JButton("Restart");
-    toggleBox.add(this.play);
-    toggleBox.add(this.pause);
-    toggleBox.add(this.resume);
-    toggleBox.add(this.restart);
-    panel.add(toggleBox);
-
-    // increase or decrease animation speed
-    Box speedBox = Box.createVerticalBox();
-    JLabel btnSpeedLabel = new JLabel(""
-            + "<html><h4>"
-            + "Increase or Decrease Animation Speed"
-            + "</h4></></html>", SwingConstants.LEFT);
-    speedBox.add(btnSpeedLabel);
-    this.increaseSpeed = new JButton("Increase");
-    this.decreaseSpeed = new JButton("Decrease");
-    speedBox.add(this.increaseSpeed);
-    speedBox.add(this.decreaseSpeed);
-    panel.add(speedBox);
-
-    // loop animation
-    Box loopBox = Box.createVerticalBox();
-    JLabel loopBtnLabel = new JLabel(""
-            + "<html><h4>"
-            + "Loop Animation"
-            + "</h4></></html>", SwingConstants.LEFT);
-    loopBox.add(loopBtnLabel);
-    this.loopCheck = new JCheckBox("Loop");
-    loopBox.add(this.loopCheck);
-    panel.add(loopBox);
-
     // add a new shape
+    // TODO add fields for new shape and new animations
     Box addBox = Box.createVerticalBox();
     JLabel btnAddLabel = new JLabel(""
             + "<html><h4>"
@@ -231,6 +214,8 @@ public class InteractiveView extends JFrame implements View {
     this.btnSave = new JButton("Save");
     saveBox.add(this.btnSave);
     panel.add(saveBox);
+
+    // TODO add functionality to upload a file
   }
 
   /**
@@ -242,7 +227,6 @@ public class InteractiveView extends JFrame implements View {
   public void setButtonListener(ActionListener e) {
     this.play.addActionListener(e);
     this.pause.addActionListener(e);
-    this.resume.addActionListener(e);
     this.restart.addActionListener(e);
     this.increaseSpeed.addActionListener(e);
     this.decreaseSpeed.addActionListener(e);

@@ -186,10 +186,6 @@ public class InteractiveAnimationController implements AnimationController, Acti
         this.appendToLog("You pressed the pause button.\n");
         this.timer.stop();
         break;
-      case "Resume":
-        this.appendToLog("You pressed the resume button.\n");
-        this.timer.start();
-        break;
       case "Restart":
         this.appendToLog("You pressed the restart button.\n");
         reset();
