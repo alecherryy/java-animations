@@ -80,12 +80,12 @@ public class InteractiveAnimationController implements AnimationController, Acti
     // set new shape list
     this.setNewShapesList();
     // create new timer
-    this.timer = new Timer(0, timerListener);
+    this.timer = new Timer(0, this.timerListener);
 
-    for (Animations a : model.getAnimations()) {
+    for (Animations a : this.model.getAnimations()) {
       String sName = a.getShape().getName();
 
-      for (Shapes s : newShapesList) {
+      for (Shapes s : this.newShapesList) {
         Shapes currentS = s;
         if (currentS.getName().equals(sName)) {
           a.resetShape(currentS);
@@ -116,13 +116,13 @@ public class InteractiveAnimationController implements AnimationController, Acti
    * be the model's original list of shapes.
    */
   private void setNewShapesList() {
-    newShapesList = new ArrayList<Shapes>();
+    this.newShapesList = new ArrayList<Shapes>();
 
     // iterate through model's shapes and create a
     // new list of shapes
-    for (Shapes s : model.getShapes()) {
+    for (Shapes s : this.model.getShapes()) {
       Shapes newS = s;
-      newShapesList.add(newS);
+      this.newShapesList.add(newS);
     }
   }
 
@@ -197,13 +197,11 @@ public class InteractiveAnimationController implements AnimationController, Acti
         break;
       case "Increase":
         this.appendToLog("You pressed the increase speed button.\n");
-        showMessagDialog("Speed increased by 10.");
         speed += 10;
         elapsedTime -= (speed) / 1000;
         break;
       case "Decrease":
         this.appendToLog("You pressed the decrease speed button.\n");
-        showMessagDialog("Speed decreased by 10.");
         // if speed is negative, set it to 0
         if (speed <= 0) {
           speed = 0;

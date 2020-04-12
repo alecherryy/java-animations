@@ -167,7 +167,7 @@ public class AnimationModelImpl implements AnimationModel {
 
     return str.toString();
   }
-  
+
   /**
    * Returns the end time from the list of animations.
    *
@@ -335,7 +335,7 @@ public class AnimationModelImpl implements AnimationModel {
       if (a.getShape().getName().equals(b.getShape().getName())) {
         if (a.getAnimationType() == b.getAnimationType()) {
           if (a.getStartTime() >= b.getStartTime() && a.getEndTime() <=
-              b.getEndTime()) {
+                  b.getEndTime()) {
             return true;
           }
         }
@@ -477,9 +477,9 @@ public class AnimationModelImpl implements AnimationModel {
       // lamba expression to filter the data
       // hash map and show only objects matching the shape name
       f = (Map<String, ArrayList<ArrayList<Integer>>>) this.data.entrySet()
-          .stream()
-          .filter(map -> name.equals(map.getKey()))
-          .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+              .stream()
+              .filter(map -> name.equals(map.getKey()))
+              .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
 
       // variable for hash map key selector
       ArrayList<ArrayList<Integer>> shape = f.get(name);
@@ -521,7 +521,7 @@ public class AnimationModelImpl implements AnimationModel {
     private void generateShapes() {
       // create a Shape obj for each item in the hash map
       this.source.forEach((k, v) -> {
-          createIndividualShapes(k, v);
+        createIndividualShapes(k, v);
       });
     }
 
@@ -544,10 +544,10 @@ public class AnimationModelImpl implements AnimationModel {
           if (el.get(1) != el.get(9) || el.get(2) != el.get(10)) {
             addMove(k, el.get(1), el.get(2), el.get(9), el.get(10), startT, endT);
           }
-          else if (color != newColor) {
+          if (color != newColor) {
             addColorChange(k, color, newColor, startT, endT);
           }
-          else if (width != el.get(11) || height != el.get(12)) {
+          if (width != el.get(11) || height != el.get(12)) {
             addSizeChange(k, width, height, el.get(11), el.get(12), startT, endT);
           }
         }
