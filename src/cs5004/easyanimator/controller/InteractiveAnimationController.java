@@ -26,6 +26,7 @@ public class InteractiveAnimationController implements AnimationController, Acti
   private String filename;
   private Timer timer;
   private ArrayList<Shapes> newShapesList;
+  private ArrayList<Animations> newAnimationsList;
   private int endTime;
   private double elapsedTime;
   private Appendable log;
@@ -229,11 +230,12 @@ public class InteractiveAnimationController implements AnimationController, Acti
       case "Add oval":
         this.model.addShape(this.view.getNewShape("oval"));
         this.appendToLog("You pressed the Add Shape button.\n");
-        reset();
         break;
       case "Add animation":
-        this.model.addAnimation(this.view.getNewAnimation());
         reset();
+        this.timer.stop();
+//        this.timer.restart();
+        this.model.addAnimation(this.view.getNewAnimation());
         break;
       default:
         break;
