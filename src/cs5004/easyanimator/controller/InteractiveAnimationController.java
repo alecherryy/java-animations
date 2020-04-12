@@ -26,7 +26,6 @@ public class InteractiveAnimationController implements AnimationController, Acti
   private String filename;
   private Timer timer;
   private ArrayList<Shapes> newShapesList;
-  private ArrayList<Animations> newAnimationsList;
   private int endTime;
   private double elapsedTime;
   private Appendable log;

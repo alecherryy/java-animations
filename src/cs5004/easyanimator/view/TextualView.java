@@ -227,7 +227,7 @@ public class TextualView implements View {
    *
    * @return a new animation
    * @throws UnsupportedOperationException if the view does not support this functionality
-//   */
+   */
   public Animations getNewAnimation() throws UnsupportedOperationException {
     throw new UnsupportedOperationException("View does not support this method");
   }

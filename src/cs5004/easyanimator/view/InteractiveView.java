@@ -54,6 +54,9 @@ public class InteractiveView extends JFrame implements View {
   private JCheckBox loopCheck;
   private ArrayList<JRadioButton> format;
 
+  // popup menu
+  private PopupMenu popup;
+
   /**
    * Constructs an InteractiveView object, with its given speed, list of shapes, list of animations,
    * and endTime.
@@ -90,6 +93,8 @@ public class InteractiveView extends JFrame implements View {
 
     // add edit panel
     this.add(setEditPanel(), BorderLayout.EAST);
+
+    // Then on your component(s)
 
     this.pack();
   }
