@@ -2,7 +2,7 @@ package cs5004.easyanimator.controller;
 
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.Timer;
 
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.animations.Animations;
@@ -24,11 +24,11 @@ public class VisualAnimationController implements AnimationController {
    * Constructs a VisualAnimationViewController object with
    * its given model, view, and speed.
    *
-   * @param model that will be used by the controller
    * @param view that will be used by the controller
+   * @param model that will be used by the controller
    * @param speed at which the animation occurs
    */
-  public VisualAnimationController(AnimationModel model, View view, double speed) {
+  public VisualAnimationController(View view, AnimationModel model, double speed) {
     this.model = model;
     this.view = view;
     this.speed = speed;
@@ -108,9 +108,10 @@ public class VisualAnimationController implements AnimationController {
    * associated with it.
    *
    * @param name The name of the shape
+   * @throws UnsupportedOperationException if the controller does not support the
+   *                                       functionality
    */
   private void removeShape(String name) {
-    this.model.removeShape(name);
-    this.view.refresh();
+    throw new UnsupportedOperationException("Controller does not support this functionality");
   }
 }

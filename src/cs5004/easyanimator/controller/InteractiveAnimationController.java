@@ -34,8 +34,8 @@ public class InteractiveAnimationController implements AnimationController, Acti
    * Create an InteractiveController object with its given model, view, speed, and the name of
    * the file that the controller will write out to.
    *
-   * @param model used by the controller
    * @param view used by the controller
+   * @param model used by the controller
    * @param speed at which the animation occurs
    * @param filename that the controller will write out to
    */
@@ -46,24 +46,6 @@ public class InteractiveAnimationController implements AnimationController, Acti
     this.speed = speed;
     this.looped = false;
     this.filename = filename;
-    this.elapsedTime = 0;
-    this.endTime = model.getEnd();
-    this.log = new StringBuffer();
-  }
-
-  /**
-   * Create an InteractiveController object with its given model, view, speed, and the name of
-   * the file that the controller will write out to.
-   *
-   * @param model used by the controller
-   * @param view used by the controller
-   * @param speed at which the animation occurs
-   */
-  public InteractiveAnimationController(View view, AnimationModel model, double speed) {
-    this.model = model;
-    this.view = view;
-    this.speed = speed;
-    this.looped = false;
     this.elapsedTime = 0;
     this.endTime = model.getEnd();
     this.log = new StringBuffer();

@@ -1,6 +1,6 @@
 package cs5004.easyanimator.controller;
 
-import javax.swing.*;
+import javax.swing.Timer;
 
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.animations.Animations;
@@ -8,8 +8,8 @@ import cs5004.easyanimator.model.shapes.Shapes;
 import cs5004.easyanimator.view.View;
 
 /**
- * Represents the controller for the Textual View. Implements AnimationController and its
- * associated methods.
+ * Represents the controller for the Textual View. Implements
+ * AnimationController and its associated methods.
  */
 public class TextualAnimationController implements AnimationController {
   private AnimationModel model;
@@ -19,8 +19,8 @@ public class TextualAnimationController implements AnimationController {
   /**
    * Constructs a TextualViewController object with its given model, view and filename.
    *
-   * @param model    the animation model that the controller will use
-   * @param view     the view that the controller will be displaying on
+   * @param view the view that the controller will be displaying on
+   * @param model the animation model that the controller will use
    * @param filename the output file the controller will write to
    */
   public TextualAnimationController(View view, AnimationModel model, String filename) {
@@ -28,7 +28,6 @@ public class TextualAnimationController implements AnimationController {
     this.view = view;
     this.filename = filename;
   }
-
 
   /**
    * Starts the animation.
@@ -47,6 +46,7 @@ public class TextualAnimationController implements AnimationController {
         }
       }
     }
+    // output to file
     this.view.write(filename);
   }
 
