@@ -90,6 +90,12 @@ public class InteractiveView extends JFrame implements View {
     decreaseSpeed = new JButton("Decrease Speed");
     buttonPanel.add(decreaseSpeed);
 
+<<<<<<< Updated upstream
+=======
+    // add command panel
+    this.add(setUpCommandPanel(), BorderLayout.EAST);
+
+>>>>>>> Stashed changes
     this.pack();
   }
 

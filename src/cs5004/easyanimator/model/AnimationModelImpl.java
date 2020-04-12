@@ -2,7 +2,8 @@ package cs5004.easyanimator.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import cs5004.easyanimator.model.animations.Animations;
@@ -194,8 +195,8 @@ public class AnimationModelImpl implements AnimationModel {
     private ArrayList<Animations> animationsList;
     private ArrayList<Shapes> shapesList;
     private ArrayList<Integer> settings;
-    private HashMap<String, String> source;
-    private HashMap<String, ArrayList<ArrayList<Integer>>> data;
+    private LinkedHashMap<String, String> source;
+    private LinkedHashMap<String, ArrayList<ArrayList<Integer>>> data;
 
     /**
      * Constructs a SimpleAnimationBuilder object.
@@ -205,9 +206,9 @@ public class AnimationModelImpl implements AnimationModel {
       this.shapesList = new ArrayList<Shapes>();
       this.settings = new ArrayList<Integer>();
       // create a hash map with {name: type}
-      this.source = new HashMap<String, String>();
+      this.source = new LinkedHashMap<String, String>();
       // create a hash map with {name: [[shape values], [shape values]]}
-      this.data = new HashMap<String, ArrayList<ArrayList<Integer>>>();
+      this.data = new LinkedHashMap<String, ArrayList<ArrayList<Integer>>>();
     }
 
     /**
@@ -471,11 +472,12 @@ public class AnimationModelImpl implements AnimationModel {
     }
 
     private void createIndividualShapes(String name, String type) {
-      HashMap<String, ArrayList<ArrayList<Integer>>> f;
+      Map<String, ArrayList<ArrayList<Integer>>> f = new LinkedHashMap
+              <String, ArrayList<ArrayList<Integer>>>();
 
       // lamba expression to filter the data
       // hash map and show only objects matching the shape name
-      f = (HashMap<String, ArrayList<ArrayList<Integer>>>) this.data.entrySet()
+      f = (Map<String, ArrayList<ArrayList<Integer>>>) this.data.entrySet()
           .stream()
           .filter(map -> name.equals(map.getKey()))
           .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
