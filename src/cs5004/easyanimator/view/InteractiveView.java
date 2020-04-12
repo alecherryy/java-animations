@@ -19,7 +19,7 @@ import cs5004.easyanimator.model.shapes.Shapes;
  */
 public class InteractiveView extends JFrame implements View {
   private float speed;
-  private AnimateJPanel animatePanel;
+  private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
   private ArrayList<Animations> animations;
   private boolean loop;
@@ -54,23 +54,17 @@ public class InteractiveView extends JFrame implements View {
     this.shapes = shapes;
     this.animations = animations;
 
-    this.setTitle("Simple Animation");
+    this.setTitle("Java Easy Animator");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    animatePanel = new AnimateJPanel();
-    animatePanel.setPreferredSize(new Dimension(1000, 1000));
+    this.animationPanel = new AnimateJPanel();
+    this.animationPanel.setPreferredSize(new Dimension(1000, 1000));
 
-    animatePanel.setShapes(shapes);
+    this.animationPanel.setShapes(shapes);
 
-    JScrollPane animationScrollPane = new JScrollPane(animatePanel);
-    animationScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    animationScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    animationScrollPane.setBounds(50, 30, 300, 500);
-    animationScrollPane.setPreferredSize(new Dimension(1000, 1000));
-
-
-    this.add(animationScrollPane);
+    // add scroll bars
+    this.add(setUpScrollBars(this.animationPanel));
 
     buttonPanel = new JPanel();
     buttonPanel.setLayout(new FlowLayout());
@@ -99,12 +93,11 @@ public class InteractiveView extends JFrame implements View {
    * @param panel to add scroll bars to
    */
   private JScrollPane setUpScrollBars(JPanel panel) {
-    JScrollPane scroll = new JScrollPane(panel);
+    JScrollPane scroll = new JScrollPane(this.animationPanel);
     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    scroll.setBounds(50, 30, 300, 50);
-
-    this.add(scroll, BorderLayout.CENTER);
+    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scroll.setBounds(50, 30, 300, 500);
+    scroll.setPreferredSize(new Dimension(1000, 1000));
 
     return scroll;
   }
@@ -309,7 +302,7 @@ public class InteractiveView extends JFrame implements View {
    */
   public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
-    animatePanel.setShapes(shapes);
+    animationPanel.setShapes(shapes);
   }
 
   /**
