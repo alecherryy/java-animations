@@ -14,6 +14,11 @@ import javax.swing.*;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
+import cs5004.easyanimator.model.animations.ChangeCoordinates;
+import cs5004.easyanimator.model.animations.ChangeSize;
+import cs5004.easyanimator.model.shapes.Coordinates;
+import cs5004.easyanimator.model.shapes.Oval;
+import cs5004.easyanimator.model.shapes.Rectangle;
 import cs5004.easyanimator.model.shapes.Shapes;
 
 /**
@@ -31,15 +36,26 @@ public class InteractiveView extends JFrame implements View {
   private JButton restart;
   private JButton increaseSpeed;
   private  JButton decreaseSpeed;
-  private JPanel buttonPanel;
 
   // extra functionality
-  private JButton btnAdd;
+  // add a new shape
+  private JButton btnAddRect;
+  private JButton btnAddOval;
+  private JTextField sAdd;
+  // add a new animation
+  private JTextField aStart;
+  private JTextField aEnd;
+  private JButton btnAddAnimation;
+  // remove a shape
   private JButton btnRemove;
   private JTextField sRemove;
+  // save
   private JButton btnSave;
   private JCheckBox loopCheck;
   private ArrayList<JRadioButton> format;
+
+  // popup menu
+  private PopupMenu popup;
 
   /**
    * Constructs an InteractiveView object, with its given speed, list of shapes, list of animations,
@@ -78,6 +94,8 @@ public class InteractiveView extends JFrame implements View {
     // add edit panel
     this.add(setEditPanel(), BorderLayout.EAST);
 
+    // Then on your component(s)
+
     this.pack();
   }
 
@@ -102,7 +120,7 @@ public class InteractiveView extends JFrame implements View {
   private JPanel setEditPanel() {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    panel.setPreferredSize(new Dimension(350, 800));
+    panel.setPreferredSize(new Dimension(350, 300));
     panel.setBackground(Color.WHITE);
     addCommandsToPanel(panel);
 
@@ -154,23 +172,52 @@ public class InteractiveView extends JFrame implements View {
     panel.add(titleBox);
 
     // add a new shape
-    // TODO add fields for new shape and new animations
     Box addBox = Box.createVerticalBox();
     JLabel btnAddLabel = new JLabel(""
             + "<html><h4>"
-            + "Add a shape to the Animator"
+            + "Add a new shape"
             + "</h4></></html>", SwingConstants.LEFT);
     addBox.add(btnAddLabel);
     JLabel addSummary = new JLabel(""
             + "<html><p>Add a new shape to the list of<br />"
-            + "current shapes. Once a new shape has been<br />"
-            + "added, you can add animations to it.</p><br /></html>");
+            + "current shapes.</p>"
+            + "<h4>Format: </h4>"
+            + "<p>name appear x-coordinate y-coordinate width height red blue green disappear</p>"
+            + "<p>Example: clara 1 190 161 20 11 113 87 151 10</p><br /></html>");
     addBox.add(addSummary);
-    JTextField addShapeName = new JTextField(5);
-    addBox.add(addShapeName);
-    this.btnAdd = new JButton("Add");
-    addBox.add(btnAdd);
+    this.sAdd = new JTextField(5);
+    addBox.add(this.sAdd);
+    this.btnAddRect = new JButton("Add rectangle");
+    addBox.add(this.btnAddRect);
+    this.btnAddOval = new JButton("Add oval");
+    addBox.add(this.btnAddOval);
     panel.add(addBox);
+
+    // add a new animation
+    // TODO new animations
+    Box addAnimationBox = Box.createVerticalBox();
+    JLabel btnAddAnimationLabel = new JLabel(""
+            + "<html><h4>"
+            + "Add a new animation"
+            + "</h4></></html>", SwingConstants.LEFT);
+    addAnimationBox.add(btnAddAnimationLabel);
+    JLabel addAnimationSummary = new JLabel(""
+            + "<html><p>Add a new animation to one of the<br />"
+            + "current shapes.</p>"
+            + "<h4>Initial State Format: </h4>"
+            + "<p>name start x-coordinate y-coordinate width height red blue green</p>"
+            + "<p>Example: C 1 190 161 20 11 113 87 151</p><br /></html>"
+            + "<h4>Final State Format: </h4>"
+            + "<p>name start x-coordinate y-coordinate width height red blue green</p>"
+            + "<p>Example: C 10 190 161 80 160 113 87 151</p><br /></html>");
+    addAnimationBox.add(addAnimationSummary);
+    this.aStart = new JTextField(5);
+    this.aEnd = new JTextField(5);
+    addAnimationBox.add(this.aStart);
+    addAnimationBox.add(this.aEnd);
+    this.btnAddAnimation = new JButton("Add animation");
+    addAnimationBox.add(this.btnAddAnimation);
+    panel.add(addAnimationBox);
 
     // remove a shape
     Box removeBox = Box.createVerticalBox();
@@ -219,6 +266,83 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
+   * Parse a textfield content and returns a new shape.
+   *
+   * @param type of shape
+   * @return a new shape
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public Shapes getNewShape(String type) {
+    if (!this.sAdd.equals("")) {
+      String[] data = this.sAdd.getText().split(" ");
+      // Z 1 190 161 120 120 113 87 151 10
+      int appear = Integer.parseInt(data[1]);
+      int disappear = Integer.parseInt(data[9]);
+      int width = Integer.parseInt(data[4]);
+      int height = Integer.parseInt(data[5]);
+      Color color = new Color(
+              Integer.parseInt(data[6]),
+              Integer.parseInt(data[7]),
+              Integer.parseInt(data[8]));
+      Coordinates pos = new Coordinates(Integer.parseInt(data[2]), Integer.parseInt(data[3]));
+      if (type.equals("rectangle")) {
+        return new Rectangle(data[0], appear, disappear, width, height, color, pos);
+      }
+      return new Oval(data[0], appear, disappear, width, height, color, pos);
+    }
+    return null;
+  }
+
+  /**
+   * Parse a textfield content and returns a new animation.
+   *
+   * @return a new animation
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public Animations getNewAnimation() {
+    String[] start = this.aStart.getText().split(" ");
+    String[] end = this.aEnd.getText().split(" ");
+    Shapes shape = null;
+
+    // find shape
+    for (Shapes s : this.shapes) {
+      if (s.getName().equals(start[0])) {
+        shape = s;
+      }
+    }
+
+    // Z 1 190 161 20 11 113 87 151
+    // Z 25 190 161 200 200 113 87 151
+    int startT = Integer.parseInt(start[1]);
+    int endT = Integer.parseInt(end[1]);
+    int startW = Integer.parseInt(start[4]);
+    int endW = Integer.parseInt(end[4]);
+    int startH = Integer.parseInt(start[5]);
+    int endH = Integer.parseInt(end[5]);
+    Coordinates startPos = new Coordinates(Integer.parseInt(start[2]), Integer.parseInt(start[3]));
+    Coordinates endPos = new Coordinates(Integer.parseInt(end[2]), Integer.parseInt(end[3]));
+    Color startC = new Color(
+            Integer.parseInt(start[6]),
+            Integer.parseInt(start[7]),
+            Integer.parseInt(start[8]));
+
+    Color endC = new Color(
+            Integer.parseInt(end[6]),
+            Integer.parseInt(end[7]),
+            Integer.parseInt(end[8]));
+    if (startW != endW || startH != endH) {
+      return new ChangeSize(shape, startT, endT, startW, endH, endW, endH);
+    }
+//    if (startC != endC) {
+//      new ChangeColor(shape, startT, endT, startC, endC);
+//    }
+    if (startPos != endPos) {
+      return new ChangeCoordinates(shape, startT, endT, startPos, endPos);
+    }
+    return null;
+  }
+
+  /**
    * Give the view an actionListener for the buttons in the view.
    *
    * @param e the event for the button
@@ -231,7 +355,9 @@ public class InteractiveView extends JFrame implements View {
     this.increaseSpeed.addActionListener(e);
     this.decreaseSpeed.addActionListener(e);
     this.loopCheck.addActionListener(e);
-    this.btnAdd.addActionListener(e);
+    this.btnAddRect.addActionListener(e);
+    this.btnAddOval.addActionListener(e);
+    this.btnAddAnimation.addActionListener(e);
     this.btnRemove.addActionListener(e);
     this.btnSave.addActionListener(e);
 
@@ -319,7 +445,6 @@ public class InteractiveView extends JFrame implements View {
    */
   public void write(String fileName) {
     String format = selectedFileFormat();
-    System.out.println(selectedFileFormat());
     String description = "";
 
     if (format != null) {

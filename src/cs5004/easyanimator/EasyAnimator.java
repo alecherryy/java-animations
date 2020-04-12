@@ -71,7 +71,7 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
     String source = "src/cs5004/easyanimator/resources/buildings.txt";
-    String type = "playback";
+    String type = "visual";
     String out = "";
     int speed = 50; // default value
     String token;

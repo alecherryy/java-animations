@@ -1,12 +1,15 @@
 package cs5004.easyanimator.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import cs5004.easyanimator.model.shapes.Coordinates;
 import cs5004.easyanimator.model.shapes.Shapes;
@@ -36,23 +39,27 @@ public class AnimateJPanel extends JPanel {
     // add scroll pane
     this.add(scrollPane);
 
-    // TODO this needs to be its own class
-    addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
+    // implement mouse adapter and instantiate PopupMenu class
+    class PopClickListener extends MouseAdapter {
 
-        Color color = Color.RED;
-        for (Shapes s : shapes) {
-          // check if event point is within shape area
-          boolean x = e.getX() >= s.getPosition().getX() && e.getX() <= s.getPosition().getX() + s.getD1();
-          boolean y = e.getY() >= s.getPosition().getY() && e.getY() <= s.getPosition().getY() + s.getD2();
-          if (x && y) {
-            s.changeColor(color);
-          }
-        }
-        repaint();
+      public void mousePressed(MouseEvent e) {
+        if (e.isPopupTrigger())
+          doPop(e);
       }
-    });
+
+      public void mouseReleased(MouseEvent e) {
+        if (e.isPopupTrigger())
+          doPop(e);
+      }
+
+      private void doPop(MouseEvent e) {
+        PopupMenu menu = new PopupMenu(e.getX(), e.getY());
+        menu.show(e.getComponent(), e.getX(), e.getY());
+      }
+    }
+
+    // add mouse listener to panel
+    this.addMouseListener(new PopClickListener());
   }
 
   /**

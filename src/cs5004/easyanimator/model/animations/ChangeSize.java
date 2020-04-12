@@ -191,7 +191,7 @@ public class ChangeSize extends AbstractAnimations {
   public void implementAnimation(double time) {
     if (this.getShape().getD1() != this.getOriginalWidth()
         || this.getShape().getD2() != this.getOriginalHeight()) {
-      throw new IllegalArgumentException("Size from which we are changing this shape's size must"
+      throw new IllegalArgumentException("Size from which we are changing this shape's size must "
          + "match the shape's original size");
 
     }
