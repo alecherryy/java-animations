@@ -521,7 +521,7 @@ public class AnimationModelImpl implements AnimationModel {
     private void generateShapes() {
       // create a Shape obj for each item in the hash map
       this.source.forEach((k, v) -> {
-          createIndividualShapes(k, v);
+        createIndividualShapes(k, v);
       });
     }
 
@@ -532,23 +532,25 @@ public class AnimationModelImpl implements AnimationModel {
     private void generateAnimations() {
       // iterate through each item in the data hash map
       this.data.forEach((k, v) -> {
+        final double THRESHOLD = .0001;
         // create animations for each item in the array of integers
         for (ArrayList<Integer> el : v) {
-          int startT = el.get(0);
-          int endT = el.get(8);
-          int width = el.get(3);
-          int height = el.get(4);
+          Integer startT = el.get(0);
+          Integer endT = el.get(8);
+          Integer width = el.get(3);
+          Integer newWidth = el.get(11);
+          Integer height = el.get(4);
+          Integer newHeight = el.get(12);
           Color color = new Color(el.get(5), el.get(6), el.get(7));
           Color newColor = new Color(el.get(13), el.get(14), el.get(15));
-
-          if (el.get(1) != el.get(9) || el.get(2) != el.get(10)) {
+          if (!el.get(1).equals(el.get(9)) || !el.get(2).equals(el.get(10))) {
             addMove(k, el.get(1), el.get(2), el.get(9), el.get(10), startT, endT);
           }
-          else if (color != newColor) {
+          if (!(color.equals(newColor))) {
             addColorChange(k, color, newColor, startT, endT);
           }
-          else if (width != el.get(11) || height != el.get(12)) {
-            addSizeChange(k, width, height, el.get(11), el.get(12), startT, endT);
+          if (!width.equals(newWidth) || !height.equals(newHeight)) {
+            addSizeChange(k, width, height, newWidth, newHeight, startT, endT);
           }
         }
       });
@@ -566,6 +568,12 @@ public class AnimationModelImpl implements AnimationModel {
       // add animations
       generateAnimations();
 
+      for (Animations a : this.animationsList) {
+        if (a.getShape().getName().equals("disk8")) {
+          System.out.println(a.getShape().getDescription());
+          System.out.println(a.getDescription());
+        }
+      }
       return new AnimationModelImpl(this);
     }
   }
