@@ -436,7 +436,6 @@ public class InteractiveView extends JFrame implements View {
    */
   public void write(String fileName) {
     String format = selectedFileFormat();
-    System.out.println(selectedFileFormat());
     String description = "";
 
     if (format != null) {
