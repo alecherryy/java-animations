@@ -27,7 +27,9 @@ public class VisualView extends JFrame implements View {
    * and a list of shapes.
    *
    * @param speed the speed
+   * @param settings the panel settings
    * @param shapes the list of shapes
+   * @param animations the list of animations
    */
   public VisualView(float speed, ArrayList<Integer> settings, ArrayList<Shapes> shapes,
                     ArrayList<Animations> animations) {
@@ -100,6 +102,16 @@ public class VisualView extends JFrame implements View {
   }
 
   /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
+    return this.settings;
+  }
+
+  /**
    * Returns the description of the view in a string.
    *
    * @return the view description in a string
@@ -111,7 +123,13 @@ public class VisualView extends JFrame implements View {
             + "functionality.");
   }
 
-  @Override
+  /**
+   * Writes out the text description of the animation to a file specified in the parameters.
+   *
+   * @param fileName the file to which we are outputting the string representation of the
+   *                 animation.
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
   public void write(String fileName) throws UnsupportedOperationException {
     throw new UnsupportedOperationException(""
             + "Visual Animation View view does not include this "
@@ -137,18 +155,9 @@ public class VisualView extends JFrame implements View {
    * @throws UnsupportedOperationException if the view does not support this method
    **/
   public void displayErrorMsg(String error) throws UnsupportedOperationException {
-    JOptionPane.showMessageDialog(this, error, "Error",
-        JOptionPane.ERROR_MESSAGE);
-  }
-
-  /**
-   * Returns a list of integers that represent the settings.
-   *
-   * @return a list representing the settings.
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
-    return this.settings;
+    throw new UnsupportedOperationException(""
+            + "Visual Animation View view does not include this "
+            + "functionality.");
   }
 
   /**
