@@ -1,6 +1,6 @@
 package cs5004.easyanimator.model;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -83,19 +83,18 @@ public class AnimationModelImpl implements AnimationModel {
    *
    * @param name of the shape to remove
    */
-  public AnimationModel removeShape(String name) {
-    for (Shapes s : this.shapes) {
-      if (s.getName().equals(name)) {
+  public void removeShape(String name) {
+    for (int i = 0; i < this.shapes.size(); i++) {
+      if (this.shapes.get(i).getName().equals(name)) {
         // remove all animations associated with the shape
-        for (Animations a : this.animations) {
-          if (a.getShape().getName().equals(s.getName())) {
-            this.animations.remove(a);
+        for (int j = 0; j < this.animations.size(); j++) {
+          if (this.animations.get(j).getShape().getName().equals(this.shapes.get(i).getName())) {
+            this.animations.remove(j);
           }
         }
-        this.shapes.remove(s);
+        this.shapes.remove(i);
       }
     }
-    return this;
   }
 
   /**
