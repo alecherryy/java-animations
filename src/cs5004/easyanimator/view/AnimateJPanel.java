@@ -36,7 +36,7 @@ public class AnimateJPanel extends JPanel {
     // add scroll pane
     this.add(scrollPane);
 
-    // TODO this needs to be its own class
+    // TODO clean this up
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {

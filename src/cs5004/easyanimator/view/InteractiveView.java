@@ -7,12 +7,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
-import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 
@@ -40,6 +38,7 @@ public class InteractiveView extends JFrame implements View {
   private JButton btnSave;
   private JCheckBox loopCheck;
   private ArrayList<JRadioButton> format;
+
 
   /**
    * Constructs an InteractiveView object, with its given speed, list of shapes, list of animations,
@@ -254,6 +253,49 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
+   * Returns the description of the view in a string.
+   *
+   * @return the view description in a string
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  public String getTextDescription() {
+
+    String markup = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
+        + "xmlns=\"http://www.w3.org/2000/svg\">\n";
+
+    double endTime = (this.endTime / speed) * 1000;
+    markup += "<rect>\n"
+        + "<animate id=\"base\" begin=\"0;base.end\" dur=\"" + endTime + "ms\" "
+        + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
+        + "</rect>\n";
+
+    for (Shapes s : this.shapes) {
+      Shapes shape = s;
+
+      if (shape.getDisplayValue()) {
+        markup += shape.toSVGTag();
+      }
+
+      for (Animations a : this.animations) {
+        Animations currentA = a;
+        Shapes currentS = currentA.getShape();
+
+        // detect loop
+        if (shape.getName().equals((currentS.getName())) && !loop) {
+          markup += currentA.toSVGTag((this.getSpeed()));
+        }
+        else if (shape.getName().equals(currentS) && loop) {
+          markup += currentA.toSVGTagWithLoop(this.getSpeed());
+        }
+      }
+      markup += shape.svgEndTag() + "\n";
+    }
+    markup += "</svg>";
+
+    return markup;
+  }
+
+  /**
    * Sets the view's visibility to true (i.e. view is visible
    * within the JFrame).
    *
@@ -270,7 +312,7 @@ public class InteractiveView extends JFrame implements View {
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
   public String getTextFieldValue() {
-    return this.sRemove.getText();
+    return null;
   }
 
   /**
@@ -319,15 +361,14 @@ public class InteractiveView extends JFrame implements View {
    */
   public void write(String fileName) {
     String format = selectedFileFormat();
-    System.out.println(selectedFileFormat());
     String description = "";
 
     if (format != null) {
-      if (format.equals(".svg")) {
-        description = this.outputSVG();
+      if (format.equals("SVG")) {
+        description = this.getTextDescription();
       }
       else {
-        description = this.outputText();
+        description = this.getTextDescription();
       }
 
       try {
@@ -335,10 +376,7 @@ public class InteractiveView extends JFrame implements View {
         if (fileName.equals("System.out")) {
           output = new BufferedWriter(new OutputStreamWriter(System.out));
         } else {
-          File file = new File(""
-                  + "src/cs5004/easyanimator/resources/"
-                  // save file using the current date time stamp
-                  + LocalDate.now().toString().toString() + format);
+          File file = new File("test-out." + selectedFileFormat());
           output = new BufferedWriter(new FileWriter(file));
         }
         output.write(description);
@@ -350,80 +388,6 @@ public class InteractiveView extends JFrame implements View {
     else {
       throw new IllegalStateException("You need to select a file format before saving.");
     }
-  }
-
-  /**
-   * Returns the model in an SVG.
-   *
-   * @return the model description
-   */
-  private String outputSVG() {
-
-    String markup = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
-            + "xmlns=\"http://www.w3.org/2000/svg\">\n";
-
-    double endTime = (this.endTime / speed) * 1000;
-    markup += "<rect>\n"
-            + "<animate id=\"base\" begin=\"0;base.end\" dur=\"" + endTime + "ms\" "
-            + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
-            + "</rect>\n";
-
-    for (Shapes s : this.shapes) {
-      Shapes shape = s;
-
-      if (shape.getDisplayValue()) {
-        markup += shape.toSVGTag();
-      }
-
-      for (Animations a : this.animations) {
-        Animations currentA = a;
-        Shapes currentS = currentA.getShape();
-
-        // detect loop
-        if (shape.getName().equals((currentS.getName())) && !loop) {
-          markup += currentA.toSVGTag((this.getSpeed()));
-        }
-        else if (shape.getName().equals(currentS) && loop) {
-          markup += currentA.toSVGTagWithLoop(this.getSpeed());
-        }
-      }
-      markup += shape.svgEndTag() + "\n";
-    }
-    markup += "</svg>";
-
-    return markup;
-  }
-
-  /**
-   * Returns the model as descriptive text.
-   *
-   * @return the model description in a string
-   */
-  private String outputText() {
-    StringBuilder str = new StringBuilder();
-
-    if (shapes.size() != 0) {
-      str.append("Shapes:\n");
-
-      for (Shapes s : this.shapes) {
-        // call shape description
-        str.append(s.getDescription(speed));
-        str.append("\n");
-      }
-    }
-
-    if (this.animations.size() != 0) {
-      // sort animations by start time
-      Utils.sortAnimations(this.animations);
-
-      for (Animations a : this.animations) {
-        // call animation description
-        str.append(a.getDescription(this.speed));
-        str.append("\n");
-      }
-    }
-
-    return str.toString();
   }
 
   /**
@@ -471,17 +435,5 @@ public class InteractiveView extends JFrame implements View {
    */
   public boolean getIsLoop() {
     return this.loop;
-  }
-
-  /**
-   * Returns the description of the view in a string.
-   *
-   * @return the view description in a string
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public String getTextDescription() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException(""
-            + "Visual Animation View view does not include this "
-            + "functionality.");
   }
 }

@@ -1,6 +1,6 @@
 package cs5004.easyanimator.model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,18 +84,19 @@ public class AnimationModelImpl implements AnimationModel {
    *
    * @param name of the shape to remove
    */
-  public void removeShape(String name) {
-    for (int i = 0; i < this.shapes.size(); i++) {
-      if (this.shapes.get(i).getName().equals(name)) {
+  public AnimationModel removeShape(String name) {
+    for (Shapes s : this.shapes) {
+      if (s.getName().equals(name)) {
         // remove all animations associated with the shape
-        for (int j = 0; j < this.animations.size(); j++) {
-          if (this.animations.get(j).getShape().getName().equals(this.shapes.get(i).getName())) {
-            this.animations.remove(j);
+        for (Animations a : this.animations) {
+          if (a.getShape().getName().equals(s.getName())) {
+            this.animations.remove(a);
           }
         }
-        this.shapes.remove(i);
+        this.shapes.remove(s);
       }
     }
+    return this;
   }
 
   /**
@@ -167,7 +168,7 @@ public class AnimationModelImpl implements AnimationModel {
 
     return str.toString();
   }
-
+  
   /**
    * Returns the end time from the list of animations.
    *
@@ -335,7 +336,7 @@ public class AnimationModelImpl implements AnimationModel {
       if (a.getShape().getName().equals(b.getShape().getName())) {
         if (a.getAnimationType() == b.getAnimationType()) {
           if (a.getStartTime() >= b.getStartTime() && a.getEndTime() <=
-                  b.getEndTime()) {
+              b.getEndTime()) {
             return true;
           }
         }
@@ -477,9 +478,9 @@ public class AnimationModelImpl implements AnimationModel {
       // lamba expression to filter the data
       // hash map and show only objects matching the shape name
       f = (Map<String, ArrayList<ArrayList<Integer>>>) this.data.entrySet()
-              .stream()
-              .filter(map -> name.equals(map.getKey()))
-              .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+          .stream()
+          .filter(map -> name.equals(map.getKey()))
+          .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
 
       // variable for hash map key selector
       ArrayList<ArrayList<Integer>> shape = f.get(name);
@@ -521,7 +522,7 @@ public class AnimationModelImpl implements AnimationModel {
     private void generateShapes() {
       // create a Shape obj for each item in the hash map
       this.source.forEach((k, v) -> {
-        createIndividualShapes(k, v);
+          createIndividualShapes(k, v);
       });
     }
 
@@ -544,7 +545,7 @@ public class AnimationModelImpl implements AnimationModel {
           if (el.get(1) != el.get(9) || el.get(2) != el.get(10)) {
             addMove(k, el.get(1), el.get(2), el.get(9), el.get(10), startT, endT);
           }
-          if (color != newColor) {
+          else if (color != newColor) {
             addColorChange(k, color, newColor, startT, endT);
           }
           if (width != el.get(11) || height != el.get(12)) {
