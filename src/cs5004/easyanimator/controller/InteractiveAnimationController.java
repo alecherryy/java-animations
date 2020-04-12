@@ -52,24 +52,6 @@ public class InteractiveAnimationController implements AnimationController, Acti
   }
 
   /**
-   * Create an InteractiveController object with its given model, view, speed, and the name of
-   * the file that the controller will write out to.
-   *
-   * @param model used by the controller
-   * @param view used by the controller
-   * @param speed at which the animation occurs
-   */
-  public InteractiveAnimationController(View view, AnimationModel model, double speed) {
-    this.model = model;
-    this.view = view;
-    this.speed = speed;
-    this.looped = false;
-    this.elapsedTime = 0;
-    this.endTime = model.getEnd();
-    this.log = new StringBuffer();
-  }
-
-  /**
    * Starts the animation.
    */
   public void start() {
@@ -80,19 +62,21 @@ public class InteractiveAnimationController implements AnimationController, Acti
     // set new shape list
     this.setNewShapesList();
     // create new timer
-    this.timer = new Timer(0, this.timerListener);
+    this.timer = new Timer(0, timerListener);
 
-    for (Animations a : this.model.getAnimations()) {
+    for (Animations a : model.getAnimations()) {
       String sName = a.getShape().getName();
 
-      for (Shapes s : this.newShapesList) {
+      for (Shapes s : newShapesList) {
         Shapes currentS = s;
         if (currentS.getName().equals(sName)) {
           a.resetShape(currentS);
         }
       }
     }
-  }
+    // output to file
+//    this.view.write(filename);
+}
 
   /**
    * Get the log from this controller.
@@ -116,13 +100,13 @@ public class InteractiveAnimationController implements AnimationController, Acti
    * be the model's original list of shapes.
    */
   private void setNewShapesList() {
-    this.newShapesList = new ArrayList<Shapes>();
+    newShapesList = new ArrayList<Shapes>();
 
     // iterate through model's shapes and create a
     // new list of shapes
-    for (Shapes s : this.model.getShapes()) {
+    for (Shapes s : model.getShapes()) {
       Shapes newS = s;
-      this.newShapesList.add(newS);
+      newShapesList.add(newS);
     }
   }
 
@@ -181,6 +165,8 @@ public class InteractiveAnimationController implements AnimationController, Acti
       case "Play":
         this.appendToLog("You pressed the play button.\n");
         this.timer.start();
+        // offer SVG functionality
+        System.out.println(log.toString());
         break;
       case "Pause":
         this.appendToLog("You pressed the pause button.\n");
@@ -188,20 +174,24 @@ public class InteractiveAnimationController implements AnimationController, Acti
         break;
       case "Restart":
         this.appendToLog("You pressed the restart button.\n");
-        reset();
+        this.timer.restart();
+        this.setNewShapesList();
+        elapsedTime = 0;
         break;
       case "Loop":
         this.appendToLog("You pressed the loop button.\n");
         looped = !looped;
         view.setIsLoop(looped);
         break;
-      case "Increase":
+      case "Increase Speed":
         this.appendToLog("You pressed the increase speed button.\n");
+        showMessagDialog("Speed increased by 10.");
         speed += 10;
         elapsedTime -= (speed) / 1000;
         break;
-      case "Decrease":
+      case "Decrease Speed":
         this.appendToLog("You pressed the decrease speed button.\n");
+        showMessagDialog("Speed decreased by 10.");
         // if speed is negative, set it to 0
         if (speed <= 0) {
           speed = 0;
@@ -211,31 +201,20 @@ public class InteractiveAnimationController implements AnimationController, Acti
         }
         elapsedTime += (speed) / 1000;
         break;
-      case "Save":
-        this.appendToLog("You pressed the export button.\n");
-        this.view.write("");
-      case "Remove":
-        this.appendToLog("You pressed the Remove Shape button.\n");
-        this.model.removeShape(this.view.getTextFieldValue());
-        reset();
-        break;
-      case "Add":
-        this.appendToLog("You pressed the Add Shape button.\n");
-        reset();
-        break;
+//      case "Save":
+//        this.appendToLog("You pressed the export button.\n");
+//        filename = view.getTextFieldValue();
+//        this.view.write(filename);
+//      case "Remove":
+//        this.appendToLog("You pressed the Remove Shape button.\n");
+//        break;
+//      case "Add":
+//        this.appendToLog("You pressed the Add Shape button.\n");
+//        this.start();
+//        break;
       default:
         break;
     }
-  }
-
-  /**
-   * Private method to reset the model and view after making changes
-   * to the model or hittin "Restart" in the UI.
-   */
-  private void reset() {
-    this.timer.restart();
-    this.setNewShapesList();
-    elapsedTime = 0;
   }
 
   /**
