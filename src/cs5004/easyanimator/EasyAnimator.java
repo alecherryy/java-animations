@@ -70,7 +70,7 @@ public final class EasyAnimator {
    * @throws FileNotFoundException when a certain file that we are looking for is not found
    */
   public static void main(String[] args) throws FileNotFoundException {
-    String source = "src/cs5004/easyanimator/resources/toh-8.txt";
+    String source = "src/cs5004/easyanimator/resources/buildings.txt";
     String type = "playback";
     String out = "";
     int speed = 50; // default value

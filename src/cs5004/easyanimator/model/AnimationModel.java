@@ -74,6 +74,4 @@ public interface AnimationModel {
    * @param name of the shape to be removed
    */
   void removeShape(String name);
-
-//  void stateChanged(AnimationModel model);
 }

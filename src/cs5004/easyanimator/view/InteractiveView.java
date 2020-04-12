@@ -75,7 +75,7 @@ public class InteractiveView extends JFrame implements View {
 
     // add command panel
     this.add(setUpCommandPanel(), BorderLayout.EAST);
-
+    
     this.pack();
   }
 
@@ -101,6 +101,7 @@ public class InteractiveView extends JFrame implements View {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setPreferredSize(new Dimension(350, 800));
+    panel.setBackground(Color.WHITE);
     addCommandsToPanel(panel);
 
     // TODO add vertical scroll bar
@@ -124,7 +125,7 @@ public class InteractiveView extends JFrame implements View {
     Box toggleBox = Box.createVerticalBox();
     JLabel btnToggleLabel = new JLabel(""
             + "<html><h4>"
-            + "Play, Pause or Restart Animation"
+            + "Play, Pause, Resume or Restart Animation"
             + "</h4></></html>", SwingConstants.LEFT);
     toggleBox.add(btnToggleLabel);
     this.play = new JButton("Play");
@@ -344,7 +345,7 @@ public class InteractiveView extends JFrame implements View {
           File file = new File(""
                   + "src/cs5004/easyanimator/resources/"
                   // save file using the current date time stamp
-                  + LocalDate.now().toString().toString());
+                  + LocalDate.now().toString().toString() + format);
           output = new BufferedWriter(new FileWriter(file));
         }
         output.write(description);

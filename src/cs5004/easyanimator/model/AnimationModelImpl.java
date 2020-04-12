@@ -84,18 +84,6 @@ public class AnimationModelImpl implements AnimationModel {
    * @param name of the shape to remove
    */
   public void removeShape(String name) {
-//    for (Shapes s : this.shapes) {
-//      if (s.getName().equals(name)) {
-//        // remove all animations associated with the shape
-//        for (Animations a : this.animations) {
-//          if (a.getShape().getName().equals(s.getName())) {
-//            this.animations.remove(a);
-//          }
-//        }
-//        this.shapes.remove(s);
-//      }
-//    }
-
     for (int i = 0; i < this.shapes.size(); i++) {
       if (this.shapes.get(i).getName().equals(name)) {
         // remove all animations associated with the shape
