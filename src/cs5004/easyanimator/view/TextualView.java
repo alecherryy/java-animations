@@ -36,32 +36,12 @@ public class TextualView implements View {
   }
 
   /**
-   * Sets the view's visibility to true (i.e. view is visible within the JFrame).
-   *
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public void display() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException(""
-            + "Textual view does not include this functionality.");
-  }
-
-  /**
    * Takes a list of Shape objects and sets them within the view.
    *
    * @param shapes a list of shapes
    */
   public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
-  }
-
-  /**
-   * Repaints the view.
-   *
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public void refresh() {
-    throw new UnsupportedOperationException(""
-            + "Textual view does not include this functionality.");
   }
 
   /**
@@ -148,6 +128,26 @@ public class TextualView implements View {
    */
   public float getSpeed() throws UnsupportedOperationException {
     return this.speed;
+  }
+
+  /**
+   * Sets the view's visibility to true (i.e. view is visible within the JFrame).
+   *
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  public void display() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException(""
+            + "Textual view does not include this functionality.");
+  }
+
+  /**
+   * Repaints the view.
+   *
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  public void refresh() {
+    throw new UnsupportedOperationException(""
+            + "Textual view does not include this functionality.");
   }
 
   /**

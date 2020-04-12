@@ -14,6 +14,7 @@ import javax.swing.*;
 
 import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
+import cs5004.easyanimator.model.animations.ChangeColor;
 import cs5004.easyanimator.model.animations.ChangeCoordinates;
 import cs5004.easyanimator.model.animations.ChangeSize;
 import cs5004.easyanimator.model.shapes.Coordinates;
@@ -53,9 +54,6 @@ public class InteractiveView extends JFrame implements View {
   private JButton btnSave;
   private JCheckBox loopCheck;
   private ArrayList<JRadioButton> format;
-
-  // popup menu
-  private PopupMenu popup;
 
   /**
    * Constructs an InteractiveView object, with its given speed, list of shapes, list of animations,
@@ -100,9 +98,10 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Private method to set up the Scroll Pane.
+   * Private method to set up scroll bars.
    *
    * @param panel to add scroll bars to
+   * @return the scroll panel
    */
   private JScrollPane setScrollBars(JPanel panel) {
     JScrollPane scroll = new JScrollPane(panel);
@@ -115,14 +114,18 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Private method to set up the command panel.
+   * Private method to set up the edit panel.
+   *
+   * @return the edit panel
    */
   private JPanel setEditPanel() {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setPreferredSize(new Dimension(350, 300));
     panel.setBackground(Color.WHITE);
-    addCommandsToPanel(panel);
+
+    // add edit controls to panel
+    addEditsToPanel(panel);
 
     // TODO add vertical scroll bar
 
@@ -130,7 +133,9 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Private method to set up the command panel.
+   * Private method to set up the control panel.
+   *
+   * @return the control panel
    */
   private JPanel setControlPanel() {
     JPanel control = new JPanel();
@@ -160,11 +165,11 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Add commands to the command panel.
+   * Add commands to the edit panel.
    *
    * @param panel to add content to
    */
-  private void addCommandsToPanel(JPanel panel) {
+  private void addEditsToPanel(JPanel panel) {
     // panel title
     Box titleBox = Box.createVerticalBox();
     JLabel title = new JLabel("<html><h2>Edit</h2></html>");
@@ -266,7 +271,8 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Parse a textfield content and returns a new shape.
+   * Parse a textfield content and return a new shape. Text field returns
+   * content in the following format: name appear X Y width height R G B disappear.
    *
    * @param type of shape
    * @return a new shape
@@ -294,7 +300,13 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Parse a textfield content and returns a new animation.
+   * Parse a textfield content and return a new shape. Text field returns
+   * content in the following format:
+   * <ul>
+   *   <li>Initial state: name start X Y width height R G B</li>
+   *   <li>Final state: name end X Y width height R G B</li>
+   * </ul>
+   * The method evaluates the string and generates a new animation accordingly.
    *
    * @return a new animation
    * @throws UnsupportedOperationException if the view does not support this functionality
@@ -311,8 +323,8 @@ public class InteractiveView extends JFrame implements View {
       }
     }
 
-    // Z 1 190 161 20 11 113 87 151
-    // Z 25 190 161 200 200 113 87 151
+    // Initial state:   Z 1  190 161 20  11  113 87 151
+    // Final state:     Z 25 190 161 200 200 113 87 151
     int startT = Integer.parseInt(start[1]);
     int endT = Integer.parseInt(end[1]);
     int startW = Integer.parseInt(start[4]);
@@ -333,9 +345,9 @@ public class InteractiveView extends JFrame implements View {
     if (startW != endW || startH != endH) {
       return new ChangeSize(shape, startT, endT, startW, endH, endW, endH);
     }
-//    if (startC != endC) {
-//      new ChangeColor(shape, startT, endT, startC, endC);
-//    }
+    if (startC != endC) {
+      new ChangeColor(shape, startT, endT, startC, endC);
+    }
     if (startPos != endPos) {
       return new ChangeCoordinates(shape, startT, endT, startPos, endPos);
     }
@@ -410,16 +422,6 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Returns a list of integers that represent the settings.
-   *
-   * @return a list representing the settings.
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("View does not support this functionality.");
-  }
-
-  /**
    * Repaints the view.
    */
   public void refresh() {
@@ -437,8 +439,9 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Writes out the text description of the animation to a file
-   * specified in the parameters.
+   * Writes out the text description of the shapes and animations to a file
+   * in the "resources/" folder, using the current date time stamp as
+   * the file name.
    *
    * @param fileName the file to which we are outputting the string
    *                 representation of the animation.
@@ -449,9 +452,11 @@ public class InteractiveView extends JFrame implements View {
 
     if (format != null) {
       if (format.equals(".svg")) {
+        // output an svg file
         description = this.outputSVG();
       }
       else {
+        // output a txt file
         description = this.outputText();
       }
 
@@ -478,7 +483,7 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Returns the model in an SVG.
+   * Private method to render the model in an SVG.
    *
    * @return the model description
    */
@@ -520,7 +525,7 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Returns the model as descriptive text.
+   * Private method to render the model in a text file.
    *
    * @return the model description in a string
    */
@@ -608,5 +613,15 @@ public class InteractiveView extends JFrame implements View {
     throw new UnsupportedOperationException(""
             + "Visual Animation View view does not include this "
             + "functionality.");
+  }
+
+  /**
+   * Returns a list of integers that represent the settings.
+   *
+   * @return a list representing the settings.
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  public ArrayList<Integer> getSettings() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this functionality.");
   }
 }

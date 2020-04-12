@@ -26,8 +26,9 @@ import cs5004.easyanimator.view.View;
 import cs5004.easyanimator.view.VisualView;
 
 /**
- * This is the main() method which acts as the entry point for our program. Our program takes in
- * inputs as command-line arguments and provides the appropriate view to the user.
+ * This is the main() method which acts as the entry point for our program.
+ * Our program takes in inputs as command-line arguments and provides
+ * the appropriate view to the user.
  */
 public final class EasyAnimator {
 
@@ -71,7 +72,7 @@ public final class EasyAnimator {
    */
   public static void main(String[] args) throws FileNotFoundException {
     String source = "src/cs5004/easyanimator/resources/buildings.txt";
-    String type = "visual";
+    String type = "playback";
     String out = "";
     int speed = 50; // default value
     String token;
@@ -147,13 +148,13 @@ public final class EasyAnimator {
         controller = new TextualAnimationController(view, model, out);
         break;
       case "visual":
-        controller = new VisualAnimationController(model, view, speed);
+        controller = new VisualAnimationController(view, model, speed);
         break;
       case "svg":
         controller = new SVGAnimationController(view, out);
         break;
       case "playback":
-        controller = new InteractiveAnimationController(view, model, speed);
+        controller = new InteractiveAnimationController(view, model, speed, out);
         break;
       default:
         showErrorMessage("AN ERROR HAS OCCURRED: INVALID VIEW TYPE.");
