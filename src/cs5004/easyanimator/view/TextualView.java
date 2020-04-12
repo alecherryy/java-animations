@@ -210,5 +210,26 @@ public class TextualView implements View {
   public String getTextFieldValue() {
     throw new UnsupportedOperationException("View does not support this method");
   }
+
+  /**
+   * Parse a textfield content and returns a new shape.
+   *
+   * @param type of shape
+   * @return a new shape
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public Shapes getNewShape(String type) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Parse a textfield content and returns a new animation.
+   *
+   * @return a new animation
+   * @throws UnsupportedOperationException if the view does not support this functionality
+//   */
+  public Animations getNewAnimation() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
 }
 

@@ -117,4 +117,21 @@ public interface View {
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
   String getTextFieldValue();
+
+  /**
+   * Parse a textfield content and returns a new shape.
+   *
+   * @param type of shape
+   * @return a new shape
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  Shapes getNewShape(String type);
+
+  /**
+   * Parse a textfield content and returns a new animation.
+   *
+   * @return a new animation
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  Animations getNewAnimation();
 }

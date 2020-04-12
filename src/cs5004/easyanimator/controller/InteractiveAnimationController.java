@@ -221,8 +221,18 @@ public class InteractiveAnimationController implements AnimationController, Acti
         this.model.removeShape(this.view.getTextFieldValue());
         reset();
         break;
-      case "Add":
+      case "Add rectangle":
+        this.model.addShape(this.view.getNewShape("rectangle"));
         this.appendToLog("You pressed the Add Shape button.\n");
+        reset();
+        break;
+      case "Add oval":
+        this.model.addShape(this.view.getNewShape("oval"));
+        this.appendToLog("You pressed the Add Shape button.\n");
+        reset();
+        break;
+      case "Add animation":
+        this.model.addAnimation(this.view.getNewAnimation());
         reset();
         break;
       default:
