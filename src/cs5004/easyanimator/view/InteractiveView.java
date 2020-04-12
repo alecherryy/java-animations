@@ -24,11 +24,16 @@ public class InteractiveView extends JFrame implements View {
   private ArrayList<Animations> animations;
   private boolean loop;
   private int endTime;
-  private JButton play, pause, restart, increaseSpeed, decreaseSpeed,
-      file, export;
-  private JCheckBox loopCheckbox;
+  private JButton play, pause, restart, increaseSpeed, decreaseSpeed;
   private JPanel buttonPanel;
-  private JTextField fileInput;
+
+  // extra functionality
+  private JButton btnAdd;
+  private JButton btnRemove;
+  private JTextField sRemove;
+  private JButton btnSave;
+  private JTextField out;
+  private ArrayList<JRadioButton> format;
 
   /**
    * Constructs an InteractiveView object, with its given speed, list of shapes, list of animations,
@@ -49,7 +54,7 @@ public class InteractiveView extends JFrame implements View {
     this.shapes = shapes;
     this.animations = animations;
 
-    this.setTitle("Java Easy Animator");
+    this.setTitle("Simple Animation");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -64,9 +69,9 @@ public class InteractiveView extends JFrame implements View {
     animationScrollPane.setBounds(50, 30, 300, 500);
     animationScrollPane.setPreferredSize(new Dimension(1000, 1000));
 
+
     this.add(animationScrollPane);
 
-    // add buttons to JPanel
     buttonPanel = new JPanel();
     buttonPanel.setLayout(new FlowLayout());
     this.add(buttonPanel, BorderLayout.SOUTH);
@@ -79,24 +84,109 @@ public class InteractiveView extends JFrame implements View {
     restart = new JButton("Restart");
     buttonPanel.add(restart);
 
-    loopCheckbox = new JCheckBox("Loop");
-    buttonPanel.add(loopCheckbox);
-
     increaseSpeed = new JButton("Increase Speed");
     buttonPanel.add(increaseSpeed);
 
     decreaseSpeed = new JButton("Decrease Speed");
     buttonPanel.add(decreaseSpeed);
 
-    fileInput = new JTextField(10);
-    buttonPanel.add(fileInput);
-    file = new JButton("Set file");
-    buttonPanel.add(file);
-
-    export = new JButton("Export");
-    buttonPanel.add(export);
-
     this.pack();
+  }
+
+  /**
+   * Private method to set up the Scroll Pane.
+   *
+   * @param panel to add scroll bars to
+   */
+  private JScrollPane setUpScrollBars(JPanel panel) {
+    JScrollPane scroll = new JScrollPane(panel);
+    scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    scroll.setBounds(50, 30, 300, 50);
+
+    this.add(scroll, BorderLayout.CENTER);
+
+    return scroll;
+  }
+
+  /**
+   * Private method to set up the command panel.
+   */
+  private JPanel setUpCommandPanel() {
+    JPanel panel = new JPanel();
+    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    panel.setPreferredSize(new Dimension(300, 1000));
+    this.add(panel, BorderLayout.EAST);
+
+    return panel;
+  }
+
+  /**
+   * Add commands to the command panel.
+   *
+   * @param panel to add content to
+   */
+  private void addCommandsToPanel(JPanel panel) {
+    // add a new shape
+    Box addBox = Box.createVerticalBox();
+    JLabel btnAddLabel = new JLabel(""
+            + "<html><h4>"
+            + "Add a shape to the Animator"
+            + "</h4></></html>", SwingConstants.LEFT);
+    addBox.add(btnAddLabel);
+    JTextField addShapeName = new JTextField(5);
+    addBox.add(addShapeName);
+    this.btnAdd = new JButton("Add");
+    addBox.add(btnAdd);
+    panel.add(addBox);
+
+    // remove a shape
+    Box removeBox = Box.createVerticalBox();
+    JLabel btnRemoveLabel = new JLabel(""
+            + "<html><h4>"
+            + "Remove a shape from the Animator"
+            + "</h4></></html>", SwingConstants.LEFT);
+    removeBox.add(btnRemoveLabel);
+    JTextField removeShapeName = new JTextField(5);
+    this.sRemove = new JTextField(5);
+    removeBox.add(this.sRemove);
+    this.btnRemove = new JButton("Remove");
+    removeBox.add(this.btnRemove);
+    panel.add(removeBox);
+
+    // save to svg file
+    Box saveBox = Box.createVerticalBox();
+    JLabel btnSaveLabel = new JLabel(""
+            + "<html><h4>"
+            + "Save animation"
+            + "</h4></></html>", SwingConstants.LEFT);
+    saveBox.add(btnSaveLabel);
+    this.out = new JTextField("Name of the file",5);
+    this.out.setForeground(Color.GRAY);
+    saveBox.add(this.out);
+    this.format = new ArrayList<JRadioButton>();
+    JRadioButton saveSVG = new JRadioButton("SVG");
+    JRadioButton saveText = new JRadioButton("Text");
+    this.format.add(saveSVG);
+    this.format.add(saveText);
+    saveBox.add(saveSVG);
+    saveBox.add(saveText);
+    this.btnSave = new JButton("Save");
+    saveBox.add(this.btnSave);
+    panel.add(saveBox);
+  }
+
+  /**
+   * Private helper method to check if a radio button
+   * is selected
+   */
+  private String selectedFileFormat() {
+    for (JRadioButton r : this.format) {
+      if (r.isSelected()) {
+        return r.getText();
+      }
+    }
+    return null;
   }
 
   /**
@@ -164,23 +254,25 @@ public class InteractiveView extends JFrame implements View {
     restart.addActionListener(e);
     increaseSpeed.addActionListener(e);
     decreaseSpeed.addActionListener(e);
-    file.addActionListener(e);
-    loopCheckbox.addActionListener(e);
-    export.addActionListener(e);
-  }
-
-  @Override
-  public String getTextFieldValue() {
-    return this.fileInput.getText();
+//    export.addActionListener(e);
+//
+//    this.btnAdd.addActionListener(e);
+//    this.btnRemove.addActionListener(e);
+//    this.btnSave.addActionListener(e);
+//
+//    for (JRadioButton r : this.format) {
+//      r.addActionListener(e);
+//    }
   }
 
   /**
    * Returns the file name command from the text box.
    *
    * @return file name from user
+   * @throws UnsupportedOperationException if the view does not support this functionality
    */
-  public String getFilename() {
-    return fileInput.getText();
+  public String getTextFieldValue() {
+    return this.out.getText();
   }
 
   /**
@@ -228,19 +320,33 @@ public class InteractiveView extends JFrame implements View {
    *                 representation of the animation.
    */
   public void write(String fileName) {
-    String description = this.getTextDescription();
-    try {
-      BufferedWriter output;
-      if (fileName.equals("System.out")) {
-        output = new BufferedWriter(new OutputStreamWriter(System.out));
-      } else {
-        File file = new File(fileName);
-        output = new BufferedWriter(new FileWriter(file));
+    String format = selectedFileFormat();
+    String description = "";
+
+    if (format != null) {
+      if (format.equals("SVG")) {
+        description = this.getTextDescription();
       }
-      output.write(description);
-      output.close();
-    } catch (IOException e) {
-      e.printStackTrace();
+      else {
+        description = this.getTextDescription();
+      }
+
+      try {
+        BufferedWriter output;
+        if (fileName.equals("System.out")) {
+          output = new BufferedWriter(new OutputStreamWriter(System.out));
+        } else {
+          File file = new File("test-out." + selectedFileFormat());
+          output = new BufferedWriter(new FileWriter(file));
+        }
+        output.write(description);
+        output.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    else {
+      throw new IllegalStateException("You need to select a file format before saving.");
     }
   }
 

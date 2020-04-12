@@ -139,7 +139,7 @@ public final class EasyAnimator {
     try {
       view = createView(speed, type, model);
     } catch (Exception e) {
-      showErrorMessage("AN ERROR HAS OCCURRED.");
+      showErrorMessage("AN ERROR HAS OCCURRED: VIEW COULD NOT BE CREATED.");
     }
 
     switch (type) {
@@ -156,14 +156,14 @@ public final class EasyAnimator {
         controller = new InteractiveAnimationController(view, model, speed, out);
         break;
       default:
-        showErrorMessage("AN ERROR HAS OCCURRED.");
+        showErrorMessage("AN ERROR HAS OCCURRED: INVALID VIEW TYPE.");
         break;
     }
 
     try {
       controller.start();
     } catch (Exception e) {
-      showErrorMessage("AN ERROR HAS OCCURRED.");
+      showErrorMessage("AN ERROR HAS OCCURRED: COULD NOT START APPLICATION.");
     }
   }
 

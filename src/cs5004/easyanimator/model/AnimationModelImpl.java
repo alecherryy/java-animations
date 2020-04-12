@@ -83,8 +83,7 @@ public class AnimationModelImpl implements AnimationModel {
    *
    * @param name of the shape to remove
    */
-  public void removeShape(String name) {
-
+  public AnimationModel removeShape(String name) {
     for (Shapes s : this.shapes) {
       if (s.getName().equals(name)) {
         // remove all animations associated with the shape
@@ -96,6 +95,7 @@ public class AnimationModelImpl implements AnimationModel {
         this.shapes.remove(s);
       }
     }
+    return this;
   }
 
   /**

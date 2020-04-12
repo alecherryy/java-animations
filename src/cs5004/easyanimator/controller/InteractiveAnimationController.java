@@ -75,8 +75,8 @@ public class InteractiveAnimationController implements AnimationController, Acti
       }
     }
     // output to file
-    this.view.write(filename);
-  }
+//    this.view.write(filename);
+}
 
   /**
    * Get the log from this controller.
@@ -201,13 +201,17 @@ public class InteractiveAnimationController implements AnimationController, Acti
         }
         elapsedTime += (speed) / 1000;
         break;
-      case "Set file":
-        this.appendToLog("You pressed the set file button.\n");
-        filename = view.getTextFieldValue();
-        break;
-      case "Export":
-        this.appendToLog("You pressed the export button.\n");
-        setFilename(filename);
+//      case "Save":
+//        this.appendToLog("You pressed the export button.\n");
+//        filename = view.getTextFieldValue();
+//        this.view.write(filename);
+//      case "Remove":
+//        this.appendToLog("You pressed the Remove Shape button.\n");
+//        break;
+//      case "Add":
+//        this.appendToLog("You pressed the Add Shape button.\n");
+//        this.start();
+//        break;
       default:
         break;
     }

@@ -2,17 +2,11 @@ package cs5004.easyanimator.view;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 
-import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 
@@ -27,11 +21,6 @@ public class VisualView extends JFrame implements View {
   private ArrayList<Integer> settings;
   private ArrayList<Animations> animations;
   private float speed;
-  private JButton btnAdd;
-  private JButton btnRemove;
-  private JTextField shapeName;
-  private JButton btnSave;
-  private ArrayList<JRadioButton> format;
 
   /**
    * This is the class constructor. It takes two parameters: the speed
@@ -55,116 +44,14 @@ public class VisualView extends JFrame implements View {
 
     animationPanel.setShapes(shapes);
 
-    this.add(setUpScrollBars(this.animationPanel), BorderLayout.CENTER);
+    JScrollPane scrollPane = new JScrollPane(animationPanel);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    scrollPane.setBounds(50, 30, 300, 50);
 
-    // create command panel
-    JPanel panel = setUpCommandPanel();
-    addCommandsToPanel(panel);
+    this.add(scrollPane, BorderLayout.CENTER);
 
     this.pack();
-  }
-
-  /**
-   * Private method to set up the Scroll Pane.
-   *
-   * @param panel to add scroll bars to
-   */
-  private JScrollPane setUpScrollBars(JPanel panel) {
-    JScrollPane scroll = new JScrollPane(panel);
-    scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    scroll.setBounds(50, 30, 300, 50);
-
-    return scroll;
-  }
-
-  /**
-   * Private method to set up the command panel.
-   */
-  private JPanel setUpCommandPanel() {
-    JPanel panel = new JPanel();
-    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    panel.setPreferredSize(new Dimension(300, this.settings.get(3)));
-    this.add(panel, BorderLayout.EAST);
-
-    return panel;
-  }
-
-  /**
-   * Add commands to the command panel.
-   *
-   * @param panel to add content to
-   */
-  private void addCommandsToPanel(JPanel panel) {
-    // add a new shape
-    Box addBox = Box.createVerticalBox();
-    JLabel btnAddLabel = new JLabel(""
-            + "<html><h4>"
-            + "Add a shape to the Animator"
-            + "</h4></></html>", SwingConstants.LEFT);
-    addBox.add(btnAddLabel);
-    JTextField addShapeName = new JTextField(5);
-    addBox.add(addShapeName);
-    this.btnAdd = new JButton("Add");
-    addBox.add(btnAdd);
-    panel.add(addBox);
-
-    // remove a shape
-    Box removeBox = Box.createVerticalBox();
-    JLabel btnRemoveLabel = new JLabel(""
-            + "<html><h4>"
-            + "Remove a shape from the Animator"
-            + "</h4></></html>", SwingConstants.LEFT);
-    removeBox.add(btnRemoveLabel);
-    JTextField removeShapeName = new JTextField(5);
-    removeBox.add(removeShapeName);
-    this.btnRemove = new JButton("Remove");
-    removeBox.add(this.btnRemove);
-    panel.add(removeBox);
-
-    // save to svg file
-    Box saveBox = Box.createVerticalBox();
-    JLabel btnSaveLabel = new JLabel(""
-            + "<html><h4>"
-            + "Save animation"
-            + "</h4></></html>", SwingConstants.LEFT);
-    saveBox.add(btnSaveLabel);
-    this.format = new ArrayList<JRadioButton>();
-    JRadioButton saveSVG = new JRadioButton("SVG");
-    JRadioButton saveText = new JRadioButton("Text");
-    this.format.add(saveSVG);
-    this.format.add(saveText);
-    saveBox.add(saveSVG);
-    saveBox.add(saveText);
-    this.btnSave = new JButton("Save");
-    saveBox.add(this.btnSave);
-    panel.add(saveBox);
-  }
-
-  /**
-   * Give the view an actionListener for the buttons in the view.
-   *
-   * @param e the event for the button
-   * @throws UnsupportedOperationException if the view does not support this functionality
-   */
-  public void setButtonListener(ActionListener e) {
-    this.btnAdd.addActionListener(e);
-    this.btnRemove.addActionListener(e);
-    this.btnSave.addActionListener(e);
-
-    for (JRadioButton r : this.format) {
-      r.addActionListener(e);
-    }
-  }
-
-  /**
-   * Returns the file name command from the text box.
-   *
-   * @return file name from user
-   * @throws UnsupportedOperationException if the view does not support this functionality
-   */
-  public String getTextFieldValue() {
-    return this.shapeName.getText();
   }
 
   /**
@@ -224,118 +111,11 @@ public class VisualView extends JFrame implements View {
             + "functionality.");
   }
 
-  /**
-   * Writes out the text description of the animation to a file specified in the parameters.
-   *
-   * @param fileName the file to which we are outputting the
-   *                 string representation of the animation.
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public void write(String fileName) {
-    String format = selectedFileFormat();
-    String description = "";
-
-    if (format != null) {
-      if (format.equals("SVG")) {
-        description = this.getSvgFile();
-      }
-      else {
-        description = this.getTextFile();
-      }
-
-      try {
-        BufferedWriter output;
-        if (fileName.equals("System.out")) {
-          output = new BufferedWriter(new OutputStreamWriter(System.out));
-        } else {
-          File file = new File("test-out." + selectedFileFormat());
-          output = new BufferedWriter(new FileWriter(file));
-        }
-        output.write(description);
-        output.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    else {
-      throw new IllegalStateException("You need to select a file format before saving.");
-    }
-
-  }
-
-  /**
-   * Private helper method to check if a radio button
-   * is selected
-   */
-  private String selectedFileFormat() {
-    for (JRadioButton r : this.format) {
-      if (r.isSelected()) {
-        return r.getText();
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Returns the animation in an svg file.
-   *
-   * @return the animation in an svg file
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  private String getSvgFile() {
-    StringBuilder svg = new StringBuilder();
-
-    // create svg mark up
-    // set overflow to "auto" to enable scrolling
-    svg.append("<svg width=\"" + this.settings.get(2) + "\" height=\"" + this.settings.get(3)
-            + "\" version=\"1.1\" overflow=\"auto\" "
-            + "xmlns=\"http://www.w3.org/2000/svg\">\n");
-
-    for (Shapes s : this.getShapes()) {
-      svg.append(s.toSVGTag());
-      for (Animations a : this.getAnimations()) {
-        if (s.getName().equals(a.getShape().getName())) {
-          svg.append(a.toSVGTag(this.getSpeed()));
-        }
-      }
-      svg.append(s.svgEndTag());
-    }
-    svg.append("</svg>");
-
-    return svg.toString();
-  }
-
-  /**
-   * Returns the animation in an svg file.
-   *
-   * @return the animation in an svg file
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  private String getTextFile() {
-    StringBuilder str = new StringBuilder();
-
-    if (shapes.size() != 0) {
-      str.append("Shapes:\n");
-
-      for (Shapes s : this.shapes) {
-        // call shape description
-        str.append(s.getDescription(speed));
-        str.append("\n");
-      }
-    }
-
-    if (this.animations.size() != 0) {
-      // sort animations by start time
-      Utils.sortAnimations(this.animations);
-
-      for (Animations a : this.animations) {
-        // call animation description
-        str.append(a.getDescription(this.speed));
-        str.append("\n");
-      }
-    }
-
-    return str.toString();
+  @Override
+  public void write(String fileName) throws UnsupportedOperationException {
+    throw new UnsupportedOperationException(""
+            + "Visual Animation View view does not include this "
+            + "functionality.");
   }
 
   /**
@@ -387,6 +167,26 @@ public class VisualView extends JFrame implements View {
    */
   public boolean getIsLoop() throws UnsupportedOperationException {
     throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param e The action event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public void setButtonListener(ActionListener e) {
+    throw new UnsupportedOperationException("View does not support this method");
+  }
+
+  /**
+   * Returns the file name command from the text box.
+   *
+   * @return file name from user
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public String getTextFieldValue() {
+    return null;
   }
 
   /**

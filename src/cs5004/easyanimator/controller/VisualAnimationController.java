@@ -1,11 +1,8 @@
 package cs5004.easyanimator.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
+import javax.swing.*;
 
 import cs5004.easyanimator.model.AnimationModel;
 import cs5004.easyanimator.model.animations.Animations;
@@ -17,12 +14,11 @@ import cs5004.easyanimator.view.View;
  * Represents the controller for the Visual Animation view.
  * Implements AnimationController and its associated methods.
  */
-public class VisualAnimationController implements AnimationController, ActionListener {
+public class VisualAnimationController implements AnimationController {
   private AnimationModel model;
   private View view;
   private double speed;
   private boolean started;
-  private Appendable log;
 
   /**
    * Constructs a VisualAnimationViewController object with
@@ -37,7 +33,6 @@ public class VisualAnimationController implements AnimationController, ActionLis
     this.view = view;
     this.speed = speed;
     this.started = false;
-    this.log = new StringBuffer();
   }
 
   /**
@@ -58,8 +53,6 @@ public class VisualAnimationController implements AnimationController, ActionLis
       newShapesList.add(newS);
     }
 
-    this.view.setButtonListener(this);
-
     while (this.started) {
       timeElapsed = System.currentTimeMillis() - startTime;
       secondsElapsed = timeElapsed / 1000.0;
@@ -67,52 +60,27 @@ public class VisualAnimationController implements AnimationController, ActionLis
 
       for (Animations a : model.getAnimations()) {
         Animations currentA = a;
-        String shapeName = currentA.getShape().getName();
-
-        for (Shapes s : model.getShapes()) {
+        Shapes animationS = currentA.getShape();
+        for (Shapes s : newShapesList) {
           Shapes currentS = s;
-
-          if (s.getName().equals(shapeName)) {
+          if (currentS.getName().equals(animationS.getName())) {
             currentA.changeShape(currentS);
           }
         }
 
-        int start = currentA.getStartTime();
-        int end = currentA.getEndTime();
+        int start = a.getStartTime();
+        int end = a.getEndTime();
 
         if (start <= unitsElapsed && end >= unitsElapsed) {
-          currentA.implementAnimation(unitsElapsed);
+          a.implementAnimation(unitsElapsed);
           this.view.setShapes(newShapesList);
           this.view.refresh();
         }
       }
+
       this.view.display();
     }
   }
-
-  /**
-   * Overrides the ActionListener method.
-   *
-   * @param e the event
-   */
-  public void actionPerformed(ActionEvent e) {
-    // evaluate event
-    switch (e.getActionCommand()) {
-      case "Remove":
-        this.appendToLog("You pressed the Remove Shape button.\n");
-        String name = view.getTextFieldValue();
-        removeShape(name);
-        break;
-      case "Add":
-        this.appendToLog("You pressed the Add Shape button.\n");
-      case "Save":
-        this.appendToLog("You pressed the Save button.\n");
-        this.view.write("test-save.svg");
-      default:
-        break;
-    }
-  }
-
 
   /**
    * Get the log from this controller.
@@ -144,19 +112,5 @@ public class VisualAnimationController implements AnimationController, ActionLis
   private void removeShape(String name) {
     this.model.removeShape(name);
     this.view.refresh();
-  }
-
-  /**
-   * Append an entry into the log.
-   *
-   * @param entry The string that will be appended to the log.
-   */
-  private void appendToLog(String entry) {
-    try {
-      this.log.append(entry);
-
-    } catch (IOException e) {
-      //do nothing
-    }
   }
 }
