@@ -70,10 +70,10 @@ public final class EasyAnimator {
    * @throws FileNotFoundException when a certain file that we are looking for is not found
    */
   public static void main(String[] args) throws FileNotFoundException {
-    String source = "src/cs5004/easyanimator/resources/toh-8.txt";
+    String source = "src/cs5004/easyanimator/resources/buildings.txt";
     String type = "playback";
     String out = "";
-    int speed = 10; // default value
+    int speed = 50; // default value
     String token;
     Appendable output = null;
     AnimationModel model = null;
@@ -153,7 +153,7 @@ public final class EasyAnimator {
         controller = new SVGAnimationController(view, out);
         break;
       case "playback":
-        controller = new InteractiveAnimationController(view, model, speed, out);
+        controller = new InteractiveAnimationController(view, model, speed);
         break;
       default:
         showErrorMessage("AN ERROR HAS OCCURRED: INVALID VIEW TYPE.");

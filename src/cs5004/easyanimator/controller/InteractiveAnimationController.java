@@ -52,6 +52,24 @@ public class InteractiveAnimationController implements AnimationController, Acti
   }
 
   /**
+   * Create an InteractiveController object with its given model, view, speed, and the name of
+   * the file that the controller will write out to.
+   *
+   * @param model used by the controller
+   * @param view used by the controller
+   * @param speed at which the animation occurs
+   */
+  public InteractiveAnimationController(View view, AnimationModel model, double speed) {
+    this.model = model;
+    this.view = view;
+    this.speed = speed;
+    this.looped = false;
+    this.elapsedTime = 0;
+    this.endTime = model.getEnd();
+    this.log = new StringBuffer();
+  }
+
+  /**
    * Starts the animation.
    */
   public void start() {
@@ -74,9 +92,7 @@ public class InteractiveAnimationController implements AnimationController, Acti
         }
       }
     }
-    // output to file
-//    this.view.write(filename);
-}
+  }
 
   /**
    * Get the log from this controller.
@@ -165,31 +181,31 @@ public class InteractiveAnimationController implements AnimationController, Acti
       case "Play":
         this.appendToLog("You pressed the play button.\n");
         this.timer.start();
-        // offer SVG functionality
-        System.out.println(log.toString());
         break;
       case "Pause":
         this.appendToLog("You pressed the pause button.\n");
         this.timer.stop();
         break;
+      case "Resume":
+        this.appendToLog("You pressed the resume button.\n");
+        this.timer.start();
+        break;
       case "Restart":
         this.appendToLog("You pressed the restart button.\n");
-        this.timer.restart();
-        this.setNewShapesList();
-        elapsedTime = 0;
+        reset();
         break;
       case "Loop":
         this.appendToLog("You pressed the loop button.\n");
         looped = !looped;
         view.setIsLoop(looped);
         break;
-      case "Increase Speed":
+      case "Increase":
         this.appendToLog("You pressed the increase speed button.\n");
         showMessagDialog("Speed increased by 10.");
         speed += 10;
         elapsedTime -= (speed) / 1000;
         break;
-      case "Decrease Speed":
+      case "Decrease":
         this.appendToLog("You pressed the decrease speed button.\n");
         showMessagDialog("Speed decreased by 10.");
         // if speed is negative, set it to 0
@@ -201,20 +217,31 @@ public class InteractiveAnimationController implements AnimationController, Acti
         }
         elapsedTime += (speed) / 1000;
         break;
-//      case "Save":
-//        this.appendToLog("You pressed the export button.\n");
-//        filename = view.getTextFieldValue();
-//        this.view.write(filename);
-//      case "Remove":
-//        this.appendToLog("You pressed the Remove Shape button.\n");
-//        break;
-//      case "Add":
-//        this.appendToLog("You pressed the Add Shape button.\n");
-//        this.start();
-//        break;
+      case "Save":
+        this.appendToLog("You pressed the export button.\n");
+        this.view.write("");
+      case "Remove":
+        this.appendToLog("You pressed the Remove Shape button.\n");
+        this.model.removeShape(this.view.getTextFieldValue());
+        reset();
+        break;
+      case "Add":
+        this.appendToLog("You pressed the Add Shape button.\n");
+        reset();
+        break;
       default:
         break;
     }
+  }
+
+  /**
+   * Private method to reset the model and view after making changes
+   * to the model or hittin "Restart" in the UI.
+   */
+  private void reset() {
+    this.timer.restart();
+    this.setNewShapesList();
+    elapsedTime = 0;
   }
 
   /**

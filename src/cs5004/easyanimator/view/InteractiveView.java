@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
+import cs5004.easyanimator.model.Utils;
 import cs5004.easyanimator.model.animations.Animations;
 import cs5004.easyanimator.model.shapes.Shapes;
 
@@ -19,12 +21,17 @@ import cs5004.easyanimator.model.shapes.Shapes;
  */
 public class InteractiveView extends JFrame implements View {
   private float speed;
-  private AnimateJPanel animatePanel;
+  private AnimateJPanel animationPanel;
   private ArrayList<Shapes> shapes;
   private ArrayList<Animations> animations;
   private boolean loop;
   private int endTime;
-  private JButton play, pause, restart, increaseSpeed, decreaseSpeed;
+  private JButton play;
+  private JButton pause;
+  private JButton resume;
+  private JButton restart;
+  private JButton increaseSpeed;
+  private  JButton decreaseSpeed;
   private JPanel buttonPanel;
 
   // extra functionality
@@ -32,7 +39,7 @@ public class InteractiveView extends JFrame implements View {
   private JButton btnRemove;
   private JTextField sRemove;
   private JButton btnSave;
-  private JTextField out;
+  private JCheckBox loopCheck;
   private ArrayList<JRadioButton> format;
 
   /**
@@ -54,48 +61,30 @@ public class InteractiveView extends JFrame implements View {
     this.shapes = shapes;
     this.animations = animations;
 
-    this.setTitle("Simple Animation");
+    this.setTitle("Java Easy Animator");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    animatePanel = new AnimateJPanel();
-    animatePanel.setPreferredSize(new Dimension(1000, 1000));
+    this.animationPanel = new AnimateJPanel();
+    this.animationPanel.setPreferredSize(new Dimension(1000, 1000));
 
-    animatePanel.setShapes(shapes);
+    this.animationPanel.setShapes(shapes);
 
-    JScrollPane animationScrollPane = new JScrollPane(animatePanel);
-    animationScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    animationScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-    animationScrollPane.setBounds(50, 30, 300, 500);
-    animationScrollPane.setPreferredSize(new Dimension(1000, 1000));
+    // add scroll bars
+    this.add(setUpScrollBars(this.animationPanel));
 
-
-    this.add(animationScrollPane);
-
-    buttonPanel = new JPanel();
-    buttonPanel.setLayout(new FlowLayout());
-    this.add(buttonPanel, BorderLayout.SOUTH);
-
-    play = new JButton("Play");
-    buttonPanel.add(play);
-
-    pause = new JButton("Pause");
-    buttonPanel.add(pause);
-    restart = new JButton("Restart");
-    buttonPanel.add(restart);
-
-    increaseSpeed = new JButton("Increase Speed");
-    buttonPanel.add(increaseSpeed);
-
-    decreaseSpeed = new JButton("Decrease Speed");
-    buttonPanel.add(decreaseSpeed);
-
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     // add command panel
     this.add(setUpCommandPanel(), BorderLayout.EAST);
 
 >>>>>>> Stashed changes
+=======
+    // add command panel
+    this.add(setUpCommandPanel(), BorderLayout.EAST);
+    
+>>>>>>> d7d6778d92012ab3daf54d60bab7677c04edb9b5
     this.pack();
   }
 
@@ -107,10 +96,9 @@ public class InteractiveView extends JFrame implements View {
   private JScrollPane setUpScrollBars(JPanel panel) {
     JScrollPane scroll = new JScrollPane(panel);
     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-    scroll.setBounds(50, 30, 300, 50);
-
-    this.add(scroll, BorderLayout.CENTER);
+    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scroll.setBounds(50, 30, 300, 500);
+    scroll.setPreferredSize(new Dimension(1000, 800));
 
     return scroll;
   }
@@ -120,9 +108,12 @@ public class InteractiveView extends JFrame implements View {
    */
   private JPanel setUpCommandPanel() {
     JPanel panel = new JPanel();
-    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    panel.setPreferredSize(new Dimension(300, 1000));
-    this.add(panel, BorderLayout.EAST);
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setPreferredSize(new Dimension(350, 800));
+    panel.setBackground(Color.WHITE);
+    addCommandsToPanel(panel);
+
+    // TODO add vertical scroll bar
 
     return panel;
   }
@@ -133,6 +124,53 @@ public class InteractiveView extends JFrame implements View {
    * @param panel to add content to
    */
   private void addCommandsToPanel(JPanel panel) {
+    // panel title
+    Box titleBox = Box.createVerticalBox();
+    JLabel title = new JLabel("<html><h2>Control Panel</h2></html>");
+    titleBox.add(title);
+    panel.add(titleBox);
+
+    // play, pause or restart animation
+    Box toggleBox = Box.createVerticalBox();
+    JLabel btnToggleLabel = new JLabel(""
+            + "<html><h4>"
+            + "Play, Pause, Resume or Restart Animation"
+            + "</h4></></html>", SwingConstants.LEFT);
+    toggleBox.add(btnToggleLabel);
+    this.play = new JButton("Play");
+    this.pause = new JButton("Pause");
+    this.resume = new JButton("Resume");
+    this.restart = new JButton("Restart");
+    toggleBox.add(this.play);
+    toggleBox.add(this.pause);
+    toggleBox.add(this.resume);
+    toggleBox.add(this.restart);
+    panel.add(toggleBox);
+
+    // increase or decrease animation speed
+    Box speedBox = Box.createVerticalBox();
+    JLabel btnSpeedLabel = new JLabel(""
+            + "<html><h4>"
+            + "Increase or Decrease Animation Speed"
+            + "</h4></></html>", SwingConstants.LEFT);
+    speedBox.add(btnSpeedLabel);
+    this.increaseSpeed = new JButton("Increase");
+    this.decreaseSpeed = new JButton("Decrease");
+    speedBox.add(this.increaseSpeed);
+    speedBox.add(this.decreaseSpeed);
+    panel.add(speedBox);
+
+    // loop animation
+    Box loopBox = Box.createVerticalBox();
+    JLabel loopBtnLabel = new JLabel(""
+            + "<html><h4>"
+            + "Loop Animation"
+            + "</h4></></html>", SwingConstants.LEFT);
+    loopBox.add(loopBtnLabel);
+    this.loopCheck = new JCheckBox("Loop");
+    loopBox.add(this.loopCheck);
+    panel.add(loopBox);
+
     // add a new shape
     Box addBox = Box.createVerticalBox();
     JLabel btnAddLabel = new JLabel(""
@@ -140,6 +178,11 @@ public class InteractiveView extends JFrame implements View {
             + "Add a shape to the Animator"
             + "</h4></></html>", SwingConstants.LEFT);
     addBox.add(btnAddLabel);
+    JLabel addSummary = new JLabel(""
+            + "<html><p>Add a new shape to the list of<br />"
+            + "current shapes. Once a new shape has been<br />"
+            + "added, you can add animations to it.</p><br /></html>");
+    addBox.add(addSummary);
     JTextField addShapeName = new JTextField(5);
     addBox.add(addShapeName);
     this.btnAdd = new JButton("Add");
@@ -153,7 +196,12 @@ public class InteractiveView extends JFrame implements View {
             + "Remove a shape from the Animator"
             + "</h4></></html>", SwingConstants.LEFT);
     removeBox.add(btnRemoveLabel);
-    JTextField removeShapeName = new JTextField(5);
+    JLabel removeSummary = new JLabel(""
+            + "<html><p>Remove a shape from the current<br />"
+            + "list of shapes. Removing a shape will<br />"
+            + "automatically remove all animations<br />"
+            + "associated with it.</p><br /></html>");
+    removeBox.add(removeSummary);
     this.sRemove = new JTextField(5);
     removeBox.add(this.sRemove);
     this.btnRemove = new JButton("Remove");
@@ -164,15 +212,18 @@ public class InteractiveView extends JFrame implements View {
     Box saveBox = Box.createVerticalBox();
     JLabel btnSaveLabel = new JLabel(""
             + "<html><h4>"
-            + "Save animation"
+            + "Save animation as an SVG or text file"
             + "</h4></></html>", SwingConstants.LEFT);
     saveBox.add(btnSaveLabel);
-    this.out = new JTextField("Name of the file",5);
-    this.out.setForeground(Color.GRAY);
-    saveBox.add(this.out);
+    JLabel saveSummary = new JLabel(""
+            + "<html><p>Save the current shapes and animations <br />"
+            + "as an SVG or text. The new file will be <br />"
+            + "automatically saved in the \"resources\" folder <br />"
+            + "and will be name with a time stamp.</p><br /></html>");
+    saveBox.add(saveSummary);
     this.format = new ArrayList<JRadioButton>();
-    JRadioButton saveSVG = new JRadioButton("SVG");
-    JRadioButton saveText = new JRadioButton("Text");
+    JRadioButton saveSVG = new JRadioButton(".svg");
+    JRadioButton saveText = new JRadioButton(".txt");
     this.format.add(saveSVG);
     this.format.add(saveText);
     saveBox.add(saveSVG);
@@ -180,6 +231,29 @@ public class InteractiveView extends JFrame implements View {
     this.btnSave = new JButton("Save");
     saveBox.add(this.btnSave);
     panel.add(saveBox);
+  }
+
+  /**
+   * Give the view an actionListener for the buttons in the view.
+   *
+   * @param e the event for the button
+   * @throws UnsupportedOperationException if the view does not support this functionality
+   */
+  public void setButtonListener(ActionListener e) {
+    this.play.addActionListener(e);
+    this.pause.addActionListener(e);
+    this.resume.addActionListener(e);
+    this.restart.addActionListener(e);
+    this.increaseSpeed.addActionListener(e);
+    this.decreaseSpeed.addActionListener(e);
+    this.loopCheck.addActionListener(e);
+    this.btnAdd.addActionListener(e);
+    this.btnRemove.addActionListener(e);
+    this.btnSave.addActionListener(e);
+
+    for (JRadioButton r : this.format) {
+      r.addActionListener(e);
+    }
   }
 
   /**
@@ -196,49 +270,6 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Returns the description of the view in a string.
-   *
-   * @return the view description in a string
-   * @throws UnsupportedOperationException if the view does not support this method
-   */
-  public String getTextDescription() {
-
-    String markup = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
-        + "xmlns=\"http://www.w3.org/2000/svg\">\n";
-
-    double endTime = (this.endTime / speed) * 1000;
-    markup += "<rect>\n"
-        + "<animate id=\"base\" begin=\"0;base.end\" dur=\"" + endTime + "ms\" "
-        + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
-        + "</rect>\n";
-
-    for (Shapes s : this.shapes) {
-      Shapes shape = s;
-
-      if (shape.getDisplayValue()) {
-        markup += shape.toSVGTag();
-      }
-
-      for (Animations a : this.animations) {
-        Animations currentA = a;
-        Shapes currentS = currentA.getShape();
-
-        // detect loop
-        if (shape.getName().equals((currentS.getName())) && !loop) {
-          markup += currentA.toSVGTag((this.getSpeed()));
-        }
-        else if (shape.getName().equals(currentS) && loop) {
-          markup += currentA.toSVGTagWithLoop(this.getSpeed());
-        }
-      }
-      markup += shape.svgEndTag() + "\n";
-    }
-    markup += "</svg>";
-
-    return markup;
-  }
-
-  /**
    * Sets the view's visibility to true (i.e. view is visible
    * within the JFrame).
    *
@@ -249,36 +280,13 @@ public class InteractiveView extends JFrame implements View {
   }
 
   /**
-   * Give the view an actionListener for the buttons in the view.
-   *
-   * @param e the event for the button
-   * @throws UnsupportedOperationException if the view does not support this functionality
-   */
-  public void setButtonListener(ActionListener e) {
-    play.addActionListener(e);
-    pause.addActionListener(e);
-    restart.addActionListener(e);
-    increaseSpeed.addActionListener(e);
-    decreaseSpeed.addActionListener(e);
-//    export.addActionListener(e);
-//
-//    this.btnAdd.addActionListener(e);
-//    this.btnRemove.addActionListener(e);
-//    this.btnSave.addActionListener(e);
-//
-//    for (JRadioButton r : this.format) {
-//      r.addActionListener(e);
-//    }
-  }
-
-  /**
    * Returns the file name command from the text box.
    *
    * @return file name from user
    * @throws UnsupportedOperationException if the view does not support this functionality
    */
   public String getTextFieldValue() {
-    return this.out.getText();
+    return this.sRemove.getText();
   }
 
   /**
@@ -315,7 +323,7 @@ public class InteractiveView extends JFrame implements View {
    */
   public void setShapes(ArrayList<Shapes> shapes) {
     this.shapes = shapes;
-    animatePanel.setShapes(shapes);
+    animationPanel.setShapes(shapes);
   }
 
   /**
@@ -327,14 +335,15 @@ public class InteractiveView extends JFrame implements View {
    */
   public void write(String fileName) {
     String format = selectedFileFormat();
+    System.out.println(selectedFileFormat());
     String description = "";
 
     if (format != null) {
-      if (format.equals("SVG")) {
-        description = this.getTextDescription();
+      if (format.equals(".svg")) {
+        description = this.outputSVG();
       }
       else {
-        description = this.getTextDescription();
+        description = this.outputText();
       }
 
       try {
@@ -342,7 +351,10 @@ public class InteractiveView extends JFrame implements View {
         if (fileName.equals("System.out")) {
           output = new BufferedWriter(new OutputStreamWriter(System.out));
         } else {
-          File file = new File("test-out." + selectedFileFormat());
+          File file = new File(""
+                  + "src/cs5004/easyanimator/resources/"
+                  // save file using the current date time stamp
+                  + LocalDate.now().toString().toString() + format);
           output = new BufferedWriter(new FileWriter(file));
         }
         output.write(description);
@@ -354,6 +366,80 @@ public class InteractiveView extends JFrame implements View {
     else {
       throw new IllegalStateException("You need to select a file format before saving.");
     }
+  }
+
+  /**
+   * Returns the model in an SVG.
+   *
+   * @return the model description
+   */
+  private String outputSVG() {
+
+    String markup = "<svg width=\"1000\" height=\"1000\" version=\"1.1\"\n"
+            + "xmlns=\"http://www.w3.org/2000/svg\">\n";
+
+    double endTime = (this.endTime / speed) * 1000;
+    markup += "<rect>\n"
+            + "<animate id=\"base\" begin=\"0;base.end\" dur=\"" + endTime + "ms\" "
+            + "attributeName=\"visibility\" from=\"hide\" to=\"hide\"/>\n"
+            + "</rect>\n";
+
+    for (Shapes s : this.shapes) {
+      Shapes shape = s;
+
+      if (shape.getDisplayValue()) {
+        markup += shape.toSVGTag();
+      }
+
+      for (Animations a : this.animations) {
+        Animations currentA = a;
+        Shapes currentS = currentA.getShape();
+
+        // detect loop
+        if (shape.getName().equals((currentS.getName())) && !loop) {
+          markup += currentA.toSVGTag((this.getSpeed()));
+        }
+        else if (shape.getName().equals(currentS) && loop) {
+          markup += currentA.toSVGTagWithLoop(this.getSpeed());
+        }
+      }
+      markup += shape.svgEndTag() + "\n";
+    }
+    markup += "</svg>";
+
+    return markup;
+  }
+
+  /**
+   * Returns the model as descriptive text.
+   *
+   * @return the model description in a string
+   */
+  private String outputText() {
+    StringBuilder str = new StringBuilder();
+
+    if (shapes.size() != 0) {
+      str.append("Shapes:\n");
+
+      for (Shapes s : this.shapes) {
+        // call shape description
+        str.append(s.getDescription(speed));
+        str.append("\n");
+      }
+    }
+
+    if (this.animations.size() != 0) {
+      // sort animations by start time
+      Utils.sortAnimations(this.animations);
+
+      for (Animations a : this.animations) {
+        // call animation description
+        str.append(a.getDescription(this.speed));
+        str.append("\n");
+      }
+    }
+
+    return str.toString();
   }
 
   /**
@@ -401,5 +487,17 @@ public class InteractiveView extends JFrame implements View {
    */
   public boolean getIsLoop() {
     return this.loop;
+  }
+
+  /**
+   * Returns the description of the view in a string.
+   *
+   * @return the view description in a string
+   * @throws UnsupportedOperationException if the view does not support this method
+   */
+  public String getTextDescription() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException(""
+            + "Visual Animation View view does not include this "
+            + "functionality.");
   }
 }
